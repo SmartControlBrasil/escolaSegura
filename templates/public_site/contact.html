@@ -31,8 +31,8 @@
         <div class="header-top-inner d-flex flex-column flex-md-row justify-content-between align-items-center">
           <div class="header-contact">
             <ul class="d-flex white flex-wrap">
-              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="tel:+33877554332"><i class="fa fa-phone me-2" aria-hidden="true"></i>+33 877 554 332</a></li>
-              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="mailto:info@website.com"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i>info@website.com</a></li>
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="tel:+33877554332"><i class="fa fa-phone me-2" aria-hidden="true"></i>(11) 4142-1413 / (11) 98271-9989</a></li>
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="mailto:comercial@santandermarmoraria.com.br"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i>comercial@santandermarmoraria.com.br</a></li>
               <li class="small"><i class="fa fa-clock-o me-2" aria-hidden="true"></i>Mon - Fri: 9:00 - 18:30</li>
             </ul>
           </div>
@@ -203,7 +203,7 @@
                   <li><i class="fa fa-envelope-o bg-secondary white text-center rounded-circle" aria-hidden="true"></i></li>
                   <li>
                     <h4 class="mb-1">E-mail</h4>
-                    <span>support@intereal.com</span>
+                    <span>comercial@santandermarmoraria.com.br</span>
                   </li>
                 </ul>
               </div>
@@ -224,36 +224,50 @@
         <div class="contact-form">
           <div class="row gx-lg-5 align-items-center gy-5">
             <div class="col-lg-6">
-              <div class="contact-form-left">
+          <div class="contact-form-left">
                 <iframe height="500" class="w-100 d-block" src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=+(mangal%20bazar)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="contact-form-right">
-                <h4>Leave A Message</h4>
-                <p class="mb-4">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <form>
-                  <div class="row gy-3">
-                    <div class="col-md-6">
-                      <input type="text" name="full-name" id="full-name" class="w-100 border border-grey" placeholder="Full Name">
-                    </div>
-                    <div class="col-md-6">
-                      <input type="email" name="email" id="email" class="w-100 border border-grey" placeholder="E-mail">
-                    </div>
-                    <div class="col-lg-12">
-                      <input type="tel" name="phone" id="phone" class="w-100 border border-grey" placeholder="Phone No.">
-                    </div>
-                    <div class="col-lg-12">
-                      <input type="text" name="subject" id="subject" class="w-100 border border-grey" placeholder="Subject">
-                    </div>
-                    <div class="col-12">
-                      <textarea name="message" id="message" placeholder="Message..." rows="4" class="w-100 border border-grey"></textarea>
-                    </div>
-                    <div class="col-12 text-center">
-                      <button class="btn-primary">Enviar Mensagem</button>
-                    </div>
-                  </div>
-                </form>
+                <h4>Deixe uma mensagem</h4>
+                 {% if success %}
+                   <div class="alert alert-success" role="alert">
+                     Mensagem enviada com sucesso! Seu consentimento de privacidade foi registrado.
+                   </div>
+                 {% endif %}
+                 <p class="mb-4">Entre em contato conosco para solicitar orçamentos de mármores, granitos ou agendar uma medição técnica.</p>
+                 <form method="post" action="/contato/">
+                   {% csrf_token %}
+                   <div class="row gy-3">
+                     <div class="col-md-6">
+                       <input type="text" name="full-name" id="full-name" class="w-100 border border-grey" placeholder="Nome Completo" required>
+                     </div>
+                     <div class="col-md-6">
+                       <input type="email" name="email" id="email" class="w-100 border border-grey" placeholder="E-mail" required>
+                     </div>
+                     <div class="col-lg-12">
+                       <input type="tel" name="phone" id="phone" class="w-100 border border-grey" placeholder="Telefone">
+                     </div>
+                     <div class="col-lg-12">
+                       <input type="text" name="subject" id="subject" class="w-100 border border-grey" placeholder="Assunto">
+                     </div>
+                     <div class="col-12">
+                       <textarea name="message" id="message" placeholder="Mensagem..." rows="4" class="w-100 border border-grey"></textarea>
+                     </div>
+                     <div class="col-12">
+                       <div class="form-check text-start">
+                         <input class="form-check-input" type="checkbox" name="lgpd_consent" id="lgpdConsent" required>
+                         <label class="form-check-label small text-secondary" for="lgpdConsent">
+                           Li e aceito a <a href="/privacidade/" target="_blank">Política de Privacidade</a> e autorizo o contato para atendimento da minha solicitação.
+                         </label>
+                       </div>
+                     </div>
+                     <div class="col-12 text-center mt-3">
+                       <button type="submit" class="btn-primary">Enviar Mensagem</button>
+                     </div>
+                   </div>
+                 </form>
               </div>
             </div>
           </div>
@@ -332,19 +346,19 @@
                   <div class="mb-3">
                     <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
                       <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
-                      <li>256 Elizaberth Ave, CA, 90025</li>
+                      <li>São Paulo - SP</li>
                     </ul>
                   </div>
                   <div class="mb-3">
                     <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
                       <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
-                      <li>+569 2316 2156</li>
+                      <li>(11) 4142-1413 / (11) 98271-9989</li>
                     </ul>
                   </div>
                   <div>
                     <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
                       <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
-                      <li>info@intereal.com</li>
+                      <li>comercial@santandermarmoraria.com.br</li>
                     </ul>
                   </div>
                 </div>
@@ -359,7 +373,8 @@
                   <li><a href="service.html">Serviços</a></li>
                   <li><a href="service.html">Attorneys</a></li>
                   <li><a href="/blog/">News & Articles</a></li>
-                  <li><a href="">Policies</a></li>
+                  <li><a href="/privacidade/">Privacidade</a></li>
+                  <li><a href="/termos/">Termos de Uso</a></li>
                   <li><a href="/contato/">Contato</a></li>
                 </ul>
               </div>
@@ -424,19 +439,19 @@
             <div class="mb-2 pb-2 border-bottom border-grey">
               <ul class="align-items-center d-flex gap-2">
                 <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
-                <li>256 Elizaberth Ave, CA, 90025</li>
+                <li>São Paulo - SP</li>
               </ul>
             </div>
             <div class="mb-2 pb-2 border-bottom border-grey">
               <ul class="align-items-center d-flex gap-2">
                 <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
-                <li>+569 2316 2156</li>
+                <li>(11) 4142-1413 / (11) 98271-9989</li>
               </ul>
             </div>
             <div>
               <ul class="align-items-center d-flex gap-2">
                 <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
-                <li>info@intereal.com</li>
+                <li>comercial@santandermarmoraria.com.br</li>
               </ul>
             </div>
           </div>

@@ -38,3 +38,19 @@ class PolicyCheckRun(TimeStampedModel):
     status = models.CharField(max_length=30, default='pending')
     findings = models.JSONField(default=list, blank=True)
     score = models.PositiveSmallIntegerField(default=0)
+
+
+class PrivacyConsentLog(TimeStampedModel):
+    name = models.CharField(max_length=160)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    source = models.CharField(max_length=120)
+    consent_text = models.TextField()
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.name} - {self.source} ({self.created_at})'

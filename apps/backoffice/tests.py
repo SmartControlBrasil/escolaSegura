@@ -1,3 +1,4 @@
+import os
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -10,6 +11,18 @@ class BackofficeTests(TestCase):
             username='testuser', 
             password='testpassword'
         )
+        # Define environmental variables for command testing
+        os.environ['DJANGO_SUPERUSER_USERNAME'] = 'envadmin'
+        os.environ['DJANGO_SUPERUSER_EMAIL'] = 'envadmin@test.com'
+        os.environ['DJANGO_SUPERUSER_PASSWORD'] = 'EnvAdminPass123!'
+        os.environ['DEMO_OWNER_USERNAME'] = 'envdemo'
+        os.environ['DEMO_OWNER_EMAIL'] = 'envdemo@test.com'
+        os.environ['DEMO_OWNER_PASSWORD'] = 'EnvDemoPass123!'
+
+    def test_bootstrap_demo_users_command(self):
+        call_command('bootstrap_demo_users')
+        self.assertTrue(User.objects.filter(username='envadmin', is_superuser=True).exists())
+        self.assertTrue(User.objects.filter(username='envdemo', is_staff=False).exists())
 
     def test_seed_marmoraria_demo_command(self):
         call_command('seed_marmoraria_demo')
@@ -48,6 +61,16 @@ class BackofficeTests(TestCase):
         response = self.client.post('/app/login/', {
             'username': 'testuser',
             'password': 'wrongpassword'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Usuário ou senha incorretos.", response.context['errors'])
+
+    def test_inactive_user_cannot_login(self):
+        self.user.is_active = False
+        self.user.save()
+        response = self.client.post('/app/login/', {
+            'username': 'testuser',
+            'password': 'testpassword'
         })
         self.assertEqual(response.status_code, 200)
         self.assertIn("Usuário ou senha incorretos.", response.context['errors'])

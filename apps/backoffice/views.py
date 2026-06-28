@@ -11,7 +11,7 @@ from apps.catalog.infrastructure.models import Product
 from apps.estimates.infrastructure.models import Estimate, EstimateLine
 from apps.service_reports.infrastructure.models import ServiceReport
 from apps.agents.infrastructure.models import AtlasProspect, VirtualAssistantSession
-from apps.core.infrastructure.models import Organization
+from apps.core.infrastructure.models import Organization, ActivityLog
 
 @login_required
 def dashboard(request):
@@ -111,6 +111,7 @@ def orcamentos_novo(request):
                     quantity=Decimal('5.00'),
                     unit_price=product.sale_price
                 )
+            log_activity(request, request.user, 'estimate_created', obj=est)
             return redirect('backoffice:orcamentos')
             
     customers_list = Customer.objects.all()
@@ -211,6 +212,30 @@ def configuracoes(request):
     return render(request, 'backoffice/configuracoes.html', context)
 
 
+def log_activity(request, user, action, obj=None, metadata=None):
+    # Try to extract IP address
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+        
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    
+    org = user.organization if (user and hasattr(user, 'organization')) else None
+    
+    ActivityLog.objects.create(
+        actor=user if (user and user.is_authenticated) else None,
+        organization=org,
+        action=action,
+        object_type=obj.__class__.__name__ if obj else '',
+        object_id=str(obj.id) if obj else '',
+        ip_address=ip,
+        user_agent=user_agent,
+        metadata=metadata or {}
+    )
+
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('backoffice:dashboard')
@@ -221,12 +246,19 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            login(request, form.get_user())
-            if next_url:
-                return redirect(next_url)
-            return redirect('backoffice:dashboard')
+            user = form.get_user()
+            if user.is_active:
+                login(request, user)
+                log_activity(request, user, 'login_success')
+                if next_url:
+                    return redirect(next_url)
+                return redirect('backoffice:dashboard')
+            else:
+                errors = ["Usuário ou senha incorretos."]
+                log_activity(request, None, 'login_failed_inactive', metadata={'username': request.POST.get('username')})
         else:
             errors = ["Usuário ou senha incorretos."]
+            log_activity(request, None, 'login_failed', metadata={'username': request.POST.get('username')})
             
     context = {
         'errors': errors,
@@ -236,5 +268,8 @@ def login_view(request):
 
 
 def logout_view(request):
+    if request.user.is_authenticated:
+        log_activity(request, request.user, 'logout')
     logout(request)
     return redirect('backoffice:login')
+
