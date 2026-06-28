@@ -161,3 +161,30 @@ class BackofficeTests(TestCase):
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get(f'/app/orcamentos/{est.id}/preview/')
         self.assertEqual(response.status_code, 200)
+
+    def test_orcamento_pdf_route(self):
+        call_command('seed_marmoraria_demo')
+        from apps.estimates.infrastructure.models import Estimate
+        est = Estimate.objects.first()
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(f'/app/orcamentos/{est.id}/pdf/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/pdf')
+
+    def test_entrega_pdf_route(self):
+        call_command('seed_marmoraria_demo')
+        from apps.service_reports.infrastructure.models import ProjectDelivery
+        
+        # Create one delivery if it doesn't exist
+        deliv = ProjectDelivery.objects.first()
+        if not deliv:
+            from apps.customers.infrastructure.models import Customer
+            from apps.core.infrastructure.models import Organization
+            c = Customer.objects.first()
+            org = Organization.objects.first()
+            deliv = ProjectDelivery.objects.create(customer=c, organization=org)
+            
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(f'/app/entregas/{deliv.id}/pdf/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/pdf')

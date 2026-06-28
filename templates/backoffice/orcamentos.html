@@ -41,7 +41,10 @@
                 <td>{{ est.created_by.username|default:"-" }}</td>
                 <td class="text-end">
                   <a href="{% url 'backoffice:orcamentos_preview' est.id %}" target="_blank" class="btn btn-outline-info btn-sm" title="Visualizar Proposta Comercial">
-                    <i class="bi bi-file-earmark-pdf"></i> Preview
+                    <i class="bi bi-eye"></i> Preview
+                  </a>
+                  <a href="{% url 'backoffice:orcamentos_pdf' est.id %}" target="_blank" class="btn btn-outline-danger btn-sm" title="Baixar PDF">
+                    <i class="bi bi-file-earmark-pdf"></i> PDF
                   </a>
                   <a href="{% url 'backoffice:orcamentos_detalhe' est.id %}" class="btn btn-outline-primary btn-sm" title="Editar Orçamento">
                     <i class="bi bi-pencil"></i>

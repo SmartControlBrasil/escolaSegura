@@ -1,35 +1,61 @@
 {% extends 'backoffice/base.html' %}
 {% block content %}
-<div class="card">
-  <div class="card-header py-3 d-flex justify-content-between align-items-center">
-    <h6 class="mb-0">Lista de Entregas</h6>
-    <a href="{% url 'backoffice:entregas_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Novo(a) Entrega</a>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table align-middle table-striped table-hover">
-        <thead class="table-light">
-          <tr>
-            <th>Cliente</th><th>Obra / Projeto</th><th>Data de Entrega</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for delivery in deliveries %}
-          <tr>
-
-            <td><strong><a href="{% url 'backoffice:entregas_detalhe' delivery.id %}">{{ delivery.customer.name }}</a></strong></td>
-            <td>{{ delivery.project.title|default:delivery.estimate.title }}</td>
-            <td>{{ delivery.delivery_date|date:"d/m/Y" }}</td>
-            <td><span class="badge rounded-pill bg-info">{{ delivery.get_status_display }}</span></td>
-        
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="6" class="text-center">Nenhuma entrega cadastrada.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Entregas de Obra</h6>
+        <a href="{% url 'backoffice:entregas_novo' %}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Nova Entrega</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-middle table-striped table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Data Prevista</th>
+                <th>Cliente</th>
+                <th>Obra</th>
+                <th>Status</th>
+                <th>Checklist</th>
+                <th>Responsável</th>
+                <th class="text-end">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for deliv in deliveries %}
+              <tr>
+                <td>{{ deliv.delivery_date|date:"d/m/Y" }}</td>
+                <td>{{ deliv.customer.name }}</td>
+                <td>{{ deliv.project.title|default:"-" }}</td>
+                <td>
+                  {% if deliv.status == 'in_progress' %}<span class="badge rounded-pill bg-warning text-dark">Em andamento</span>
+                  {% elif deliv.status == 'delivered' %}<span class="badge rounded-pill bg-success">Entregue</span>
+                  {% elif deliv.status == 'pending' %}<span class="badge rounded-pill bg-danger">Com pendência</span>
+                  {% else %}<span class="badge rounded-pill bg-secondary">{{ deliv.get_status_display }}</span>{% endif %}
+                </td>
+                <td>
+                  {% if deliv.checklist_completed %}<i class="bi bi-check-circle-fill text-success"></i> Completo
+                  {% else %}<i class="bi bi-clock-history text-warning"></i> Pendente{% endif %}
+                </td>
+                <td>{{ deliv.responsible.username|default:"-" }}</td>
+                <td class="text-end">
+                  <a href="{% url 'backoffice:entregas_pdf' deliv.id %}" target="_blank" class="btn btn-outline-danger btn-sm" title="Baixar PDF">
+                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                  </a>
+                  <a href="{% url 'backoffice:entregas_detalhe' deliv.id %}" class="btn btn-outline-primary btn-sm" title="Editar Entrega">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" class="text-center">Nenhuma entrega cadastrada.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

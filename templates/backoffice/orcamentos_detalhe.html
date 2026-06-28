@@ -7,7 +7,10 @@
         <h6 class="mb-0">Orçamento: {{ estimate.number }}</h6>
         <div class="d-flex align-items-center gap-2">
             <a href="{% url 'backoffice:orcamentos_preview' estimate.id %}" target="_blank" class="btn btn-info btn-sm text-white">
-                <i class="bi bi-eye"></i> Preview Comercial
+                <i class="bi bi-eye"></i> Preview Web
+            </a>
+            <a href="{% url 'backoffice:orcamentos_pdf' estimate.id %}" target="_blank" class="btn btn-danger btn-sm text-white">
+                <i class="bi bi-file-earmark-pdf"></i> Baixar PDF
             </a>
             <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
                 {% csrf_token %}

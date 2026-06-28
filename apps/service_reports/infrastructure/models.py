@@ -111,6 +111,11 @@ class ProjectDelivery(TimeStampedModel):
     delivery_date = models.DateField(default=timezone.localdate)
     responsible = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='deliveries_managed')
     checklist_completed = models.BooleanField(default=False)
+    chk_parts_installed = models.BooleanField(default=False)
+    chk_finish_checked = models.BooleanField(default=False)
+    chk_cleaning_done = models.BooleanField(default=False)
+    chk_customer_oriented = models.BooleanField(default=False)
+    
     customer_accepted = models.BooleanField(default=False)
     pending_issues = models.TextField(blank=True)
     notes = models.TextField(blank=True)

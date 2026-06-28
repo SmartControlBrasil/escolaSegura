@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,6 +16,9 @@ from apps.service_reports.infrastructure.models import ServiceReport, ProjectDel
 from apps.finance.infrastructure.models import AccountReceivable, AccountPayable
 from apps.accounts.infrastructure.models import User
 from apps.agents.infrastructure.models import AtlasProspect, VirtualAssistantSession
+
+from django.template.loader import render_to_string
+import weasyprint
 
 @login_required
 def dashboard(request):
@@ -327,6 +331,24 @@ def orcamentos_preview(request, id):
     return render(request, 'backoffice/orcamentos_preview.html', context)
 
 @login_required
+def orcamentos_pdf(request, id):
+    estimate = get_object_or_404(Estimate, id=id)
+    org = Organization.objects.first()
+    context = {
+        'estimate': estimate,
+        'organization': org
+    }
+    
+    html_string = render_to_string('backoffice/orcamentos_preview.html', context)
+    pdf_file = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+    
+    log_activity(request, request.user, 'estimate_pdf_generated', obj=estimate)
+    
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="Orcamento_{estimate.number}.pdf"'
+    return response
+
+@login_required
 def vistorias(request):
     reports_list = ServiceReport.objects.all().order_by('-service_date')
     context = {
@@ -569,6 +591,11 @@ def entregas_detalhe(request, id):
     delivery = get_object_or_404(ProjectDelivery, id=id)
     if request.method == 'POST':
         delivery.checklist_completed = request.POST.get('checklist_completed') == 'on'
+        delivery.chk_parts_installed = request.POST.get('chk_parts_installed') == 'on'
+        delivery.chk_finish_checked = request.POST.get('chk_finish_checked') == 'on'
+        delivery.chk_cleaning_done = request.POST.get('chk_cleaning_done') == 'on'
+        delivery.chk_customer_oriented = request.POST.get('chk_customer_oriented') == 'on'
+        
         delivery.customer_accepted = request.POST.get('customer_accepted') == 'on'
         delivery.pending_issues = request.POST.get('pending_issues', delivery.pending_issues)
         delivery.notes = request.POST.get('notes', delivery.notes)
@@ -577,6 +604,34 @@ def entregas_detalhe(request, id):
         log_activity(request, request.user, 'delivery_updated', obj=delivery)
         return redirect('backoffice:entregas')
     return render(request, 'backoffice/entregas_detalhe.html', {'delivery': delivery})
+
+@login_required
+def entregas_preview(request, id):
+    delivery = get_object_or_404(ProjectDelivery, id=id)
+    org = Organization.objects.first()
+    context = {
+        'delivery': delivery,
+        'organization': org
+    }
+    return render(request, 'backoffice/entregas_preview.html', context)
+
+@login_required
+def entregas_pdf(request, id):
+    delivery = get_object_or_404(ProjectDelivery, id=id)
+    org = Organization.objects.first()
+    context = {
+        'delivery': delivery,
+        'organization': org
+    }
+    
+    html_string = render_to_string('backoffice/entregas_preview.html', context)
+    pdf_file = weasyprint.HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+    
+    log_activity(request, request.user, 'delivery_pdf_generated', obj=delivery)
+    
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="Relatorio_Entrega_{delivery.id}.pdf"'
+    return response
 
 # ==========================================
 # OBRAS / PROJETOS

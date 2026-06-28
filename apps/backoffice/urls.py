@@ -23,6 +23,7 @@ urlpatterns = [
     path('orcamentos/novo/', views.orcamentos_novo, name='orcamentos_novo'),
     path('orcamentos/<uuid:id>/', views.orcamentos_detalhe, name='orcamentos_detalhe'),
     path('orcamentos/<uuid:id>/preview/', views.orcamentos_preview, name='orcamentos_preview'),
+    path('orcamentos/<uuid:id>/pdf/', views.orcamentos_pdf, name='orcamentos_pdf'),
     
     # Vistorias
     path('vistorias/', views.vistorias, name='vistorias'),
@@ -33,6 +34,8 @@ urlpatterns = [
     path('entregas/', views.entregas, name='entregas'),
     path('entregas/nova/', views.entregas_novo, name='entregas_novo'),
     path('entregas/<uuid:id>/', views.entregas_detalhe, name='entregas_detalhe'),
+    path('entregas/<uuid:id>/preview/', views.entregas_preview, name='entregas_preview'),
+    path('entregas/<uuid:id>/pdf/', views.entregas_pdf, name='entregas_pdf'),
 
     # Obras / Projetos
     path('obras/', views.obras, name='obras'),

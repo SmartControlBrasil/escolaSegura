@@ -1,34 +1,90 @@
 {% extends 'backoffice/base.html' %}
+{% load static %}
 {% block content %}
 <div class="row">
   <div class="col-12 col-lg-8 mx-auto">
     <div class="card">
-      <div class="card-header py-3">
-        <h6 class="mb-0">Detalhes: Entrega: {{ delivery.name }}</h6>
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Detalhes da Entrega</h6>
+        <a href="{% url 'backoffice:entregas_pdf' delivery.id %}" target="_blank" class="btn btn-danger btn-sm"><i class="bi bi-file-earmark-pdf"></i> Baixar Relatório PDF</a>
       </div>
       <div class="card-body">
         <form method="post" action="{% url 'backoffice:entregas_detalhe' delivery.id %}">
-{% csrf_token %}
-          <div class="mb-3">
-            <label class="form-label">Data de Entrega</label>
-            <input type="date" name="delivery_date" class="form-control" value="{{ delivery.delivery_date|date:"Y-m-d" }}">
+          {% csrf_token %}
+          <div class="row g-3">
+            
+            <div class="col-md-6">
+                <label class="form-label">Status da Entrega</label>
+                <select name="status" class="form-select">
+                    <option value="in_progress" {% if delivery.status == 'in_progress' %}selected{% endif %}>Em andamento</option>
+                    <option value="delivered" {% if delivery.status == 'delivered' %}selected{% endif %}>Entregue Definitivo</option>
+                    <option value="pending" {% if delivery.status == 'pending' %}selected{% endif %}>Entregue com Pendências</option>
+                </select>
+            </div>
+            
+            <div class="col-12 mt-4">
+                <h6 class="fw-bold mb-3 border-bottom pb-2">Checklist Operacional</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-check form-switch mb-2">
+                          <input class="form-check-input" type="checkbox" role="switch" name="chk_parts_installed" id="chk_parts_installed" {% if delivery.chk_parts_installed %}checked{% endif %}>
+                          <label class="form-check-label" for="chk_parts_installed">Peças Instaladas na Obra</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                          <input class="form-check-input" type="checkbox" role="switch" name="chk_finish_checked" id="chk_finish_checked" {% if delivery.chk_finish_checked %}checked{% endif %}>
+                          <label class="form-check-label" for="chk_finish_checked">Acabamento e Polimento Conferidos</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check form-switch mb-2">
+                          <input class="form-check-input" type="checkbox" role="switch" name="chk_cleaning_done" id="chk_cleaning_done" {% if delivery.chk_cleaning_done %}checked{% endif %}>
+                          <label class="form-check-label" for="chk_cleaning_done">Limpeza do Ambiente Executada</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                          <input class="form-check-input" type="checkbox" role="switch" name="chk_customer_oriented" id="chk_customer_oriented" {% if delivery.chk_customer_oriented %}checked{% endif %}>
+                          <label class="form-check-label" for="chk_customer_oriented">Cliente Orientado sobre Manutenção</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="form-check mt-3 mb-2">
+                <input class="form-check-input" type="checkbox" name="checklist_completed" id="chk_completed" {% if delivery.checklist_completed %}checked{% endif %}>
+                <label class="form-check-label fw-bold" for="chk_completed">Marcar Check-list como Geral Completo</label>
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <label class="form-label text-danger">Pendências Registradas</label>
+              <textarea name="pending_issues" class="form-control" rows="2" placeholder="O que faltou entregar ou ajustar?">{{ delivery.pending_issues }}</textarea>
+            </div>
+            
+            <div class="col-12 mt-4">
+                <h6 class="fw-bold mb-3 border-bottom pb-2">Comprovação e Aceite</h6>
+                <div class="mb-3">
+                    <label class="form-label">Fotos de Evidência (Simulado)</label>
+                    <div class="d-flex gap-3">
+                        <img src="{% static 'site/images/projetos/projeto-1.jpg' %}" alt="Foto 1" class="img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;">
+                        <img src="{% static 'site/images/projetos/projeto-2.jpg' %}" alt="Foto 2" class="img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;">
+                        <div class="d-flex align-items-center justify-content-center bg-light border rounded" style="width: 120px; height: 120px; border-style: dashed !important;">
+                            <i class="bi bi-camera fs-3 text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="customer_accepted" id="chk_accepted" {% if delivery.customer_accepted %}checked{% endif %}>
+                  <label class="form-check-label fw-bold text-success" for="chk_accepted">Cliente aceitou e assinou fisicamente a entrega</label>
+                </div>
+            </div>
+
+            <div class="col-12 text-end">
+              <a href="{% url 'backoffice:entregas' %}" class="btn btn-secondary">Cancelar</a>
+              <button type="submit" class="btn btn-primary">Salvar Entrega</button>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Status</label>
-            <select name="status" class="form-select">
-              <option value="scheduled" {% if delivery.status == "scheduled" %}selected{% endif %}>Agendada</option>
-              <option value="delivered" {% if delivery.status == "delivered" %}selected{% endif %}>Entregue</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Observações</label>
-            <input type="text" name="notes" class="form-control" value="{{ delivery.notes }}">
-          </div>
-          <div class="text-end">
-            <a href="{% url 'backoffice:entregas' %}" class="btn btn-secondary">Voltar</a>
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-          </div>
-</form>
+        </form>
       </div>
     </div>
   </div>
