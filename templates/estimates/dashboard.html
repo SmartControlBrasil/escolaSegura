@@ -1,0 +1,29 @@
+{% extends 'app_base.html' %}
+{% block title %}Orçamentos{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Orçamentos e vistorias</h1>
+  <p>Central para iniciar contato, registrar fotos da obra pelo celular, levantar medidas e gerar propostas totalmente editáveis.</p>
+  <div class="toolbar"><a class="btn success" href="{% url 'estimates-builder' %}">+ Novo orçamento</a></div>
+</section>
+<div class="grid cards">
+  <div class="card"><div class="muted">Rascunhos</div><div class="metric">{{ draft_count }}</div></div>
+  <div class="card"><div class="muted">Em vistoria</div><div class="metric">{{ inspection_count }}</div></div>
+  <div class="card"><div class="muted">Enviados</div><div class="metric">{{ sent_count }}</div></div>
+  <div class="card"><div class="muted">Aprovados</div><div class="metric">{{ approved_count }}</div></div>
+</div>
+<div class="card">
+  <h2>Últimos orçamentos</h2>
+  <table class="table">
+    <thead><tr><th>Número</th><th>Cliente</th><th>Título</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody>
+      {% for estimate in recent_estimates %}
+      <tr>
+        <td>{{ estimate.number|default:estimate.id }}</td><td>{{ estimate.customer|default:'-' }}</td><td>{{ estimate.title }}</td><td><span class="badge">{{ estimate.get_status_display }}</span></td>
+        <td><a class="btn secondary" href="{% url 'estimates-builder-edit' estimate.id %}">Editar</a> <a class="btn brand" href="{% url 'estimates-mobile-inspection' estimate.id %}">Vistoria</a></td>
+      </tr>
+      {% empty %}<tr><td colspan="5">Nenhum orçamento ainda.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

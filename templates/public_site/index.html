@@ -1,0 +1,1227 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Início – Santander</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'public_site/image/01_intereal_thumbnail.png' %}">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'public_site/css/bootstrap.min.css' %}">
+  <!--CSS Plugins-->
+  <link rel="stylesheet" href="{% static 'public_site/css/plugin.css' %}">
+  <!--Custom CSS-->
+  <link rel="stylesheet" href="{% static 'public_site/css/style.css' %}">
+
+  <!-- Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+
+  <!-- Header Section Starts -->
+  <Header class="position-relative z-3">
+    <div class="header-top py-3">
+      <div class="container">
+        <div class="header-top-inner d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div class="header-contact">
+            <ul class="d-flex white flex-wrap">
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="tel:+33877554332"><i class="fa fa-phone me-2" aria-hidden="true"></i>+33 877 554 332</a></li>
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="mailto:info@website.com"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i>info@website.com</a></li>
+              <li class="small"><i class="fa fa-clock-o me-2" aria-hidden="true"></i>Mon - Fri: 9:00 - 18:30</li>
+            </ul>
+          </div>
+          <div class="social-links">
+            <ul class="d-flex gap-2">
+              <li><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="header-nav header-nav-menu" id="header-nav-menu">
+      <div class="container">
+        <div class="header-nav-inner border-top border-light py-3">
+          <div class="row gx-xl-5 align-items-center justify-content-between">
+            <div class="col-xl-2 col-md-3 col-6 order-1">
+              <div class="header-logo">
+                <a href="/"><img src="{% static 'public_site/image/logo.png' %}" alt="logo" class="w-100"></a>
+              </div>
+            </div>
+            <div class="col-xl-7 col-0 order-3 order-xl-2">
+              <div class="header-nav">
+                <div class="navbar-collapse " id="bs-example-navbar-collapse-1">
+                  <ul class="navbar-nav flex-row align-items-center justify-content-center" id="responsive-menu">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium active text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Início
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item active text-capitalize"
+                            href="/">Início 1</a></li>
+                        <li><a class="dropdown-item text-capitalize border-grey"
+                            href="/">Início 2</a></li>
+                        <li><a class="dropdown-item text-capitalize"
+                            href="/">Início 3</a></li>         
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text fw-medium text-uppercase" href="/sobre/">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Pages
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize" 
+                            href="team.html">Our Team</a></li>
+                        <li><a class="dropdown-item text-capitalize" 
+                            href="team-detail.html">Team Detail</a></li>    
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="career-list.html">Career</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="career-detail.html">Career Detail</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="faq.html">Faq</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="pricing.html">pricing</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="testimonial.html">Testimonial</a></li>
+                        <li><a class="dropdown-item text-capitalize"
+                            href="coming-soon.html">Coming Soon</a></li>
+                        <li><a class="dropdown-item  text-capitalize" 
+                            href="error.html">404Error</a></li>   
+                        <li><a class="dropdown-item  text-capitalize" 
+                            href="search.html">Search Result</a></li>   
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Serviços
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="/servicos/">Service List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="service-detail.html">Service Detail</a></li> 
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Projetos
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="/projetos/">Projet List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="project-detail.html">Projet Detail</a></li>    
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown ">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Notícias
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="/blog/">Notícias List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="blog-detail.html">Notícias Single</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text fw-medium text-uppercase" href="/contato/">Contato</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-4 col-0  order-2 order-xl-3">
+              <div class="header-icons d-none d-xl-block">
+                <ul class="d-flex align-items-center gap-4  justify-content-xl-end">
+                  <li><a class="position-relative" data-bs-toggle="modal" data-bs-target="#interealModal"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                  </a></li>
+                  <li><a href="consultation.html" class="btn-secondary">Get A Qoute</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div id="slicknav-mobile"></div>
+        </div>
+      </div>
+    </div>
+  </Header>
+  <!-- Header Section Ends -->
+
+  <!-- Banner Section Starts -->
+  <section class="banner p-0 position-relative">
+    <div class="container-fluid p-0">
+      <div class="banner-slider">
+        <div class="slide position-relative" style="background-image: url("{% static 'public_site/image/pexels-jvdm-1457842.jpg' %}");">
+          <div class="overlay"></div>
+          <div class="container white position-absolute start-50 translate-middle text-center">
+            <div class="banner-info w-xl-75 w-xxl-50 m-auto mb-2">
+              <h1 class="white">Transform Your Space into Timeless Beauty</h1>
+              <p class="mb-5 fst-italic" style="font-size: 18px;">Bespoke interiors crafted to reflect your personality and lifestyle.</p>
+              <a href="/contato/" class="btn-secondary bg-transparent border-2 border text-white border-white">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="slide position-relative" style="background-image: url("{% static 'public_site/image/apartment-with-pop-of-yellow-2021-08-26-15-43-11-utc.jpg' %}");">
+          <div class="overlay"></div>
+          <div class="container white position-absolute start-50 translate-middle text-center">
+            <div class="banner-info w-xl-75 w-xxl-50 m-auto mb-2">
+              <h1 class="white">Designing for Today, Building for Tomorrow</h1>
+              <p class="mb-5 fst-italic" style="font-size: 18px;">Eco-friendly materials. Smart design solutions. Responsible living.</p>
+              <a href="/contato/" class="btn-secondary bg-transparent border-2 border text-white border-white">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="slide position-relative" style="background-image: url("{% static 'public_site/image/bedroom-interior-design-3d-rendering-2021-08-26-18-15-32-utc1.jpg' %}");">
+          <div class="overlay"></div>
+          <div class="container white position-absolute start-50 translate-middle text-center">
+            <div class="banner-info w-xl-75 w-xxl-50 m-auto mb-2">
+              <h1 class="white">Your Dream Space, Designed & Delivered</h1>
+              <p class="mb-5 fst-italic" style="font-size: 18px;">From concept to completion — we handle every detail with care.</p>
+              <a href="/contato/" class="btn-secondary bg-transparent border-2 border text-white border-white">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="since-section bg-dark white d-flex align-items-center w-xl-75 position-absolute z-2 bottom-0 end-0 text-center text-md-start overflow-hidden">
+        <div class="container-fluid p-0">
+          <div class="row">
+            <div class="col-md-2 d-md-flex">
+              <div class="px-5 my-auto py-4 py-md-0">
+                <span class="h5 fw-semibold teko mb-0">Since 1990</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="p-5 bg-secondary">
+                <h4 class="white mb-0">Mármore, construction services</h4>
+              </div>
+            </div>
+            <div class="col-md-7 d-md-flex">
+              <div class="px-5 my-auto py-4 py-md-0">
+                <p class="mb-3">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla velit esse cillum  pariatur.</p>
+                <p class="mb-0">Excepteur sint occaecat velit esse cillum  cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Banner Section Ends -->
+
+  <!-- Empresa Section Starts -->
+  <section class="about position-relative z-0">
+    <div class="container pt-5">
+      <div class="about-inner border-dashed pb-6 mb-6 position-relative">
+        <span class="heading-clip">Empresa</span>
+        <div class="row gx-lg-5 gy-5 align-items-center">
+          <div class="col-lg-6">
+            <div class="about-left text-center text-lg-end">
+              <div class="about-info">
+                <h2 class="mb-3">We offer you professional <span class="secondary d-block">Interior design</span></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+              <div class="about-signature border-dashed mb-4 pb-4">
+                <img src="{% static 'public_site/image/signatures-download-clipart-29-e1743574209464.png' %}" alt="signature" class="w-25">
+                <span class="teko h6 primary d-block">Mark Mcguire, CEO</span>
+              </div>
+              <div class="about-btns">
+                <ul class="d-flex justify-content-between align-items-center">
+                  <li><a href="/sobre/" class="btn-primary">Saiba Mais</a></li>
+                  <li class="about-tel">
+                    <ul class="d-flex gap-3 align-items-center">
+                      <li><i class="fa fa-volume-control-phone text-center rounded-circle white bg-secondary" aria-hidden="true"></i></li>
+                      <li class="teko fw-medium primary h6 mb-0">
+                        Have any questions?
+                        <span class="d-block secondary h3 mb-0">+92 123 456 7890</span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="about-right p-5 pb-0">
+              <img src="{% static 'public_site/image/modern-composition-of-dining-room-interior-2022-12-07-04-28-22-utc.jpg' %}" alt="about img" class="w-100">
+            </div>
+            <div class="about-qoute p-4 bg-primary w-75 white position-relative" style="margin-top: -100px;">
+              <p class="ps-3 border-start border-4 border-secondary mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+                <span class="mb-0 h6 teko d-block mt-2">Stephen Lawson</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="partner-inner">
+        <div class="row gy-4 align-items-center">
+          <div class="col-lg-3">
+            <div class="partner-left p-3 border border-2 border-grey text-center text-lg-start">
+              <h4 class="mb-0"><span class="secondary">500+</span> our trusted client</h4>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="partner-right">
+              <div class="partner-slider">
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/3.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/4.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/5.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/6.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/3.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/4.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/5.jpg' %}" alt="partner-logo">
+                </div>
+                <div class="mx-3 d-flex align-items-center">
+                  <img src="{% static 'public_site/image/6.jpg' %}" alt="partner-logo">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Empresa Section Ends -->
+
+  <!-- Service Section Starts -->
+  <section class="service p-0">
+    <div class="service-title position-relative section-padding">
+      <div class="overlay"></div>
+      <div class="container position-relative">
+        <div class="service-title-inner text-center text-lg-start">
+          <div class="row align-items-center gy-4">
+            <div class="col-lg-6">
+              <div class="service-title-left white">
+                <h2 class="white">Solutions for every <span class="secondary">corner</span></h2>
+                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="service-title-right text-lg-end">
+                <a href="/servicos/" class="btn-primary">View All Serviços</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="service-body position-relative" style="margin-top: -70px;">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="service-box border border-2 bg-white border-grey text-center">
+              <div class="service-icon mb-4"><i class="fa fa-user-o border border-2 border-grey text-center secondary" aria-hidden="true"></i></div>
+              <div class="service-info">
+                <h3>Mármore</h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id rerum minima, nihil cupiditate culpa repellendus</p>
+                <a href="service-detail.html" class="btn-primary">Learn More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-box border border-2 bg-white border-grey text-center">
+              <div class="service-icon mb-4"><i class="fa fa-building-o border border-2 border-grey text-center secondary" aria-hidden="true"></i></div>
+              <div class="service-info">
+                <h3>Granito</h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id rerum minima, nihil cupiditate culpa repellendus</p>
+                <a href="service-detail.html" class="btn-primary">Learn More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="service-box border border-2 bg-white border-grey text-center">
+              <div class="service-icon mb-4"><i class="fa fa-pie-chart border border-2 border-grey text-center secondary" aria-hidden="true"></i></div>
+              <div class="service-info">
+                <h3>Silestone</h3>
+                <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id rerum minima, nihil cupiditate culpa repellendus</p>
+                <a href="service-detail.html" class="btn-primary">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Service Section Ends -->
+
+  <!-- Why Us Section Starts -->
+  <section class="why-us">
+    <div class="container">
+      <div class="why-us-inner position-relative pt-5">
+        <span class="heading-clip">Why Us</span>
+        <div class="row gx-lg-5 gy-5 align-items-center">
+          <div class="col-lg-6 order-lg-1 order-2">
+            <div class="why-us-left">
+              <div class="why-us-image me-lg-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="{% static 'public_site/image/luxury-interior-design-2021-10-21-02-43-57-utc.jpg' %}" alt="interiror">
+                  </div>
+                  <div class="col-md-6">
+                    <img src="{% static 'public_site/image/vintage-wooden-home-interior-design-2022-12-16-00-19-04-utc.jpg' %}" alt="interiror" class="mt-5">
+                  </div>
+                </div>
+              </div>
+              <div class="why-us-progressbar p-4 bg-primary w-md-75 ms-auto position-relative" style="margin-top: -100px;">
+                <ul>
+                  <li class="mb-4">
+                    <span class="teko h6 white">Idea & Concept</span>
+                    <div class="progress-bar-section mt-2">
+                      <div class="progress rounded-0 bg-white position-relative overflow-visible" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="height: 7px">
+                        <div class="progress-bar bg-secondary position-relative overflow-visible" style="width: 90%">
+                          <div class="percentage-wrapper position-absolute rounded-circle p-2 bg-secondary white d-flex align-items-center justify-content-between">
+                            <span class="progress-num" data-val="90"></span><Span>%</Span>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  </li>
+                  <li class="mb-4">
+                    <span class="teko h6 white">Mármore</span>
+                    <div class="progress-bar-section mt-2">
+                      <div class="progress rounded-0 bg-white position-relative overflow-visible" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="height: 7px">
+                        <div class="progress-bar bg-secondary position-relative overflow-visible" style="width: 94%">
+                          <div class="percentage-wrapper position-absolute rounded-circle p-2 bg-secondary white d-flex align-items-center justify-content-between">
+                            <span class="progress-num" data-val="94"></span><Span>%</Span>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  </li>
+                  <li>
+                    <span class="teko h6 white">Accuracy & Execution</span>
+                    <div class="progress-bar-section mt-2">
+                      <div class="progress rounded-0 bg-white position-relative overflow-visible" role="progressbar" aria-label="Basic example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="height: 7px">
+                        <div class="progress-bar bg-secondary position-relative overflow-visible" style="width: 85%">
+                          <div class="percentage-wrapper position-absolute rounded-circle p-2 bg-secondary white d-flex align-items-center justify-content-between">
+                            <span class="progress-num" data-val="85"></span><Span>%</Span>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-2 order-1">
+            <div class="why-us-right">
+            <div class="why-us-title mb-4 pb-4 border-dashed text-center text-lg-start">
+              <span class="teko h5 secondary">Why Choose Us</span>
+              <div class="sperator bg-secondary mt-1 mb-2" style="width: 40px; height: 2px;"></div>
+              <h2 class="mb-3">A Behind-the-Scenes Look at <span class="secondary">Our Agency</span></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div> 
+
+            <div class="feature-lisiting">
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <div class="feature-box p-3 border border-2 border-grey">
+                    <ul class="d-flex align-items-center">
+                      <li class="h3 mb-0 me-3 pe-3 border-end border-grey border-2">
+                        <i class="fa fa-building-o secondary" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <h5 class="mb-0">Fast Building</h5>
+                        <p class="mb-0 small">Lorem ipsum dolor sit amet, consectetur.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-box p-3 border border-2 border-grey">
+                    <ul class="d-flex align-items-center">
+                      <li class="h3 mb-0 me-3 pe-3 border-end border-grey border-2">
+                        <i class="fa fa-lightbulb-o secondary" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <h5 class="mb-0">Smart Execute</h5>
+                        <p class="mb-0 small">Lorem ipsum dolor sit amet, consectetur.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-box p-3 border border-2 border-grey">
+                    <ul class="d-flex align-items-center">
+                      <li class="h3 mb-0 me-3 pe-3 border-end border-grey border-2">
+                        <i class="fa fa-file-text-o secondary" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <h5 class="mb-0">Fine Planned</h5>
+                        <p class="mb-0 small">Lorem ipsum dolor sit amet, consectetur.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-box p-3 border border-2 border-grey">
+                    <ul class="d-flex align-items-center">
+                      <li class="h3 mb-0 me-3 pe-3 border-end border-grey border-2">
+                        <i class="fa fa-picture-o secondary" aria-hidden="true"></i>
+                      </li>
+                      <li>
+                        <h5 class="mb-0">Perfect Design</h5>
+                        <p class="mb-0 small">Lorem ipsum dolor sit amet, consectetur.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Why Us Section Starts -->
+
+  <!-- Process Section Starts -->
+  <section class="process bg-primary">
+    <div class="container">
+      <div class="process-inner position-relative ">
+        <span class="heading-clip z-0 w-100 text-center top-50 start-50 translate-middle">Work Process</span>
+        <div class="row gx-md-5 position-relative gy-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="process-box grey">
+              <span class="h1 mb-0">01</span>
+              <h3 class="white mt-3">Strategy and Planning</h3>
+              <p>An interior design agency can create content that showcases</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="process-box grey mt-md-5">
+              <span class="h1 mb-0">02</span>
+              <h3 class="white mt-3">Concept Design</h3>
+              <p>An interior design agency can create content that showcases</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="process-box grey">
+              <span class="h1 mb-0">03</span>
+              <h3 class="white mt-3">Design Development</h3>
+              <p>An interior design agency can create content that showcases</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Process Section Ends -->
+
+  <!-- Projetos Section Starts -->
+  <section class="project bg-secondarylight text-center text-lg-start">
+    <div class="container">
+      <div class="project-inner">
+        <div class="project-title mb-5">
+          <div class="row gx-md-5 gy-3 align-items-center">
+            <div class="col-lg-6">
+              <div class="project-title-left">
+                <h2 class="mb-0">Design Made Real Showcasing <span class="secondary">Latest Projetos</span></h2>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="project-title-right">
+                <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ratione impedit eaque excepturi expedita, non repellendus doloremque doloribus esse ullam ea reiciendis voluptatum nam facilis modi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-body mb-5">
+          <div class="d-md-flex overflow-hidden">
+            <div class="project-box m-1 position-relative" style="background-image: url("{% static 'public_site/image/modern-bathroom-interior-design-2022-12-16-11-57-19-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Interior & Furnishing Designing</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/interior-design-of-scandinavian-open-space-2022-12-07-04-19-53-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Mármore- Urban Living</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/vintage-wooden-home-interior-design-2022-12-16-00-19-04-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Exteriror Início Design</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+          </div>
+          <div class="d-md-flex overflow-hidden">
+            <div class="project-box m-1 position-relative" style="background-image: url("{% static 'public_site/image/interior-design-of-a-bedroom-2022-11-16-06-07-23-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Sanitary & Flooring Work</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/office-building-2022-12-15-19-40-07-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Mármore- Urban Living</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/interior-design-of-stylish-living-room-2022-12-07-04-16-53-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Exteriror Início Design</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-contact p-4 border border-2 border-white">
+          <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+              <div class="project-contact-left">
+                <h3>Ready To Start New Projetos With <span class="secondary">Santander</span>?</h3>
+                <p class="mb-0">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="project-contact-right text-lg-end">
+                <a href="/contato/" class="btn-primary">Contato</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Projetos Section Ends -->
+
+  <!-- Review Section Starts -->
+  <section class="review">
+    <div class="container">
+      <div class="review-inner pt-4 position-relative">
+        <span class="heading-clip text-center text-lg-start w-100">Reviews</span>
+        <div class="row gy-5 align-items-center">
+          <div class="col-lg-4">
+            <div class="review-left text-center text-lg-start">
+              <span class="teko h5 secondary">Our Testimonials</span>
+              <div class="sperator bg-secondary mt-1 mb-2" style="width: 40px; height: 2px;"></div>
+              <h2 class="mb-3">Check what they are <span class="secondary">talking about</span></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore.</p>
+              <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat, sunt in culpa qui.</p>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="review-right">
+              <div class="review-slider">
+                <div class="slide mx-3">
+                  <div class="review-box px-4 py-5 bg-primary border border-2 border-secondary text-center">
+                    <div class="review-icon h2 mb-3 white">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="review-detail white">
+                      <p class="fw-normal fst-italic" style="font-size: 18px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, libero impedit molestias voluptatum autem d.</p>
+                      <div class="sperator bg-secondary my-4 mx-auto" style="width: 40px; height: 2px;"></div>
+                      <p class="secondary"><span class="d-block h5 white teko mb-0">Christina Bell</span>Banker</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="slide mx-3">
+                  <div class="review-box px-4 py-5 bg-primary border border-2 border-secondary text-center">
+                    <div class="review-icon h2 white mb-3">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="review-detail white">
+                      <p class="fw-normal fst-italic" style="font-size: 18px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, libero impedit molestias voluptatum autem d.</p>
+                      <div class="sperator bg-secondary my-4 mx-auto" style="width: 40px; height: 2px;"></div>
+                      <p class="secondary"><span class="d-block h5 white teko mb-0">Kelvin Martin</span> Developer</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="slide mx-3">
+                  <div class="review-box px-4 py-5 bg-primary border border-2 border-secondary text-center">
+                    <div class="review-icon h2 white mb-3">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="review-detail white">
+                      <p class="fw-normal fst-italic" style="font-size: 18px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, libero impedit molestias voluptatum autem d.</p>
+                      <div class="sperator bg-secondary my-4 mx-auto" style="width: 40px; height: 2px;"></div>
+                      <p class="secondary"><span class="d-block h5 white teko mb-0">Nelson Kelly</span> Designer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Review Section Ends -->
+
+  <!-- Team Section Starts -->
+  <section class="teams">
+    <div class="container">
+      <div class="teams-inner">
+        <div class="teams-title position-relative pt-5 mb-5 text-center text-lg-start">
+          <span class="heading-clip">Our Team</span>
+          <div class="row align-items-center gy-3">
+            <div class="col-lg-6">
+              <div class="teams-title-left">
+                <h2 class="mb-0">Meet Our <span class="secondary">Expert Leadership</span></h2>
+                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="teams-title-right text-lg-end">
+                <a href="team.html" class="btn-primary">View All Leaders</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="teams-body">
+          <div class="row gy-4 gy-md-0">
+            <div class="col-lg-3 col-md-6">
+              <div class="teams-box p-2 border border-2 border-grey position-relative overflow-hidden">
+                <div class="teams-image">
+                  <img src="{% static 'public_site/image/female-entrepreneur-2021-08-29-03-28-29-utc.jpg' %}" alt="teams image">
+                </div>
+                <div class="overlay"></div>
+                <div class="teams-info position-absolute text-center mx-auto w-100 white">
+                  <h5 class="mb-0 white">Nelly Gongunk</h5>
+                  <span>Managing DIrector</span>
+                  <ul class="social-link mt-3 mb-5">
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-twitter"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-pinterest-p"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="teams-box p-2 border border-2 border-grey position-relative overflow-hidden mt-md-4">
+                <div class="teams-image">
+                  <img src="{% static 'public_site/image/photo-of-clever-male-lawyer-waits-for-client-outdo-2022-08-17-21-37-58-utc.jpg' %}" alt="teams image">
+                </div>
+                <div class="overlay"></div>
+                <div class="teams-info position-absolute text-center mx-auto w-100 white">
+                  <h5 class="mb-0 white">Ralph Waldo</h5>
+                  <span>Officer</span>
+                  <ul class="social-link mt-3 mb-5">
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-twitter"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-pinterest-p"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="teams-box p-2 border border-2 border-grey position-relative overflow-hidden">
+                <div class="teams-image">
+                  <img src="{% static 'public_site/image/smart-asian-business-woman-smiling-at-office-space-2022-11-18-09-57-02-utc-e1743574185157.jpg' %}" alt="teams image">
+                </div>
+                <div class="overlay"></div>
+                <div class="teams-info position-absolute text-center mx-auto w-100 white">
+                  <h5 class="mb-0 white">Natalia Ford</h5>
+                  <span>Architect</span>
+                  <ul class="social-link mt-3 mb-5">
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-twitter"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-pinterest-p"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="teams-box p-2 border border-2 border-grey position-relative overflow-hidden mt-md-4">
+                <div class="teams-image">
+                  <img src="{% static 'public_site/image/happy-mature-businessman-pointing-at-blank-noteboo-2022-11-17-08-47-48-utc.jpg' %}" alt="teams image">
+                </div>
+                <div class="overlay"></div>
+                <div class="teams-info position-absolute text-center mx-auto w-100 white">
+                  <h5 class="mb-0 white">Antonio Ulag</h5>
+                  <span>Architect </span>
+                  <ul class="social-link mt-3 mb-5">
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-twitter"></i></a></li>
+                    <li class="d-inline-block"><a href="#" class="rounded-circle d-block me-2 text-center"><i class="fa fa-pinterest-p"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Team Section Ends -->
+
+  <!-- Stat Section Starts -->
+  <section class="stat position-relative">
+    <div class="overlay bg-primary opacity-75"></div>
+    <div class="container position-relative">
+      <div class="stat-inner grey">
+        <div class="stat-title mb-4 pb-4 border-bottom border-2 border-light text-center text-lg-start">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="stat-title-left">
+                <h2 class="mb-0 white">Milestones that We Are Proud of <span class="secondary">Reaching</span></h2>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="stat-title-right">
+                <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-body text-center">
+          <ul class="d-flex justify-content-evenly flex-wrap gap-3">
+            <li>
+              <span class="h1">542+</span>
+              <span class="teko h4 d-block mt-1 mb-0">Successful Projetos Done</span>
+            </li>
+            <li>
+              <span class="h1">152+</span>
+              <span class="teko h4 d-block mt-1 mb-0">Delight Clients</span>
+            </li>
+            <li>
+              <span class="h1">105+</span>
+              <span class="teko h4 d-block mt-1 mb-0">Award Achivement</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Stat Section Ends -->
+
+  <!-- Start Projetos Section Starts -->
+  <section class="project-cta pb-0 position-relative z-1" style="margin-bottom: -96px;">
+    <div class="container">
+      <div class="project-cta-inner text-center w-lg-75 m-auto">
+        <span class="teko h5 secondary">Ready For a Projetos?</span>
+        <div class="sperator bg-secondary mt-1 mb-2 m-auto" style="width: 40px; height: 2px;"></div>
+        <h2 class="mb-2 w-lg-50 m-auto">Ready To Assist & Cast Your Impression With A <span class="secondary">Designs</span></h2>
+        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit,  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum..</p>
+        <a href="consultation.html" class="btn-primary">Start Projetos</a>
+
+        <div class="video-inline overflow-hidden mt-5 position-relative" data-fancybox data-type="iframe" data-src="https://www.youtube.com/embed/ok9MH86gRK4?si=0sAhGTa0-7lPYxHr" style="height: 500px;">
+          <img src="{% static 'public_site/image/modern-composition-of-dining-room-interior-2022-12-07-04-28-22-utc.jpg' %}" alt="thumnail" class="w-100">
+          <div class="overlay bg-primary opacity-25"></div>
+          <div class="play-icon position-absolute top-50 start-50 translate-middle">
+            <i class="fa fa-play white text-center border border-3 rounded-circle border-white" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Start Projetos Section Ends -->
+
+  <!-- Faq Section Starts -->
+  <section class="faq position-relative">
+    <div class="overlay bg-primary opacity-75"></div>
+    <div class="container position-relative">
+      <div class="faq-inner pt-8">
+        <div class="row align-items-center gx-lg-5 gy-5">
+          <div class="col-lg-6">
+            <div class="faq-left grey text-center text-lg-start">
+              <span class="teko h5 secondary white">Questions And Answers</span>
+              <div class="sperator bg-white mt-1 mb-2" style="width: 40px; height: 2px;"></div>
+              <h2 class="mb-3 white">Frequently Asked <span class="secondary">questions</span></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore. Excepteur sint occaecat cupidatat, sunt in culpa qui. elit, sed do eiusmod tempor ut cupidatat.</p>
+              <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="faq-right">
+              <div class="faq-accordion p-4 bg-secondarylight">
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item border-0 rounded-0 mb-1">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button rounded-0 shadow-none fw-normal popins text" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        We are a global family that values diversity.
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-4">
+                        <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item border-0 rounded-0 mb-1">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed rounded-0 shadow-none fw-normal popins text" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        We own and shape our future.
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-4">
+                        <strong>This is the second item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item border-0 rounded-0 mb-1">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed rounded-0 shadow-none fw-normal popins text" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                       Sed eget justo eget urna placerat dapibus non magna?
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-4">
+                        <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item border-0 rounded-0 mb-1">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed rounded-0 shadow-none fw-normal popins text" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Proin neque metus, pellentesque vitae cursus quis?
+                      </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-4">
+                        <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item border-0 rounded-0 mb-1">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed rounded-0 shadow-none fw-normal popins text" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                       We own and shape our future.
+                      </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-4">
+                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi laborum illo architecto? Deserunt voluptas maxime at reiciendis odio sed nesciunt a ut! Tempore rem ducimus illum quibusdam, rerum voluptates illo?</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Faq Section Ends -->
+
+  <!-- Notícias Section Starts -->
+  <section class="blog">
+    <div class="container">
+      <div class="blog-inner">
+        <div class="blog-title position-relative pt-5 mb-5 text-center text-lg-start">
+          <span class="heading-clip w-75">Our Articles</span>
+          <div class="row align-items-center gy-3">
+            <div class="col-lg-7">
+              <div class="blog-title-left">
+                <h2 class="mb-0">Sharing Our <span class="secondary">Knowledge and Passion</span> for Santander</h2>
+                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="blog-title-right text-lg-end">
+                <a href="/blog/" class="btn-primary">View All Articles</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-body">
+          <div class="row gy-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="blog-box border border-2 border-grey">
+                <div class="blog-image position-relative">
+                  <a href="blog-detail.html">
+                    <img src="{% static 'public_site/image/office-building-2022-12-15-19-40-07-utc.jpg' %}" alt="building">
+                    <div class="overlay"></div>
+                  </a>
+                </div>
+                <div class="blog-info p-4 text-center border-bottom border-grey">
+                  <h4 class="mb-2"><a href="blog-detail.html" class="secondary">Learn the right way to use wall sheet right now</a></h4>
+                  <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium ipsum delectu.</p>
+                </div>
+                <div class="blog-data px-4 py-3">
+                  <ul class="d-flex justify-content-center small">
+                    <li class="me-2 pe-2 border-end">February 28, 2025 </li>
+                    <li>No Comments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="blog-box border border-2 border-grey">
+                <div class="blog-image position-relative">
+                  <a href="blog-detail.html">
+                    <img src="{% static 'public_site/image/interior-design-of-a-bedroom-2022-11-16-06-07-23-utc.jpg' %}" alt="bedroom">
+                    <div class="overlay"></div>
+                  </a>
+                </div>
+                <div class="blog-info p-4 text-center border-bottom border-grey">
+                  <h4 class="mb-2"><a href="blog-detail.html" class="secondary">How to protect your damaged walls using DIY</a></h4>
+                  <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium ipsum delectu.</p>
+                </div>
+                <div class="blog-data px-4 py-3">
+                  <ul class="d-flex justify-content-center small">
+                    <li class="me-2 pe-2 border-end">February 28, 2025 </li>
+                    <li>No Comments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="blog-box border border-2 border-grey">
+                <div class="blog-image position-relative">
+                  <a href="blog-detail.html">
+                    <img src="{% static 'public_site/image/office-building-2022-12-15-19-37-04-utc1.jpg' %}" alt="building">
+                    <div class="overlay"></div>
+                  </a>
+                </div>
+                <div class="blog-info p-4 text-center border-bottom border-grey">
+                  <h4 class="mb-2"><a href="blog-detail.html" class="secondary">More off this hello salamander lied much over tightly</a></h4>
+                  <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium ipsum delectu.</p>
+                </div>
+                <div class="blog-data px-4 py-3">
+                  <ul class="d-flex justify-content-center small">
+                    <li class="me-2 pe-2 border-end">February 28, 2025 </li>
+                    <li>No Comments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Notícias Section Ends -->
+
+  <!-- Appointment Section Starts -->
+  <div class="appointment py-5 bg-secondarylight">
+    <div class="container">
+      <div class="appointment-inner">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-3 col-md-4">
+            <div class="appointment-left">
+              <ul class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                <li class="me-3 pe-3 border-end border-2 border-white"><img src="{% static 'public_site/image/chat.png' %}" alt="chat" style="height: 44px; width: 44px;"></li>
+                <li class="teko">
+                  <span class="h6 primary mb-0">Book Your Schedule</span>
+                  <span class="d-block h3 mb-0">666 888 0000</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-8">
+            <div class="appointment-center">
+              <p class="mb-0">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="appointment-right text-center text-lg-end">
+              <a href="consultation.html" class="btn-primary">Book An Appointment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Appointment Section Ends -->
+
+  <!-- Footer Section Starts -->
+  <footer class="section-padding position-relative pb-5">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+      <div class="footer-inner white">
+        <div class="footer-top pb-5 mb-5 border-bottom border-2 border-light">
+          <div class="row align-items-center gx-lg-5 gy-4">
+            <div class="col-lg-3 col-md-4">
+              <div class="footer-top-left">
+                <img src="{% static 'public_site/image/logo.png' %}" alt="footer logo" class="w-100">
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <div class="footer-top-right">
+                <p class="white mb-0 h6 fw-normal fst-italic">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-middle mb-5  pb-5 border-bottom border-light text-center text-md-start">
+          <div class="row gx-lg-5 gy-5">
+            <div class="col-lg-4">
+              <div class="footer-info">
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</p>
+                <p class="mb-4">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui reprehenderit dolor officia. </p>
+                <div class="footer-socials mb-4">
+                  <ul class="d-flex gap-1 my-2 justify-content-center justify-content-md-start">
+                    <li><a href=""><i class="fa fa-facebook bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-linkedin bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-google-plus bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                  </ul>
+                </div>
+                <div class="contact-info">
+                  <div class="mb-3">
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
+                      <li>256 Elizaberth Ave, CA, 90025</li>
+                    </ul>
+                  </div>
+                  <div class="mb-3">
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
+                      <li>+569 2316 2156</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
+                      <li>info@intereal.com</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="quick-links">
+                <h4 class="white mb-2">Quick Link</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <ul class="d-flex flex-column gap-3">
+                  <li><a href="/sobre/">Empresa</a></li>
+                  <li><a href="service.html">Serviços</a></li>
+                  <li><a href="service.html">Attorneys</a></li>
+                  <li><a href="/blog/">News & Articles</a></li>
+                  <li><a href="">Policies</a></li>
+                  <li><a href="/contato/">Contato</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="services">
+                <h4 class="white mb-2">Serviços</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <ul class="d-flex flex-column gap-3">
+                  <li><a href="service.html">Perfect Planning</a></li>
+                  <li><a href="service.html">Professional Design</a></li>
+                  <li><a href="service.html">Best Interior</a></li>
+                  <li><a href="service.html">Furniture Design</a></li>
+                  <li><a href="service.html">Complete Decoration</a></li>
+                  <li><a href="service.html">Terms & Conditions</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="services">
+                <h4 class="white mb-2">Get interesting news</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo ea dolorum.</p>
+                <div class="subscribe">
+                  <input type="email" placeholder="Email" class="mb-2">
+                  <a href="" class="btn-primary">Subscribe</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom text-center">
+          <p class="mb-0"> &copy;2025 Santander. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Footer Section Ends -->
+
+  <!--Back-to-top Button start-->
+  <div id="back-to-top">
+    <a href="#" class="bg-secondary position-relative align-items-center rounded-circle d-block"></a>
+  </div>
+  <!--Back-to-top Button end-->
+
+  <!-- Santander Info Starts -->
+  <div class="modal fade intereal-info-modal" id="interealModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog  h-100 my-0 rounded-0 me-0 modal-sm">
+      <div class="modal-content h-100 rounded-0">
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close me-4" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times bg-secondary text-center white" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body mt-5 mx-3">
+          <div class="logo mb-4">
+            <img src="{% static 'public_site/image/logo1.png' %}" alt="logo">
+          </div>
+          <div class="info mb-4">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="contact-info mb-4">
+            <div class="mb-2 pb-2 border-bottom border-grey">
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
+                <li>256 Elizaberth Ave, CA, 90025</li>
+              </ul>
+            </div>
+            <div class="mb-2 pb-2 border-bottom border-grey">
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
+                <li>+569 2316 2156</li>
+              </ul>
+            </div>
+            <div>
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
+                <li>info@intereal.com</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-socials mb-4">
+            <ul class="d-flex gap-1 my-2">
+              <li><a href=""><i class="fa fa-facebook bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Santander Info Ends -->
+
+  <script src="{% static 'public_site/js/jquery-3.7.1.min.js' %}"></script>
+  <script src="{% static 'public_site/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'public_site/js/plugin.js' %}"></script>
+  <script src="{% static 'public_site/js/main.js' %}"></script>
+</body>
+</html>

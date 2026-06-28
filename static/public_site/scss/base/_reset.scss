@@ -1,0 +1,62 @@
+/* Remove default margins and paddings */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove text decoration for links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Set default font for body */
+body {
+  $font-family-base: 'Poppins', Arial, sans-serif;
+  $font-size-base: 15px;
+  $line-height-base: 1.5;
+}
+
+/* Reset images and media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: inline-block;
+  width: 100%;
+}
+
+/* Reset form elements */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+// Slick Slider
+.slick-track {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+    .modal-sm {
+        --bs-modal-width: 350px;
+    }
+  }    

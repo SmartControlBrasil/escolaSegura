@@ -1,0 +1,484 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projetos - Santander</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'public_site/image/01_intereal_thumbnail.png' %}">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'public_site/css/bootstrap.min.css' %}">
+  <!--CSS Plugins-->
+  <link rel="stylesheet" href="{% static 'public_site/css/plugin.css' %}">
+  <!--Custom CSS-->
+  <link rel="stylesheet" href="{% static 'public_site/css/style.css' %}">
+
+  <!-- Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+
+  <!-- Header Section Starts -->
+  <Header class="position-relative z-3">
+    <div class="header-top py-3">
+      <div class="container">
+        <div class="header-top-inner d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div class="header-contact">
+            <ul class="d-flex white flex-wrap">
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="tel:+33877554332"><i class="fa fa-phone me-2" aria-hidden="true"></i>+33 877 554 332</a></li>
+              <li class="me-3 pe-3 border-end border-lightgrey small"><a href="mailto:info@website.com"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i>info@website.com</a></li>
+              <li class="small"><i class="fa fa-clock-o me-2" aria-hidden="true"></i>Mon - Fri: 9:00 - 18:30</li>
+            </ul>
+          </div>
+          <div class="social-links">
+            <ul class="d-flex gap-2">
+              <li><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="header-nav header-nav-menu" id="header-nav-menu">
+      <div class="container">
+        <div class="header-nav-inner border-top border-light py-3">
+          <div class="row gx-xl-5 align-items-center justify-content-between">
+            <div class="col-xl-2 col-md-3 col-6 order-1">
+              <div class="header-logo">
+                <a href="/"><img src="{% static 'public_site/image/logo.png' %}" alt="logo" class="w-100"></a>
+              </div>
+            </div>
+            <div class="col-xl-7 col-0 order-3 order-xl-2">
+              <div class="header-nav">
+                <div class="navbar-collapse " id="bs-example-navbar-collapse-1">
+                  <ul class="navbar-nav flex-row align-items-center justify-content-center" id="responsive-menu">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Início
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize"
+                            href="/">Início 1</a></li>
+                        <li><a class="dropdown-item text-capitalize border-grey"
+                            href="/">Início 2</a></li>
+                        <li><a class="dropdown-item text-capitalize"
+                            href="/">Início 3</a></li>         
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text fw-medium text-uppercase" href="/sobre/">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Pages
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize" 
+                            href="team.html">Our Team</a></li>
+                        <li><a class="dropdown-item text-capitalize" 
+                            href="team-detail.html">Team Detail</a></li>    
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="career-list.html">Career</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="career-detail.html">Career Detail</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="faq.html">Faq</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="pricing.html">pricing</a></li>
+                        <li><a class="dropdown-item  text-capitalize"
+                            href="testimonial.html">Testimonial</a></li>
+                        <li><a class="dropdown-item text-capitalize"
+                            href="coming-soon.html">Coming Soon</a></li>
+                        <li><a class="dropdown-item  text-capitalize" 
+                            href="error.html">404Error</a></li>   
+                        <li><a class="dropdown-item  text-capitalize" 
+                            href="search.html">Search Result</a></li>   
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Serviços
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="/servicos/">Service List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="service-detail.html">Service Detail</a></li> 
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase active" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Projetos
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0 active"
+                            href="/projetos/">Projet List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="project-detail.html">Projet Detail</a></li>    
+                      </ul>
+                    </li>
+                    <li class="nav-item dropdown ">
+                      <a class="nav-link dropdown-toggle text fw-medium text-uppercase" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Notícias
+                      </a>
+                      <ul class="dropdown-menu bg-lightgrey p-0 rounded-0 border-0">
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="/blog/">Notícias List</a></li>
+                        <li><a class="dropdown-item text-capitalize black border-0"
+                            href="blog-detail.html">Notícias Single</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text fw-medium text-uppercase" href="/contato/">Contato</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-4 col-0  order-2 order-xl-3">
+              <div class="header-icons d-none d-xl-block">
+                <ul class="d-flex align-items-center gap-4  justify-content-xl-end">
+                  <li><a class="position-relative" data-bs-toggle="modal" data-bs-target="#interealModal"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                  </a></li>
+                  <li><a href="consultation.html" class="btn-secondary">Get A Qoute</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div id="slicknav-mobile"></div>
+        </div>
+      </div>
+    </div>
+  </Header>
+  <!-- Header Section Ends -->
+
+  <!-- Breadcrumb Section Starts -->
+  <section class="breadcrumb position-relative mb-0">
+    <div class="overlay"></div>
+    <div class="container position-absolute top-50 start-50 translate-middle text-center">
+      <div class="breadcrumb-inner mt-8">
+        <h2 class="grey mb-0">Projetos Lists</h2>
+      </div>
+    </div>
+  </section>
+  <!-- Breadcrumb Section Ends -->
+
+  <!-- Projetos Section Starts -->
+  <section class="project text-center text-lg-start">
+    <div class="container">
+      <div class="project-inner">
+        <div class="project-title mb-5">
+          <div class="row gx-md-5 gy-3 align-items-center">
+            <div class="col-lg-6">
+              <div class="project-title-left">
+                <h2 class="mb-0">Design Made Real Showcasing <span class="secondary">Latest Projetos</span></h2>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="project-title-right">
+                <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ratione impedit eaque excepturi expedita, non repellendus doloremque doloribus esse ullam ea reiciendis voluptatum nam facilis modi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-body mb-5 pb-5 border-dashed">
+          <div class="d-md-flex overflow-hidden">
+            <div class="project-box m-1 position-relative" style="background-image: url("{% static 'public_site/image/modern-bathroom-interior-design-2022-12-16-11-57-19-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Interior & Furnishing Designing</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/interior-design-of-scandinavian-open-space-2022-12-07-04-19-53-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Mármore- Urban Living</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/vintage-wooden-home-interior-design-2022-12-16-00-19-04-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Exteriror Início Design</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+          </div>
+          <div class="d-md-flex overflow-hidden">
+            <div class="project-box m-1 position-relative" style="background-image: url("{% static 'public_site/image/interior-design-of-a-bedroom-2022-11-16-06-07-23-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Sanitary & Flooring Work</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/office-building-2022-12-15-19-40-07-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Mármore- Urban Living</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/interior-design-of-stylish-living-room-2022-12-07-04-16-53-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Exteriror Início Design</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+          </div>
+          <div class="d-md-flex overflow-hidden">
+            <div class="project-box m-1 position-relative" style="background-image: url("{% static 'public_site/image/bedroom-interior-design-3d-rendering-2021-08-26-18-15-32-utc1.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Sanitary & Flooring Work</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/apartment-with-pop-of-yellow-2021-08-26-15-43-11-utc.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Mármore- Urban Living</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+            <div class="project-box m-1" style="background-image: url("{% static 'public_site/image/office-building-2022-12-15-19-37-04-utc1.jpg' %}");">
+              <div class="overlay"></div>
+              <div class="project-info position-relative mt-auto text-center w-100 mb-4">
+                <h4 class="white">Exteriror Início Design</h4>
+                <a href="project-detail.html" class="btn-secondary bg-transparent border-2 border text-white border-white mb-2">View Projetos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-contact p-4 border border-2 border-secondarylight">
+          <div class="row align-items-center gy-4">
+            <div class="col-lg-7">
+              <div class="project-contact-left">
+                <h3>Ready To Start New Projetos With <span class="secondary">Santander</span>?</h3>
+                <p class="mb-0">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="project-contact-right text-lg-end">
+                <a href="/contato/" class="btn-primary">Contato</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Projetos Section Ends -->
+
+  <!-- Appointment Section Starts -->
+  <div class="appointment py-5 bg-secondarylight">
+    <div class="container">
+      <div class="appointment-inner">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-3 col-md-4">
+            <div class="appointment-left">
+              <ul class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                <li class="me-3 pe-3 border-end border-2 border-white"><img src="{% static 'public_site/image/chat.png' %}" alt="chat" style="height: 44px; width: 44px;"></li>
+                <li class="teko">
+                  <span class="h6 primary mb-0">Book Your Schedule</span>
+                  <span class="d-block h3 mb-0">666 888 0000</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-8">
+            <div class="appointment-center">
+              <p class="mb-0">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="appointment-right text-center text-lg-end">
+              <a href="consultation.html" class="btn-primary">Book An Appointment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Appointment Section Ends -->
+
+  <!-- Footer Section Starts -->
+  <footer class="section-padding position-relative pb-5">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+      <div class="footer-inner white">
+        <div class="footer-top pb-5 mb-5 border-bottom border-2 border-light">
+          <div class="row align-items-center gx-lg-5 gy-4">
+            <div class="col-lg-3 col-md-4">
+              <div class="footer-top-left">
+                <img src="{% static 'public_site/image/logo.png' %}" alt="footer logo" class="w-100">
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <div class="footer-top-right">
+                <p class="white mb-0 h6 fw-normal fst-italic">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporatu incididunt ut labore et dolore magna aliqua.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-middle mb-5  pb-5 border-bottom border-light text-center text-md-start">
+          <div class="row gx-lg-5 gy-5">
+            <div class="col-lg-4">
+              <div class="footer-info">
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</p>
+                <p class="mb-4">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui reprehenderit dolor officia. </p>
+                <div class="footer-socials mb-4">
+                  <ul class="d-flex gap-1 my-2 justify-content-center justify-content-md-start">
+                    <li><a href=""><i class="fa fa-facebook bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-twitter bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-linkedin bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                    <li><a href=""><i class="fa fa-google-plus bg-white bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+                  </ul>
+                </div>
+                <div class="contact-info">
+                  <div class="mb-3">
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
+                      <li>256 Elizaberth Ave, CA, 90025</li>
+                    </ul>
+                  </div>
+                  <div class="mb-3">
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
+                      <li>+569 2316 2156</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="align-items-center d-flex gap-2 justify-content-center justify-content-md-start">
+                      <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
+                      <li>info@intereal.com</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="quick-links">
+                <h4 class="white mb-2">Quick Link</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <ul class="d-flex flex-column gap-3">
+                  <li><a href="/sobre/">Empresa</a></li>
+                  <li><a href="service.html">Serviços</a></li>
+                  <li><a href="service.html">Attorneys</a></li>
+                  <li><a href="/blog/">News & Articles</a></li>
+                  <li><a href="">Policies</a></li>
+                  <li><a href="/contato/">Contato</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="services">
+                <h4 class="white mb-2">Serviços</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <ul class="d-flex flex-column gap-3">
+                  <li><a href="service.html">Perfect Planning</a></li>
+                  <li><a href="service.html">Professional Design</a></li>
+                  <li><a href="service.html">Best Interior</a></li>
+                  <li><a href="service.html">Furniture Design</a></li>
+                  <li><a href="service.html">Complete Decoration</a></li>
+                  <li><a href="service.html">Terms & Conditions</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="services">
+                <h4 class="white mb-2">Get interesting news</h4>
+                <div class="border-bottom border-white w-25 mb-4 m-auto ms-md-1"></div>
+                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo ea dolorum.</p>
+                <div class="subscribe">
+                  <input type="email" placeholder="Email" class="mb-2">
+                  <a href="" class="btn-primary">Subscribe</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom text-center">
+          <p class="mb-0"> &copy;2025 Santander. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Footer Section Ends -->
+
+  <!--Back-to-top Button start-->
+  <div id="back-to-top">
+    <a href="#" class="bg-secondary position-relative align-items-center rounded-circle d-block"></a>
+  </div>
+  <!--Back-to-top Button end-->
+
+  <!-- Santander Info Starts -->
+  <div class="modal fade intereal-info-modal" id="interealModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog  h-100 my-0 rounded-0 me-0 modal-sm">
+      <div class="modal-content h-100 rounded-0">
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close me-4" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times bg-secondary text-center white" aria-hidden="true"></i></button>
+        </div>
+        <div class="modal-body mt-5 mx-3">
+          <div class="logo mb-4">
+            <img src="{% static 'public_site/image/logo1.png' %}" alt="logo">
+          </div>
+          <div class="info mb-4">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="mb-0">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="contact-info mb-4">
+            <div class="mb-2 pb-2 border-bottom border-grey">
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-map-marker me-2" aria-hidden="true"></i></li>
+                <li>256 Elizaberth Ave, CA, 90025</li>
+              </ul>
+            </div>
+            <div class="mb-2 pb-2 border-bottom border-grey">
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-phone me-2" aria-hidden="true"></i></li>
+                <li>+569 2316 2156</li>
+              </ul>
+            </div>
+            <div>
+              <ul class="align-items-center d-flex gap-2">
+                <li class="h5 mb-0"><i class="fa fa-envelope-o me-2" aria-hidden="true"></i></li>
+                <li>info@intereal.com</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-socials mb-4">
+            <ul class="d-flex gap-1 my-2">
+              <li><a href=""><i class="fa fa-facebook bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-twitter bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-linkedin bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+              <li><a href=""><i class="fa fa-google-plus bg-primary bg-opacity-25 rounded-circle text-center" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Santander Info Ends -->
+
+  <script src="{% static 'public_site/js/jquery-3.7.1.min.js' %}"></script>
+  <script src="{% static 'public_site/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'public_site/js/plugin.js' %}"></script>
+  <script src="{% static 'public_site/js/main.js' %}"></script>
+</body>
+</html>

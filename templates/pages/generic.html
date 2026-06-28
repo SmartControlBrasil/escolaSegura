@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.seo_title|default:page.title }}</title>
+    <meta name="description" content="{{ page.seo_description }}">
+</head>
+<body>
+    {{ page.html|safe }}
+</body>
+</html>

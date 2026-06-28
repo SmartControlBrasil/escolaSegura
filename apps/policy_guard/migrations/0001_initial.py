@@ -1,0 +1,13 @@
+import uuid
+from django.db import migrations, models
+import django.db.models.deletion
+
+class Migration(migrations.Migration):
+    initial = True
+    dependencies = [('customers','0001_initial')]
+    operations = [
+        migrations.CreateModel(name='DataProcessingRecord', fields=[('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),('created_at', models.DateTimeField(auto_now_add=True)),('updated_at', models.DateTimeField(auto_now=True)),('process_name', models.CharField(max_length=180)),('legal_basis', models.CharField(max_length=120)),('data_categories', models.JSONField(blank=True, default=list)),('purpose', models.TextField()),('retention_days', models.PositiveIntegerField(default=365)),('owner', models.CharField(blank=True, max_length=160)),('is_active', models.BooleanField(default=True))]),
+        migrations.CreateModel(name='PolicyCheckRun', fields=[('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),('created_at', models.DateTimeField(auto_now_add=True)),('updated_at', models.DateTimeField(auto_now=True)),('name', models.CharField(max_length=180)),('status', models.CharField(default='pending', max_length=30)),('findings', models.JSONField(blank=True, default=list)),('score', models.PositiveSmallIntegerField(default=0))]),
+        migrations.CreateModel(name='SecurityIncident', fields=[('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),('created_at', models.DateTimeField(auto_now_add=True)),('updated_at', models.DateTimeField(auto_now=True)),('title', models.CharField(max_length=180)),('severity', models.CharField(choices=[('low','Baixa'),('medium','Média'),('high','Alta'),('critical','Crítica')], default='low', max_length=20)),('description', models.TextField()),('status', models.CharField(default='open', max_length=30)),('detected_at', models.DateTimeField(blank=True, null=True)),('closed_at', models.DateTimeField(blank=True, null=True)),('mitigation', models.TextField(blank=True))]),
+        migrations.CreateModel(name='ConsentRecord', fields=[('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),('created_at', models.DateTimeField(auto_now_add=True)),('updated_at', models.DateTimeField(auto_now=True)),('subject_email', models.EmailField(blank=True, max_length=254)),('channel', models.CharField(default='web', max_length=60)),('purpose', models.CharField(max_length=180)),('granted', models.BooleanField(default=False)),('evidence', models.JSONField(blank=True, default=dict)),('customer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='customers.customer'))]),
+    ]

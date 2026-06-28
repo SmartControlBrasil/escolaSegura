@@ -1,0 +1,50 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Orçamentos de Marmoraria</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Número</th>
+            <th>Título/Projeto</th>
+            <th>Cliente</th>
+            <th>Valor Total</th>
+            <th>Data de Criação</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for estimate in estimates %}
+          <tr>
+            <td><code>{{ estimate.number }}</code></td>
+            <td><strong>{{ estimate.title }}</strong></td>
+            <td>{{ estimate.customer.name }}</td>
+            <td>R$ {{ estimate.total_amount }}</td>
+            <td>{{ estimate.created_at|date:"d/m/Y H:i" }}</td>
+            <td>
+              {% if estimate.status == 'approved' %}
+                <span class="badge rounded-pill bg-success">Aprovado</span>
+              {% elif estimate.status == 'rejected' %}
+                <span class="badge rounded-pill bg-danger">Rejeitado</span>
+              {% elif estimate.status == 'sent' %}
+                <span class="badge rounded-pill bg-info">Enviado</span>
+              {% else %}
+                <span class="badge rounded-pill bg-warning text-dark">{{ estimate.get_status_display }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">Nenhum orçamento cadastrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

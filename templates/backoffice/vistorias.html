@@ -1,0 +1,48 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Relatórios de Vistoria / Medição Técnica</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Número</th>
+            <th>Título da Vistoria</th>
+            <th>Cliente</th>
+            <th>Orçamento Relacionado</th>
+            <th>Técnico</th>
+            <th>Data do Serviço</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for report in reports %}
+          <tr>
+            <td><code>{{ report.number }}</code></td>
+            <td><strong>{{ report.title }}</strong></td>
+            <td>{{ report.customer.name }}</td>
+            <td>{{ report.estimate.number|default:"-" }}</td>
+            <td>{{ report.technician_name }}</td>
+            <td>{{ report.service_date|date:"d/m/Y" }}</td>
+            <td>
+              {% if report.status == 'completed' %}
+                <span class="badge rounded-pill bg-success">Concluído</span>
+              {% else %}
+                <span class="badge rounded-pill bg-warning text-dark">{{ report.get_status_display }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center">Nenhuma vistoria técnica registrada.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,255 @@
+@import '../abstracts/variables';
+
+
+// Colors
+.primary {color: $primary-color;}
+.secondary{color: $secondary-color;}
+.text {color: $text-color;}
+.white {color: $white-color;}
+.grey{color: $grey-color;}
+.secondarylight{color: $background-color1;}
+
+
+// Bacground Color
+.bg-primary {background-color: $primary-color !important;}
+.bg-secondary {background-color: $secondary-color !important;}
+.bg-dark {background-color: $dark-color !important;}
+.bg-secondarylight {background-color: $background-color1 ;}
+.bg-grey{background-color: $grey-color !important;}
+
+
+// Border
+.border-lightgrey{border-color: $border-grey !important;}
+.border-light{border-color: $border-light !important;}
+.border-secondary {border-color: $secondary-color !important}
+.border-dashed {border-bottom: 2px dashed $grey-color !important}
+.border-dash {border-style: dashed !important;}
+.border-dashed-end {border-right: 2px dashed $grey-color !important}
+.border-grey {border-color: $grey-color !important;}
+.border-secondarylight {border-color: $background-color1 !important;}
+
+
+/* ---------------- PADDING ---------------- */
+.p-6 { padding: 4rem !important; }
+.p-7 { padding: 5rem !important; }
+.p-8 { padding: 6rem !important; }
+.p-9 { padding: 7rem !important; }
+.p-10 { padding: 8rem !important; }
+
+/* Padding Top */
+.pt-6, .py-6 { padding-top: 4rem !important; }
+.pt-7, .py-7 { padding-top: 5rem !important; }
+.pt-8, .py-8 { padding-top: 6rem !important; }
+.pt-9, .py-9 { padding-top: 7rem !important; }
+.pt-10, .py-10 { padding-top: 8rem !important; }
+
+/* Padding Bottom */
+.pb-6, .py-6 { padding-bottom: 4rem !important; }
+.pb-7, .py-7 { padding-bottom: 5rem !important; }
+.pb-8, .py-8 { padding-bottom: 6rem !important; }
+.pb-9, .py-9 { padding-bottom: 7rem !important; }
+.pb-10, .py-10 { padding-bottom: 8rem !important; }
+
+/* Padding Start */
+.ps-6, .px-6 { padding-left: 4rem !important; }
+.ps-7, .px-7 { padding-left: 5rem !important; }
+.ps-8, .px-8 { padding-left: 6rem !important; }
+.ps-9, .px-9 { padding-left: 7rem !important; }
+.ps-10, .px-10 { padding-left: 8rem !important; }
+
+/* Padding End */
+.pe-6, .px-6 { padding-right: 4rem !important; }
+.pe-7, .px-7 { padding-right: 5rem !important; }
+.pe-8, .px-8 { padding-right: 6rem !important; }
+.pe-9, .px-9 { padding-right: 7rem !important; }
+.pe-10, .px-10 { padding-right: 8rem !important; }
+
+/* ---------------- MARGIN ---------------- */
+.m-6 { margin: 4rem !important; }
+.m-7 { margin: 5rem !important; }
+.m-8 { margin: 6rem !important; }
+.m-9 { margin: 7rem !important; }
+.m-10 { margin: 8rem !important; }
+
+/* Margin Top */
+.mt-6, .my-6 { margin-top: 4rem !important; }
+.mt-7, .my-7 { margin-top: 5rem !important; }
+.mt-8, .my-8 { margin-top: 6rem !important; }
+.mt-9, .my-9 { margin-top: 7rem !important; }
+.mt-10, .my-10 { margin-top: 8rem !important; }
+
+/* Margin Bottom */
+.mb-6, .my-6 { margin-bottom: 4rem !important; }
+.mb-7, .my-7 { margin-bottom: 5rem !important; }
+.mb-8, .my-8 { margin-bottom: 6rem !important; }
+.mb-9, .my-9 { margin-bottom: 7rem !important; }
+.mb-10, .my-10 { margin-bottom: 8rem !important; }
+
+/* Margin Start */
+.ms-6, .mx-6 { margin-left: 4rem !important; }
+.ms-7, .mx-7 { margin-left: 5rem !important; }
+.ms-8, .mx-8 { margin-left: 6rem !important; }
+.ms-9, .mx-9 { margin-left: 7rem !important; }
+.ms-10, .mx-10 { margin-left: 8rem !important; }
+
+/* Margin Start */
+.me-6, .mx-6 { margin-right: 4rem !important; }
+.me-7, .mx-7 { margin-right: 5rem !important; }
+.me-8, .mx-8 { margin-right: 6rem !important; }
+.me-9, .mx-9 { margin-right: 7rem !important; }
+.me-10, .mx-10 { margin-right: 8rem !important; }
+
+section, .section-padding {
+  padding: 100px 0;
+}
+
+
+// Overlay
+.overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000000A1;
+}
+
+// Heading 
+.heading-clip {
+  font-size: 98px;
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.22;
+  -webkit-text-stroke-width: 1px;
+  stroke-width: 1px;
+  -webkit-text-stroke-color: $grey-color;
+  stroke: $grey-color;
+  color: $white-color;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: -1;
+
+  @media (max-width:1200px){
+    font-size: 70px;
+  }
+  @media (max-width:996px){
+    font-size: 50px;
+  }
+  @media (max-width:768px){
+    font-size: 35px;
+  }
+}
+
+/* Width */
+
+@media (min-width:768px) {
+  .w-md-auto {width: auto !important;}
+  .w-md-25 {width: 25% !important;}
+  .w-md-50 {width: 50% !important;}
+  .w-md-75 {width: 75% !important;}
+}
+
+@media (min-width:996px) {
+  .w-lg-50 {width: 50% !important;}
+  .w-lg-75 {width: 75% !important;}
+}
+
+@media (min-width:1200px) {
+  .w-xl-50 {width: 50% !important;}
+  .w-xl-75 {width: 75% !important;}
+}
+
+@media (min-width:1400px) {
+  .w-xxl-50 {width: 50% !important;}
+}
+
+
+// Animations
+@keyframes bannerfadein{
+  0% {
+    opacity: 0;
+    top: 122%;
+  }
+  100% {
+    opacity: 1;
+    top: 50%;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    background-size: 100%;
+  }
+  to {
+    background-size: 110%;
+  }
+}
+
+@media (max-width: 1200px) {
+  @keyframes zoomIn {
+    from {
+      background-size: 150%;
+    }
+    to {
+      background-size: 170%;
+    }
+  }
+}
+
+// Sperator
+.sperator {
+  @media (max-width: 996px) {
+    margin: auto;
+  }
+}
+
+/* Sticky Header */
+.navbar-sticky-in {
+  position: fixed !important; /* Fixes navbar at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999 !important; /* Keeps it above other elements */
+  background: $primary-color;
+  box-shadow: 0px 1px 5px rgba(225, 225, 225, 0.1);
+
+  .header-nav-inner {
+    border: none !important;
+  }
+}
+
+/*Back-to-top button  */
+#back-to-top {
+  position: fixed;
+  z-index: 1000;
+  bottom: 20px;
+  right: 20px;
+
+  @media (max-width:768px ) {
+    bottom: 80px;
+  }
+}
+
+#back-to-top a {
+  width: 50px;
+  height: 50px;
+  transition: all ease-in-out .5s;
+}
+
+#back-to-top a:hover{
+  background-color: $primary-color !important;
+}
+
+#back-to-top a:after {
+  position: absolute;
+  content: '\f077';
+  font-family: "FontAwesome";
+  font-size: 16px;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%,-50%)
+}

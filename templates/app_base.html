@@ -1,0 +1,25 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Smart System{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/smart_system_ui.css' %}">
+</head>
+<body class="smart-ui">
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">Smart System</div>
+    <div class="tagline">Base operacional para orçamentos, campo, serviços e gestão.</div>
+    <a class="navlink" href="/app/estimates/">Orçamentos</a>
+    <a class="navlink" href="/app/estimates/builder/">Novo orçamento</a>
+    <a class="navlink" href="/app/service-reports/">Relatórios de serviço</a>
+    <a class="navlink" href="/admin/">Admin Django</a>
+  </aside>
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>
