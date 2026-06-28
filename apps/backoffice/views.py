@@ -9,9 +9,12 @@ from decimal import Decimal
 from apps.customers.infrastructure.models import Customer
 from apps.catalog.infrastructure.models import Product
 from apps.estimates.infrastructure.models import Estimate, EstimateLine
-from apps.service_reports.infrastructure.models import ServiceReport
+from apps.core.infrastructure.models import Organization, ActivityLog, Supplier, Vehicle
+from apps.sales.infrastructure.models import Project
+from apps.service_reports.infrastructure.models import ServiceReport, ProjectDelivery
+from apps.finance.infrastructure.models import AccountReceivable, AccountPayable
+from apps.accounts.infrastructure.models import User
 from apps.agents.infrastructure.models import AtlasProspect, VirtualAssistantSession
-from apps.core.infrastructure.models import Organization, ActivityLog
 
 @login_required
 def dashboard(request):
@@ -70,6 +73,10 @@ def clientes_novo(request):
         email = request.POST.get('email', '')
         phone = request.POST.get('phone', '')
         ctype = request.POST.get('type', 'company')
+        whatsapp = request.POST.get('whatsapp', '')
+        address = request.POST.get('address', '')
+        lead_origin = request.POST.get('lead_origin', '')
+        lgpd_consent = request.POST.get('lgpd_consent') == 'on'
         
         org = Organization.objects.first()
         
@@ -80,7 +87,11 @@ def clientes_novo(request):
                 document=document,
                 email=email,
                 phone=phone,
-                type=ctype
+                type=ctype,
+                whatsapp=whatsapp,
+                address=address,
+                lead_origin=lead_origin,
+                lgpd_consent=lgpd_consent
             )
             log_activity(request, request.user, 'customer_created', obj=c)
             return redirect('backoffice:clientes')
@@ -95,7 +106,12 @@ def clientes_detalhe(request, id):
         customer.document = request.POST.get('document', customer.document)
         customer.email = request.POST.get('email', customer.email)
         customer.phone = request.POST.get('phone', customer.phone)
+        customer.whatsapp = request.POST.get('whatsapp', customer.whatsapp)
         customer.type = request.POST.get('type', customer.type)
+        customer.address = request.POST.get('address', customer.address)
+        customer.lead_origin = request.POST.get('lead_origin', customer.lead_origin)
+        customer.status = request.POST.get('status', customer.status)
+        customer.lgpd_consent = request.POST.get('lgpd_consent') == 'on'
         customer.save()
         log_activity(request, request.user, 'customer_updated', obj=customer)
         return redirect('backoffice:clientes')
@@ -119,16 +135,27 @@ def catalogo_novo(request):
         unit = request.POST.get('unit', 'un')
         sale_price = request.POST.get('sale_price', '0.00')
         
+        cost_price = request.POST.get('cost_price', '0.00')
+        suggested_margin = request.POST.get('suggested_margin', '0.00')
+        supplier_id = request.POST.get('supplier')
+        
         org = Organization.objects.first()
         
         if name:
+            sup = Supplier.objects.filter(id=supplier_id).first() if supplier_id else None
             p = Product.objects.create(
                 organization=org,
                 name=name,
                 type=ptype,
                 unit=unit,
-                sale_price=Decimal(sale_price.replace(',', '.')) if sale_price else Decimal('0.00')
+                cost_price=Decimal(cost_price.replace(',', '.')) if cost_price else Decimal('0.00'),
+                suggested_margin=Decimal(suggested_margin.replace(',', '.')) if suggested_margin else Decimal('0.00'),
+                sale_price=Decimal(sale_price.replace(',', '.')) if sale_price else Decimal('0.00'),
+                supplier=sup
             )
+            if 'image' in request.FILES:
+                p.image = request.FILES['image']
+                p.save()
             log_activity(request, request.user, 'product_created', obj=p)
             return redirect('backoffice:catalogo')
             
@@ -144,11 +171,27 @@ def catalogo_detalhe(request, id):
         sale_price = request.POST.get('sale_price')
         if sale_price:
             product.sale_price = Decimal(sale_price.replace(',', '.'))
+        cost_price = request.POST.get('cost_price')
+        if cost_price:
+            product.cost_price = Decimal(cost_price.replace(',', '.'))
+        suggested_margin = request.POST.get('suggested_margin')
+        if suggested_margin:
+            product.suggested_margin = Decimal(suggested_margin.replace(',', '.'))
+            
+        supplier_id = request.POST.get('supplier')
+        if supplier_id:
+            product.supplier_id = supplier_id
+            
+        product.is_active = request.POST.get('is_active') == 'on'
+        
+        if 'image' in request.FILES:
+            product.image = request.FILES['image']
+            
         product.save()
         log_activity(request, request.user, 'product_updated', obj=product)
         return redirect('backoffice:catalogo')
         
-    context = {'product': product}
+    context = {'product': product, 'suppliers': Supplier.objects.all()}
     return render(request, 'backoffice/catalogo_detalhe.html', context)
 
 @login_required
@@ -206,7 +249,19 @@ def orcamentos_detalhe(request, id):
     estimate = get_object_or_404(Estimate, id=id)
     if request.method == 'POST':
         action = request.POST.get('action')
-        if action == 'update_status':
+        
+        if not action:
+            # Updating basic info
+            estimate.environment = request.POST.get('environment', estimate.environment)
+            deadline_days = request.POST.get('deadline_days')
+            if deadline_days and deadline_days.isdigit():
+                estimate.deadline_days = int(deadline_days)
+            estimate.title = request.POST.get('title', estimate.title)
+            estimate.service_location = request.POST.get('service_location', estimate.service_location)
+            estimate.save()
+            log_activity(request, request.user, 'estimate_updated', obj=estimate)
+
+        elif action == 'update_status':
             new_status = request.POST.get('status')
             if new_status:
                 estimate.status = new_status
@@ -271,6 +326,8 @@ def vistorias_novo(request):
         customer = Customer.objects.filter(id=customer_id).first()
         org = Organization.objects.first()
         
+        scheduled_date = request.POST.get('scheduled_date')
+        
         if customer and title:
             rep = ServiceReport.objects.create(
                 organization=org,
@@ -278,6 +335,7 @@ def vistorias_novo(request):
                 title=title,
                 status='draft',
                 service_location=service_location,
+                scheduled_date=scheduled_date if scheduled_date else None,
                 created_by=request.user
             )
             rep.ensure_number()
@@ -298,6 +356,12 @@ def vistorias_detalhe(request, id):
         report.status = request.POST.get('status', report.status)
         report.problem_reported = request.POST.get('problem_reported', report.problem_reported)
         report.service_performed = request.POST.get('service_performed', report.service_performed)
+        report.risks_reported = request.POST.get('risks_reported', report.risks_reported)
+        
+        scheduled_date = request.POST.get('scheduled_date')
+        if scheduled_date:
+            report.scheduled_date = scheduled_date
+            
         report.save()
         log_activity(request, request.user, 'servicereport_updated', obj=report)
         return redirect('backoffice:vistorias')
@@ -450,3 +514,310 @@ def logout_view(request):
     logout(request)
     return redirect('backoffice:login')
 
+
+
+# ==========================================
+# ENTREGAS DE OBRA
+# ==========================================
+@login_required
+def entregas(request):
+    deliveries = ProjectDelivery.objects.all()
+    return render(request, 'backoffice/entregas.html', {'deliveries': deliveries})
+
+@login_required
+def entregas_novo(request):
+    if request.method == 'POST':
+        c_id = request.POST.get('customer')
+        p_id = request.POST.get('project')
+        org = Organization.objects.first()
+        if c_id:
+            c = Customer.objects.get(id=c_id)
+            proj = Project.objects.filter(id=p_id).first() if p_id else None
+            d = ProjectDelivery.objects.create(
+                organization=org,
+                customer=c,
+                project=proj,
+                notes=request.POST.get('notes', '')
+            )
+            log_activity(request, request.user, 'delivery_created', obj=d)
+            return redirect('backoffice:entregas')
+    return render(request, 'backoffice/entregas_novo.html', {
+        'customers': Customer.objects.all(),
+        'projects': Project.objects.all()
+    })
+
+@login_required
+def entregas_detalhe(request, id):
+    delivery = get_object_or_404(ProjectDelivery, id=id)
+    if request.method == 'POST':
+        delivery.checklist_completed = request.POST.get('checklist_completed') == 'on'
+        delivery.customer_accepted = request.POST.get('customer_accepted') == 'on'
+        delivery.pending_issues = request.POST.get('pending_issues', delivery.pending_issues)
+        delivery.notes = request.POST.get('notes', delivery.notes)
+        delivery.status = request.POST.get('status', delivery.status)
+        delivery.save()
+        log_activity(request, request.user, 'delivery_updated', obj=delivery)
+        return redirect('backoffice:entregas')
+    return render(request, 'backoffice/entregas_detalhe.html', {'delivery': delivery})
+
+# ==========================================
+# OBRAS / PROJETOS
+# ==========================================
+@login_required
+def obras(request):
+    projects = Project.objects.all()
+    return render(request, 'backoffice/obras.html', {'projects': projects})
+
+@login_required
+def obras_novo(request):
+    if request.method == 'POST':
+        c_id = request.POST.get('customer')
+        e_id = request.POST.get('estimate')
+        org = Organization.objects.first()
+        if c_id:
+            c = Customer.objects.get(id=c_id)
+            est = Estimate.objects.filter(id=e_id).first() if e_id else None
+            p = Project.objects.create(
+                organization=org,
+                customer=c,
+                estimate=est,
+                title=request.POST.get('title', 'Nova Obra'),
+                address=request.POST.get('address', ''),
+                notes=request.POST.get('notes', '')
+            )
+            log_activity(request, request.user, 'project_created', obj=p)
+            return redirect('backoffice:obras')
+    return render(request, 'backoffice/obras_novo.html', {
+        'customers': Customer.objects.all(),
+        'estimates': Estimate.objects.filter(status='approved')
+    })
+
+@login_required
+def obras_detalhe(request, id):
+    project = get_object_or_404(Project, id=id)
+    if request.method == 'POST':
+        project.title = request.POST.get('title', project.title)
+        project.address = request.POST.get('address', project.address)
+        project.status = request.POST.get('status', project.status)
+        project.notes = request.POST.get('notes', project.notes)
+        if request.POST.get('scheduled_date'):
+            project.scheduled_date = request.POST.get('scheduled_date')
+        project.save()
+        log_activity(request, request.user, 'project_updated', obj=project)
+        return redirect('backoffice:obras')
+    return render(request, 'backoffice/obras_detalhe.html', {'project': project})
+
+# ==========================================
+# VEÍCULOS
+# ==========================================
+@login_required
+def veiculos(request):
+    vehicles = Vehicle.objects.all()
+    return render(request, 'backoffice/veiculos.html', {'vehicles': vehicles})
+
+@login_required
+def veiculos_novo(request):
+    if request.method == 'POST':
+        org = Organization.objects.first()
+        plate = request.POST.get('plate')
+        if plate:
+            v = Vehicle.objects.create(
+                organization=org,
+                plate=plate,
+                model=request.POST.get('model', ''),
+                brand=request.POST.get('brand', ''),
+                usage=request.POST.get('usage', '')
+            )
+            log_activity(request, request.user, 'vehicle_created', obj=v)
+            return redirect('backoffice:veiculos')
+    return render(request, 'backoffice/veiculos_novo.html')
+
+@login_required
+def veiculos_detalhe(request, id):
+    vehicle = get_object_or_404(Vehicle, id=id)
+    if request.method == 'POST':
+        vehicle.plate = request.POST.get('plate', vehicle.plate)
+        vehicle.model = request.POST.get('model', vehicle.model)
+        vehicle.brand = request.POST.get('brand', vehicle.brand)
+        vehicle.status = request.POST.get('status', vehicle.status)
+        vehicle.usage = request.POST.get('usage', vehicle.usage)
+        vehicle.notes = request.POST.get('notes', vehicle.notes)
+        vehicle.save()
+        log_activity(request, request.user, 'vehicle_updated', obj=vehicle)
+        return redirect('backoffice:veiculos')
+    return render(request, 'backoffice/veiculos_detalhe.html', {'vehicle': vehicle})
+
+# ==========================================
+# FORNECEDORES
+# ==========================================
+@login_required
+def fornecedores(request):
+    suppliers = Supplier.objects.all()
+    return render(request, 'backoffice/fornecedores.html', {'suppliers': suppliers})
+
+@login_required
+def fornecedores_novo(request):
+    if request.method == 'POST':
+        org = Organization.objects.first()
+        name = request.POST.get('name')
+        if name:
+            s = Supplier.objects.create(
+                organization=org,
+                name=name,
+                cnpj=request.POST.get('cnpj', ''),
+                phone=request.POST.get('phone', ''),
+                email=request.POST.get('email', ''),
+                city=request.POST.get('city', ''),
+                address=request.POST.get('address', ''),
+                category=request.POST.get('category', '')
+            )
+            log_activity(request, request.user, 'supplier_created', obj=s)
+            return redirect('backoffice:fornecedores')
+    return render(request, 'backoffice/fornecedores_novo.html')
+
+@login_required
+def fornecedores_detalhe(request, id):
+    supplier = get_object_or_404(Supplier, id=id)
+    if request.method == 'POST':
+        supplier.name = request.POST.get('name', supplier.name)
+        supplier.cnpj = request.POST.get('cnpj', supplier.cnpj)
+        supplier.phone = request.POST.get('phone', supplier.phone)
+        supplier.email = request.POST.get('email', supplier.email)
+        supplier.city = request.POST.get('city', supplier.city)
+        supplier.address = request.POST.get('address', supplier.address)
+        supplier.category = request.POST.get('category', supplier.category)
+        supplier.is_active = request.POST.get('is_active') == 'on'
+        supplier.notes = request.POST.get('notes', supplier.notes)
+        supplier.save()
+        log_activity(request, request.user, 'supplier_updated', obj=supplier)
+        return redirect('backoffice:fornecedores')
+    return render(request, 'backoffice/fornecedores_detalhe.html', {'supplier': supplier})
+
+# ==========================================
+# FINANCEIRO
+# ==========================================
+@login_required
+def financeiro(request):
+    payables = AccountPayable.objects.all()
+    receivables = AccountReceivable.objects.all()
+    return render(request, 'backoffice/financeiro.html', {
+        'payables': payables,
+        'receivables': receivables
+    })
+
+@login_required
+def financeiro_novo(request):
+    if request.method == 'POST':
+        org = Organization.objects.first()
+        ftype = request.POST.get('type')
+        description = request.POST.get('description')
+        amount = request.POST.get('amount')
+        due_date = request.POST.get('due_date')
+
+        if description and amount and due_date:
+            if ftype == 'payable':
+                AccountPayable.objects.create(
+                    organization=org,
+                    description=description,
+                    amount=amount,
+                    due_date=due_date
+                )
+            else:
+                c_id = request.POST.get('customer')
+                c = Customer.objects.filter(id=c_id).first() if c_id else None
+                AccountReceivable.objects.create(
+                    organization=org,
+                    customer=c,
+                    description=description,
+                    amount=amount,
+                    due_date=due_date
+                )
+            return redirect('backoffice:financeiro')
+    return render(request, 'backoffice/financeiro_novo.html', {'customers': Customer.objects.all()})
+
+@login_required
+def financeiro_detalhe(request, id):
+    # try payable first
+    payable = AccountPayable.objects.filter(id=id).first()
+    receivable = None
+    if not payable:
+        receivable = get_object_or_404(AccountReceivable, id=id)
+
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        if payable:
+            payable.status = status
+            if status == 'paid' and not payable.paid_at:
+                payable.paid_at = timezone.now()
+            payable.save()
+        else:
+            receivable.status = status
+            if status == 'paid' and not receivable.paid_at:
+                receivable.paid_at = timezone.now()
+            receivable.save()
+        return redirect('backoffice:financeiro')
+
+    return render(request, 'backoffice/financeiro_detalhe.html', {
+        'item': payable or receivable,
+        'type': 'payable' if payable else 'receivable'
+    })
+
+# ==========================================
+# USUÁRIOS
+# ==========================================
+from django.contrib.auth.models import Group
+
+@login_required
+def usuarios(request):
+    users = User.objects.all()
+    return render(request, 'backoffice/usuarios.html', {'users': users})
+
+@login_required
+def usuarios_novo(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        role = request.POST.get('role')
+        group_id = request.POST.get('group')
+        
+        if username and email:
+            u = User.objects.create_user(username=username, email=email, password='changeme123')
+            u.role = role
+            u.save()
+            if group_id:
+                g = Group.objects.filter(id=group_id).first()
+                if g:
+                    u.groups.add(g)
+            log_activity(request, request.user, 'user_created', obj=u)
+            return redirect('backoffice:usuarios')
+            
+    return render(request, 'backoffice/usuarios_novo.html', {
+        'groups': Group.objects.all(),
+        'roles': User.Role.choices
+    })
+
+@login_required
+def usuarios_detalhe(request, id):
+    u = get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        u.first_name = request.POST.get('first_name', u.first_name)
+        u.last_name = request.POST.get('last_name', u.last_name)
+        u.is_active = request.POST.get('is_active') == 'on'
+        u.role = request.POST.get('role', u.role)
+        u.save()
+
+        group_id = request.POST.get('group')
+        if group_id:
+            g = Group.objects.filter(id=group_id).first()
+            if g:
+                u.groups.clear()
+                u.groups.add(g)
+
+        log_activity(request, request.user, 'user_updated', obj=u)
+        return redirect('backoffice:usuarios')
+        
+    return render(request, 'backoffice/usuarios_detalhe.html', {
+        'u': u,
+        'groups': Group.objects.all(),
+        'roles': User.Role.choices
+    })

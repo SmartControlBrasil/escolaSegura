@@ -1,0 +1,44 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Detalhes: Veículo: {{ vehicle.name }}</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:veiculos_detalhe' vehicle.id %}">
+{% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Placa</label>
+            <input type="text" name="plate" class="form-control" value="{{ vehicle.plate }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <input type="text" name="brand" class="form-control" value="{{ vehicle.brand }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Modelo</label>
+            <input type="text" name="model" class="form-control" value="{{ vehicle.model }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Uso (ex: Entregas)</label>
+            <input type="text" name="usage" class="form-control" value="{{ vehicle.usage }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="active" {% if vehicle.status == "active" %}selected{% endif %}>Ativo</option>
+              <option value="maintenance" {% if vehicle.status == "maintenance" %}selected{% endif %}>Manutenção</option>
+            </select>
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:veiculos' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+          </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

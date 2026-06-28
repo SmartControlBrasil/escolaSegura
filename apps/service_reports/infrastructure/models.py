@@ -20,11 +20,13 @@ class ServiceReport(TimeStampedModel):
     number = models.CharField(max_length=40, blank=True, db_index=True)
     title = models.CharField(max_length=180)
     status = models.CharField(max_length=30, choices=Status.choices, default=Status.DRAFT)
+    scheduled_date = models.DateTimeField(null=True, blank=True)
     service_date = models.DateField(default=timezone.localdate)
     service_location = models.CharField(max_length=240, blank=True)
     technician_name = models.CharField(max_length=160, blank=True)
     problem_reported = models.TextField(blank=True)
     service_performed = models.TextField(blank=True)
+    risks_reported = models.TextField(blank=True)
     recommendations = models.TextField(blank=True)
     customer_signature_name = models.CharField(max_length=160, blank=True)
     started_at = models.DateTimeField(null=True, blank=True)
@@ -94,3 +96,29 @@ class ServiceReportPhoto(TimeStampedModel):
 
     def __str__(self):
         return self.caption or f'Foto {self.report}'
+
+
+class ProjectDelivery(TimeStampedModel):
+    class Status(models.TextChoices):
+        IN_PROGRESS = 'in_progress', 'Em andamento'
+        DELIVERED = 'delivered', 'Entregue'
+        PENDING = 'pending', 'Entregue com pendência'
+
+    organization = models.ForeignKey('core.Organization', null=True, blank=True, on_delete=models.SET_NULL)
+    customer = models.ForeignKey('customers.Customer', on_delete=models.PROTECT, related_name='deliveries')
+    project = models.ForeignKey('sales.Project', null=True, blank=True, on_delete=models.SET_NULL, related_name='deliveries')
+    estimate = models.ForeignKey('estimates.Estimate', null=True, blank=True, on_delete=models.SET_NULL, related_name='deliveries')
+    delivery_date = models.DateField(default=timezone.localdate)
+    responsible = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='deliveries_managed')
+    checklist_completed = models.BooleanField(default=False)
+    customer_accepted = models.BooleanField(default=False)
+    pending_issues = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
+    status = models.CharField(max_length=30, choices=Status.choices, default=Status.IN_PROGRESS)
+
+    class Meta:
+        ordering = ['-delivery_date', '-created_at']
+
+    def __str__(self):
+        return f'Entrega {self.id} - {self.customer}'
+

@@ -1,0 +1,42 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Lista de Veículos</h6>
+    <a href="{% url 'backoffice:veiculos_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Novo(a) Veículo</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Placa</th><th>Marca/Modelo</th><th>Uso</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vehicle in vehicles %}
+          <tr>
+
+            <td><strong><a href="{% url 'backoffice:veiculos_detalhe' vehicle.id %}">{{ vehicle.plate }}</a></strong></td>
+            <td>{{ vehicle.brand }} {{ vehicle.model }}</td>
+            <td>{{ vehicle.usage }}</td>
+            <td>
+              {% if vehicle.status == 'active' %}
+                <span class="badge rounded-pill bg-success">Ativo</span>
+              {% else %}
+                <span class="badge rounded-pill bg-secondary">{{ vehicle.status }}</span>
+              {% endif %}
+            </td>
+        
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">Nenhum veículo cadastrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

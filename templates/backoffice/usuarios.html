@@ -1,0 +1,42 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Lista de Usuários</h6>
+    <a href="{% url 'backoffice:usuarios_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Novo(a) Usuário</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Usuário</th><th>E-mail</th><th>Função</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+
+            <td><strong><a href="{% url 'backoffice:usuarios_detalhe' user.id %}">{{ user.username }}</a></strong></td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.get_role_display }}</td>
+            <td>
+              {% if user.is_active %}
+                <span class="badge rounded-pill bg-success">Ativo</span>
+              {% else %}
+                <span class="badge rounded-pill bg-danger">Bloqueado</span>
+              {% endif %}
+            </td>
+        
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">Nenhum usuário encontrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

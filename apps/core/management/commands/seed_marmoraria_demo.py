@@ -4,6 +4,11 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+
+from apps.core.infrastructure.models import Supplier, Vehicle
+from apps.sales.infrastructure.models import Project
+from apps.finance.infrastructure.models import AccountPayable, AccountReceivable
+from apps.service_reports.infrastructure.models import ProjectDelivery
 from apps.core.infrastructure.models import Organization
 from apps.customers.infrastructure.models import Customer, CustomerAddress, CustomerContact
 from apps.catalog.infrastructure.models import ProductCategory, Product
@@ -304,6 +309,63 @@ class Command(BaseCommand):
                 session=session,
                 role='user',
                 content='Tem cerca de 1,20m de largura.'
+            )
+
+        
+        # 10. Novos Modelos (Veículos, Fornecedores, Obras, Entregas, Financeiro)
+        # Fornecedores
+        suppliers = []
+        for sname in ['Granitos Silva', 'Mármores e Cia', 'Inox Design', 'Distribuidora São Paulo']:
+            s, _ = Supplier.objects.get_or_create(
+                organization=org,
+                name=sname,
+                defaults={'category': 'Pedras' if 'Silva' in sname or 'Mármore' in sname else 'Insumos', 'city': 'São Paulo', 'phone': '(11) 3222-1111'}
+            )
+            suppliers.append(s)
+
+        # Veículos
+        vehicles = []
+        for vdata in [('ABC-1234', 'Fiorino'), ('XYZ-9876', 'HR'), ('MMM-0000', 'Saveiro')]:
+            v, _ = Vehicle.objects.get_or_create(
+                organization=org,
+                plate=vdata[0],
+                defaults={'model': vdata[1], 'brand': 'Volkswagen' if 'Saveiro' in vdata[1] else 'Fiat' if 'Fiorino' in vdata[1] else 'Hyundai', 'usage': 'Entregas' if 'HR' in vdata[1] else 'Vistorias'}
+            )
+            vehicles.append(v)
+
+        # Obras
+        projects = []
+        for i, est in enumerate(Estimate.objects.all()[:5]):
+            p, _ = Project.objects.get_or_create(
+                organization=org,
+                title=f'Obra {est.customer.name.split()[0]}',
+                defaults={'customer': est.customer, 'estimate': est, 'address': est.service_location, 'status': 'production'}
+            )
+            projects.append(p)
+
+        # Entregas
+        for i, proj in enumerate(projects[:3]):
+            ProjectDelivery.objects.get_or_create(
+                organization=org,
+                customer=proj.customer,
+                project=proj,
+                defaults={'checklist_completed': True, 'customer_accepted': False, 'notes': 'Entrega agendada.'}
+            )
+
+        # Financeiro (Contas a Pagar / Receber)
+        for i, sup in enumerate(suppliers[:3]):
+            AccountPayable.objects.get_or_create(
+                organization=org,
+                description=f'Fatura {sup.name}',
+                defaults={'amount': Decimal('1500.00'), 'due_date': timezone.now().date(), 'status': 'pending'}
+            )
+        
+        for i, proj in enumerate(projects[:3]):
+            AccountReceivable.objects.get_or_create(
+                organization=org,
+                customer=proj.customer,
+                description=f'Sinal Obra {proj.title}',
+                defaults={'amount': Decimal('5000.00'), 'due_date': timezone.now().date(), 'status': 'paid'}
             )
 
         self.stdout.write(self.style.SUCCESS('Comando de seed comercial seed_marmoraria_demo concluído com sucesso!'))

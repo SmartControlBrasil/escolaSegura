@@ -1,0 +1,36 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Detalhes: Obra: {{ project.name }}</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:obras_detalhe' project.id %}">
+{% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Título da Obra</label>
+            <input type="text" name="title" class="form-control" value="{{ project.title }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Endereço</label>
+            <input type="text" name="address" class="form-control" value="{{ project.address }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="production" {% if project.status == "production" %}selected{% endif %}>Em Produção</option>
+              <option value="installed" {% if project.status == "installed" %}selected{% endif %}>Instalado</option>
+            </select>
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:obras' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+          </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

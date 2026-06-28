@@ -43,3 +43,29 @@ class SalesOrderItem(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.subtotal = (self.quantity or Decimal('0')) * (self.unit_price or Decimal('0'))
         super().save(*args, **kwargs)
+
+
+class Project(TimeStampedModel):
+    class Status(models.TextChoices):
+        PLANNED = 'planned', 'Planejada'
+        PRODUCTION = 'production', 'Em produção'
+        INSTALLATION = 'installation', 'Em instalação'
+        DELIVERED = 'delivered', 'Entregue'
+        PAUSED = 'paused', 'Pausada'
+        CANCELLED = 'cancelled', 'Cancelada'
+
+    organization = models.ForeignKey('core.Organization', null=True, blank=True, on_delete=models.SET_NULL)
+    customer = models.ForeignKey('customers.Customer', on_delete=models.PROTECT, related_name='projects')
+    estimate = models.ForeignKey('estimates.Estimate', null=True, blank=True, on_delete=models.SET_NULL, related_name='projects')
+    title = models.CharField(max_length=180)
+    address = models.CharField(max_length=240, blank=True)
+    responsible = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='managed_projects')
+    scheduled_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=30, choices=Status.choices, default=Status.PLANNED)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-scheduled_date', '-created_at']
+
+    def __str__(self):
+        return self.title

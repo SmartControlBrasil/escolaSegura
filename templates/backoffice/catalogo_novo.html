@@ -37,7 +37,32 @@
             <a href="{% url 'backoffice:catalogo' %}" class="btn btn-secondary">Cancelar</a>
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
-        </form>
+        
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Custo Estimado</label>
+            <input type="text" name="cost_price" class="form-control" placeholder="0.00">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Margem Sugerida (%)</label>
+            <input type="text" name="suggested_margin" class="form-control" placeholder="0.00">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Imagem Demonstrativa</label>
+        <input type="file" name="image" class="form-control" accept="image/*">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fornecedor</label>
+        <select name="supplier" class="form-select">
+            <option value="">Nenhum</option>
+            {% for s in suppliers %}
+            <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+</form>
       </div>
     </div>
   </div>

@@ -79,3 +79,39 @@ class Attachment(TimeStampedModel):
 
     class Meta:
         ordering = ['-created_at']
+
+class Supplier(TimeStampedModel):
+    organization = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.SET_NULL)
+    name = models.CharField(max_length=180)
+    cnpj = models.CharField(max_length=32, blank=True)
+    phone = models.CharField(max_length=32, blank=True)
+    email = models.EmailField(blank=True)
+    city = models.CharField(max_length=120, blank=True)
+    address = models.TextField(blank=True)
+    category = models.CharField(max_length=120, blank=True)
+    is_active = models.BooleanField(default=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Vehicle(TimeStampedModel):
+    organization = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.SET_NULL)
+    plate = models.CharField(max_length=20)
+    model = models.CharField(max_length=120, blank=True)
+    brand = models.CharField(max_length=120, blank=True)
+    year = models.IntegerField(null=True, blank=True)
+    driver = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+    status = models.CharField(max_length=50, default='active')
+    usage = models.CharField(max_length=120, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['plate']
+
+    def __str__(self):
+        return f'{self.plate} - {self.model}'

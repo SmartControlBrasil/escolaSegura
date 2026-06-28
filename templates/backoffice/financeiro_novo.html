@@ -1,0 +1,40 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Novo(a) Registro Financeiro</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:financeiro_novo' %}">
+{% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <input type="text" name="description" class="form-control" value="{{ description }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Valor</label>
+            <input type="text" name="amount" class="form-control" value="{{ amount }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Data de Vencimento</label>
+            <input type="date" name="due_date" class="form-control" value="{{ due_date|date:"Y-m-d" }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="pending" {% if record.status == "pending" %}selected{% endif %}>Pendente</option>
+              <option value="paid" {% if record.status == "paid" %}selected{% endif %}>Pago / Recebido</option>
+            </select>
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:financeiro' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

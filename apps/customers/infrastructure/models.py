@@ -18,8 +18,12 @@ class Customer(TimeStampedModel):
     document = models.CharField(max_length=32, blank=True, db_index=True)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=32, blank=True)
+    whatsapp = models.CharField(max_length=32, blank=True)
     city = models.CharField(max_length=120, blank=True)
     state = models.CharField(max_length=2, blank=True)
+    address = models.TextField(blank=True)
+    lead_origin = models.CharField(max_length=120, blank=True)
+    lgpd_consent = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.ACTIVE)
     notes = models.TextField(blank=True)
 

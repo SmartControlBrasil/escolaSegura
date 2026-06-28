@@ -29,6 +29,36 @@ urlpatterns = [
     path('vistorias/novo/', views.vistorias_novo, name='vistorias_novo'),
     path('vistorias/<uuid:id>/', views.vistorias_detalhe, name='vistorias_detalhe'),
     
+    # Entregas de Obra
+    path('entregas/', views.entregas, name='entregas'),
+    path('entregas/nova/', views.entregas_novo, name='entregas_novo'),
+    path('entregas/<uuid:id>/', views.entregas_detalhe, name='entregas_detalhe'),
+
+    # Obras / Projetos
+    path('obras/', views.obras, name='obras'),
+    path('obras/nova/', views.obras_novo, name='obras_novo'),
+    path('obras/<uuid:id>/', views.obras_detalhe, name='obras_detalhe'),
+
+    # Veículos
+    path('veiculos/', views.veiculos, name='veiculos'),
+    path('veiculos/novo/', views.veiculos_novo, name='veiculos_novo'),
+    path('veiculos/<uuid:id>/', views.veiculos_detalhe, name='veiculos_detalhe'),
+
+    # Fornecedores
+    path('fornecedores/', views.fornecedores, name='fornecedores'),
+    path('fornecedores/novo/', views.fornecedores_novo, name='fornecedores_novo'),
+    path('fornecedores/<uuid:id>/', views.fornecedores_detalhe, name='fornecedores_detalhe'),
+
+    # Financeiro
+    path('financeiro/', views.financeiro, name='financeiro'),
+    path('financeiro/novo/', views.financeiro_novo, name='financeiro_novo'),
+    path('financeiro/<uuid:id>/', views.financeiro_detalhe, name='financeiro_detalhe'),
+
+    # Usuários
+    path('usuarios/', views.usuarios, name='usuarios'),
+    path('usuarios/novo/', views.usuarios_novo, name='usuarios_novo'),
+    path('usuarios/<uuid:id>/', views.usuarios_detalhe, name='usuarios_detalhe'),
+
     # Outros
     path('relatorios/', views.relatorios, name='relatorios'),
     path('redes-sociais/', views.redes_sociais, name='redes_sociais'),

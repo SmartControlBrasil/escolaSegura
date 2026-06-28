@@ -41,6 +41,18 @@ class BackofficeTests(TestCase):
             '/app/atlas/',
             '/app/assistente/',
             '/app/configuracoes/',
+            '/app/entregas/',
+            '/app/entregas/nova/',
+            '/app/obras/',
+            '/app/obras/nova/',
+            '/app/veiculos/',
+            '/app/veiculos/novo/',
+            '/app/fornecedores/',
+            '/app/fornecedores/novo/',
+            '/app/financeiro/',
+            '/app/financeiro/novo/',
+            '/app/usuarios/',
+            '/app/usuarios/novo/',
         ]
         for route in routes:
             response = self.client.get(route)
