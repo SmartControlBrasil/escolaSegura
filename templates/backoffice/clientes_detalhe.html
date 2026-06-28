@@ -1,0 +1,44 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Detalhes do Cliente: {{ customer.name }}</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:clientes_detalhe' customer.id %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Tipo de Cliente</label>
+            <select name="type" class="form-select">
+              <option value="person" {% if customer.type == 'person' %}selected{% endif %}>Pessoa Física</option>
+              <option value="company" {% if customer.type == 'company' %}selected{% endif %}>Pessoa Jurídica</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nome / Razão Social *</label>
+            <input type="text" name="name" class="form-control" value="{{ customer.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Documento (CPF/CNPJ)</label>
+            <input type="text" name="document" class="form-control" value="{{ customer.document }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" value="{{ customer.email }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefone</label>
+            <input type="text" name="phone" class="form-control" value="{{ customer.phone }}">
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:clientes' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

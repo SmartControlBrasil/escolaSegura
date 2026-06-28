@@ -21,8 +21,8 @@
         <tbody>
           {% for estimate in estimates %}
           <tr>
-            <td><code>{{ estimate.number }}</code></td>
-            <td><strong>{{ estimate.title }}</strong></td>
+            <td><code><a href="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">{{ estimate.number }}</a></code></td>
+            <td><strong><a href="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">{{ estimate.title }}</a></strong></td>
             <td>{{ estimate.customer.name }}</td>
             <td>R$ {{ estimate.total_amount }}</td>
             <td>{{ estimate.created_at|date:"d/m/Y H:i" }}</td>

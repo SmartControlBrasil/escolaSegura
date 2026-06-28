@@ -3,6 +3,7 @@
 <div class="card">
   <div class="card-header py-3 d-flex justify-content-between align-items-center">
     <h6 class="mb-0">Lista de Clientes</h6>
+    <a href="{% url 'backoffice:clientes_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Novo Cliente</a>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -20,7 +21,7 @@
         <tbody>
           {% for customer in customers %}
           <tr>
-            <td><strong>{{ customer.name }}</strong></td>
+            <td><strong><a href="{% url 'backoffice:clientes_detalhe' customer.id %}">{{ customer.name }}</a></strong></td>
             <td>{{ customer.get_type_display }}</td>
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>

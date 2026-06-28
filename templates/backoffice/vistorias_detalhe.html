@@ -1,0 +1,70 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Vistoria: {{ report.number }}</h6>
+        <span class="badge bg-secondary">{{ report.get_status_display }}</span>
+      </div>
+      <div class="card-body">
+        
+        <form method="post" action="{% url 'backoffice:vistorias_detalhe' report.id %}">
+          {% csrf_token %}
+          
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Cliente</label>
+              <input type="text" class="form-control" value="{{ report.customer.name }}" disabled>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Orçamento Vinculado</label>
+              <input type="text" class="form-control" value="{{ report.estimate.number|default:'Nenhum' }}" disabled>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Título da Vistoria *</label>
+            <input type="text" name="title" class="form-control" value="{{ report.title }}" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Status da Vistoria</label>
+            <select name="status" class="form-select">
+              <option value="draft" {% if report.status == 'draft' %}selected{% endif %}>Rascunho</option>
+              <option value="in_progress" {% if report.status == 'in_progress' %}selected{% endif %}>Em Execução</option>
+              <option value="completed" {% if report.status == 'completed' %}selected{% endif %}>Concluído</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Local do Serviço</label>
+            <input type="text" name="service_location" class="form-control" value="{{ report.service_location }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Técnico Responsável</label>
+            <input type="text" name="technician_name" class="form-control" value="{{ report.technician_name }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Observações / Problema Relatado</label>
+            <textarea name="problem_reported" class="form-control" rows="3">{{ report.problem_reported }}</textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Serviço Realizado / Medições Técnicas</label>
+            <textarea name="service_performed" class="form-control" rows="4">{{ report.service_performed }}</textarea>
+          </div>
+
+          <div class="text-end">
+            <a href="{% url 'backoffice:vistorias' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

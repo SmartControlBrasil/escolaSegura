@@ -1,8 +1,9 @@
 {% extends 'backoffice/base.html' %}
 {% block content %}
 <div class="card">
-  <div class="card-header py-3">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
     <h6 class="mb-0">Relatórios de Vistoria / Medição Técnica</h6>
+    <a href="{% url 'backoffice:vistorias_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Nova Vistoria</a>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -21,8 +22,8 @@
         <tbody>
           {% for report in reports %}
           <tr>
-            <td><code>{{ report.number }}</code></td>
-            <td><strong>{{ report.title }}</strong></td>
+            <td><code><a href="{% url 'backoffice:vistorias_detalhe' report.id %}">{{ report.number }}</a></code></td>
+            <td><strong><a href="{% url 'backoffice:vistorias_detalhe' report.id %}">{{ report.title }}</a></strong></td>
             <td>{{ report.customer.name }}</td>
             <td>{{ report.estimate.number|default:"-" }}</td>
             <td>{{ report.technician_name }}</td>

@@ -1,0 +1,38 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Nova Vistoria Técnica</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:vistorias_novo' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Cliente *</label>
+            <select name="customer" class="form-select" required>
+              <option value="">Selecione...</option>
+              {% for c in customers %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Título da Vistoria *</label>
+            <input type="text" name="title" class="form-control" required placeholder="Ex: Medição Bancada Cozinha">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Local do Serviço</label>
+            <input type="text" name="service_location" class="form-control">
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:vistorias' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

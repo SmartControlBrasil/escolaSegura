@@ -1,0 +1,45 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-lg-8 mx-auto">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0">Detalhes do Item: {{ product.name }}</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" action="{% url 'backoffice:catalogo_detalhe' product.id %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Tipo</label>
+            <select name="type" class="form-select">
+              <option value="product" {% if product.type == 'product' %}selected{% endif %}>Produto (Chapa, Cuba, etc)</option>
+              <option value="service" {% if product.type == 'service' %}selected{% endif %}>Serviço (Mão de Obra, Instalação)</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nome do Item *</label>
+            <input type="text" name="name" class="form-control" value="{{ product.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Unidade de Medida</label>
+            <select name="unit" class="form-select">
+              <option value="m2" {% if product.unit == 'm2' %}selected{% endif %}>Metro Quadrado (m²)</option>
+              <option value="ml" {% if product.unit == 'ml' %}selected{% endif %}>Metro Linear (ml)</option>
+              <option value="un" {% if product.unit == 'un' %}selected{% endif %}>Unidade (un)</option>
+              <option value="h" {% if product.unit == 'h' %}selected{% endif %}>Hora (h)</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Preço de Venda (R$)</label>
+            <input type="text" name="sale_price" class="form-control" value="{{ product.sale_price|stringformat:'f' }}">
+          </div>
+          <div class="text-end">
+            <a href="{% url 'backoffice:catalogo' %}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

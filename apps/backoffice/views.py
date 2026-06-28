@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -63,12 +63,93 @@ def clientes(request):
     return render(request, 'backoffice/clientes.html', context)
 
 @login_required
+def clientes_novo(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        document = request.POST.get('document', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        ctype = request.POST.get('type', 'company')
+        
+        org = Organization.objects.first()
+        
+        if name:
+            c = Customer.objects.create(
+                organization=org,
+                name=name,
+                document=document,
+                email=email,
+                phone=phone,
+                type=ctype
+            )
+            log_activity(request, request.user, 'customer_created', obj=c)
+            return redirect('backoffice:clientes')
+
+    return render(request, 'backoffice/clientes_novo.html')
+
+@login_required
+def clientes_detalhe(request, id):
+    customer = get_object_or_404(Customer, id=id)
+    if request.method == 'POST':
+        customer.name = request.POST.get('name', customer.name)
+        customer.document = request.POST.get('document', customer.document)
+        customer.email = request.POST.get('email', customer.email)
+        customer.phone = request.POST.get('phone', customer.phone)
+        customer.type = request.POST.get('type', customer.type)
+        customer.save()
+        log_activity(request, request.user, 'customer_updated', obj=customer)
+        return redirect('backoffice:clientes')
+        
+    context = {'customer': customer}
+    return render(request, 'backoffice/clientes_detalhe.html', context)
+
+@login_required
 def catalogo(request):
     products_list = Product.objects.all().order_by('category__name', 'name')
     context = {
         'products': products_list
     }
     return render(request, 'backoffice/catalogo.html', context)
+
+@login_required
+def catalogo_novo(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        ptype = request.POST.get('type', 'product')
+        unit = request.POST.get('unit', 'un')
+        sale_price = request.POST.get('sale_price', '0.00')
+        
+        org = Organization.objects.first()
+        
+        if name:
+            p = Product.objects.create(
+                organization=org,
+                name=name,
+                type=ptype,
+                unit=unit,
+                sale_price=Decimal(sale_price.replace(',', '.')) if sale_price else Decimal('0.00')
+            )
+            log_activity(request, request.user, 'product_created', obj=p)
+            return redirect('backoffice:catalogo')
+            
+    return render(request, 'backoffice/catalogo_novo.html')
+
+@login_required
+def catalogo_detalhe(request, id):
+    product = get_object_or_404(Product, id=id)
+    if request.method == 'POST':
+        product.name = request.POST.get('name', product.name)
+        product.type = request.POST.get('type', product.type)
+        product.unit = request.POST.get('unit', product.unit)
+        sale_price = request.POST.get('sale_price')
+        if sale_price:
+            product.sale_price = Decimal(sale_price.replace(',', '.'))
+        product.save()
+        log_activity(request, request.user, 'product_updated', obj=product)
+        return redirect('backoffice:catalogo')
+        
+    context = {'product': product}
+    return render(request, 'backoffice/catalogo_detalhe.html', context)
 
 @login_required
 def orcamentos(request):
@@ -121,12 +202,108 @@ def orcamentos_novo(request):
     return render(request, 'backoffice/orcamentos_novo.html', context)
 
 @login_required
+def orcamentos_detalhe(request, id):
+    estimate = get_object_or_404(Estimate, id=id)
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'update_status':
+            new_status = request.POST.get('status')
+            if new_status:
+                estimate.status = new_status
+                estimate.save()
+                log_activity(request, request.user, 'estimate_status_updated', obj=estimate, metadata={'new_status': new_status})
+        elif action == 'add_item':
+            product_id = request.POST.get('product')
+            quantity = request.POST.get('quantity', '1')
+            if product_id:
+                product = get_object_or_404(Product, id=product_id)
+                EstimateLine.objects.create(
+                    estimate=estimate,
+                    product=product,
+                    kind=product.type,
+                    description=f'Fornecimento de {product.name}',
+                    unit=product.unit,
+                    quantity=Decimal(quantity.replace(',', '.')),
+                    unit_price=product.sale_price
+                )
+                log_activity(request, request.user, 'estimate_item_added', obj=estimate)
+        elif action == 'remove_item':
+            line_id = request.POST.get('line_id')
+            if line_id:
+                EstimateLine.objects.filter(id=line_id, estimate=estimate).delete()
+                estimate.recalculate_totals()
+                log_activity(request, request.user, 'estimate_item_removed', obj=estimate)
+                
+        return redirect('backoffice:orcamentos_detalhe', id=id)
+        
+    products = Product.objects.filter(is_active=True)
+    context = {
+        'estimate': estimate,
+        'products': products
+    }
+    return render(request, 'backoffice/orcamentos_detalhe.html', context)
+
+@login_required
+def orcamentos_preview(request, id):
+    estimate = get_object_or_404(Estimate, id=id)
+    org = Organization.objects.first()
+    context = {
+        'estimate': estimate,
+        'organization': org
+    }
+    return render(request, 'backoffice/orcamentos_preview.html', context)
+
+@login_required
 def vistorias(request):
     reports_list = ServiceReport.objects.all().order_by('-service_date')
     context = {
         'reports': reports_list
     }
     return render(request, 'backoffice/vistorias.html', context)
+
+@login_required
+def vistorias_novo(request):
+    if request.method == 'POST':
+        customer_id = request.POST.get('customer')
+        title = request.POST.get('title')
+        service_location = request.POST.get('service_location', '')
+        
+        customer = Customer.objects.filter(id=customer_id).first()
+        org = Organization.objects.first()
+        
+        if customer and title:
+            rep = ServiceReport.objects.create(
+                organization=org,
+                customer=customer,
+                title=title,
+                status='draft',
+                service_location=service_location,
+                created_by=request.user
+            )
+            rep.ensure_number()
+            log_activity(request, request.user, 'servicereport_created', obj=rep)
+            return redirect('backoffice:vistorias')
+            
+    customers_list = Customer.objects.all()
+    context = {'customers': customers_list}
+    return render(request, 'backoffice/vistorias_novo.html', context)
+
+@login_required
+def vistorias_detalhe(request, id):
+    report = get_object_or_404(ServiceReport, id=id)
+    if request.method == 'POST':
+        report.title = request.POST.get('title', report.title)
+        report.service_location = request.POST.get('service_location', report.service_location)
+        report.technician_name = request.POST.get('technician_name', report.technician_name)
+        report.status = request.POST.get('status', report.status)
+        report.problem_reported = request.POST.get('problem_reported', report.problem_reported)
+        report.service_performed = request.POST.get('service_performed', report.service_performed)
+        report.save()
+        log_activity(request, request.user, 'servicereport_updated', obj=report)
+        return redirect('backoffice:vistorias')
+        
+    context = {'report': report}
+    return render(request, 'backoffice/vistorias_detalhe.html', context)
 
 @login_required
 def relatorios(request):

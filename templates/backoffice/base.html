@@ -521,7 +521,7 @@
                     </div>
                     <small class="mb-0">Painel Principal</small>
                   </div>
-                  <a href="/app/" class="list-group-item"><i class="bi bi-house-door"></i>Início</a>
+                  <a href="{% url 'backoffice:dashboard' %}" class="list-group-item"><i class="bi bi-house-door"></i>Início</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-marmoraria">
@@ -532,11 +532,11 @@
                     </div>
                     <small class="mb-0">Gestão Comercial</small>
                   </div>
-                  <a href="/app/clientes/" class="list-group-item"><i class="bi bi-people"></i>Clientes</a>
-                  <a href="/app/catalogo/" class="list-group-item"><i class="bi bi-journal-text"></i>Catálogo</a>
-                  <a href="/app/orcamentos/" class="list-group-item"><i class="bi bi-file-earmark-ruled"></i>Orçamentos</a>
-                  <a href="/app/vistorias/" class="list-group-item"><i class="bi bi-clipboard-check"></i>Vistorias</a>
-                  <a href="/app/relatorios/" class="list-group-item"><i class="bi bi-graph-up"></i>Relatórios</a>
+                  <a href="{% url 'backoffice:clientes' %}" class="list-group-item"><i class="bi bi-people"></i>Clientes</a>
+                  <a href="{% url 'backoffice:catalogo' %}" class="list-group-item"><i class="bi bi-journal-text"></i>Catálogo</a>
+                  <a href="{% url 'backoffice:orcamentos' %}" class="list-group-item"><i class="bi bi-file-earmark-ruled"></i>Orçamentos</a>
+                  <a href="{% url 'backoffice:vistorias' %}" class="list-group-item"><i class="bi bi-clipboard-check"></i>Vistorias</a>
+                  <a href="{% url 'backoffice:relatorios' %}" class="list-group-item"><i class="bi bi-graph-up"></i>Relatórios</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-growth">
@@ -547,10 +547,10 @@
                     </div>
                     <small class="mb-0">Crescimento Acelerado</small>
                   </div>
-                  <a href="/app/growth/" class="list-group-item"><i class="bi bi-lightning"></i>Growth Engine</a>
-                  <a href="/app/atlas/" class="list-group-item"><i class="bi bi-compass"></i>Atlas</a>
-                  <a href="/app/assistente/" class="list-group-item"><i class="bi bi-robot"></i>Assistente Virtual</a>
-                  <a href="/app/redes-sociais/" class="list-group-item"><i class="bi bi-share"></i>Redes Sociais</a>
+                  <a href="{% url 'backoffice:growth' %}" class="list-group-item"><i class="bi bi-lightning"></i>Growth Engine</a>
+                  <a href="{% url 'backoffice:atlas' %}" class="list-group-item"><i class="bi bi-compass"></i>Atlas</a>
+                  <a href="{% url 'backoffice:assistente' %}" class="list-group-item"><i class="bi bi-robot"></i>Assistente Virtual</a>
+                  <a href="{% url 'backoffice:redes_sociais' %}" class="list-group-item"><i class="bi bi-share"></i>Redes Sociais</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-settings">
@@ -561,7 +561,7 @@
                     </div>
                     <small class="mb-0">Opções do Sistema</small>
                   </div>
-                  <a href="/app/configuracoes/" class="list-group-item"><i class="bi bi-gear"></i>Configurações</a>
+                  <a href="{% url 'backoffice:configuracoes' %}" class="list-group-item"><i class="bi bi-gear"></i>Configurações</a>
                 </div>
               </div>
             </div>
