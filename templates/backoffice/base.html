@@ -30,6 +30,16 @@
   <link href="{% static 'backoffice/assets/css/header-colors.css' %}" rel="stylesheet" />
 
   <title>Skodash - Bootstrap 5 Admin Template</title>
+
+  <!-- Theme Persistence -->
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('skodash-theme');
+      if (savedTheme) {
+        document.documentElement.className = savedTheme;
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -680,6 +690,32 @@
   </script>
   
 
+
+  <!-- Save Theme Persistence -->
+  <script>
+    $(document).ready(function() {
+      var savedTheme = localStorage.getItem('skodash-theme');
+      if (savedTheme) {
+        if (savedTheme === 'light-theme') $('#LightTheme').prop('checked', true);
+        else if (savedTheme === 'dark-theme') $('#DarkTheme').prop('checked', true);
+        else if (savedTheme === 'semi-dark') $('#SemiDarkTheme').prop('checked', true);
+        else if (savedTheme === 'minimal-theme') $('#MinimalTheme').prop('checked', true);
+      }
+
+      $("#LightTheme").on("click", function() {
+        localStorage.setItem('skodash-theme', 'light-theme');
+      });
+      $("#DarkTheme").on("click", function() {
+        localStorage.setItem('skodash-theme', 'dark-theme');
+      });
+      $("#SemiDarkTheme").on("click", function() {
+        localStorage.setItem('skodash-theme', 'semi-dark');
+      });
+      $("#MinimalTheme").on("click", function() {
+        localStorage.setItem('skodash-theme', 'minimal-theme');
+      });
+    });
+  </script>
 </body>
 
 </html>

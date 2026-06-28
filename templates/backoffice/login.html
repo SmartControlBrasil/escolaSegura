@@ -19,6 +19,23 @@
   <link href="{% static 'backoffice/assets/css/pace.min.css' %}" rel="stylesheet" />
 
   <title>Marmoraria360 - Login</title>
+
+  <!--Theme Styles-->
+  <link href="{% static 'backoffice/assets/css/dark-theme.css' %}" rel="stylesheet" />
+  <link href="{% static 'backoffice/assets/css/light-theme.css' %}" rel="stylesheet" />
+  <link href="{% static 'backoffice/assets/css/semi-dark.css' %}" rel="stylesheet" />
+  <link href="{% static 'backoffice/assets/css/header-colors.css' %}" rel="stylesheet" />
+
+  <!-- Theme Persistence -->
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('skodash-theme');
+      if (savedTheme) {
+        document.documentElement.className = savedTheme;
+      }
+    })();
+  </script>
+
 </head>
 
 <body>
