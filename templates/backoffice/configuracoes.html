@@ -1,0 +1,32 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Configurações da Empresa</h6>
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Razão Social</label>
+        <input type="text" class="form-control" value="{{ organization.legal_name }}" readonly>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nome Fantasia</label>
+        <input type="text" class="form-control" value="{{ organization.name }}" readonly>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">CNPJ</label>
+        <input type="text" class="form-control" value="{{ organization.document }}" readonly>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">E-mail Comercial</label>
+        <input type="email" class="form-control" value="{{ organization.email }}" readonly>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Telefone de Contato</label>
+        <input type="text" class="form-control" value="{{ organization.phone }}" readonly>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

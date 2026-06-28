@@ -1,0 +1,43 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Growth Engine - Funil Comercial da Marmoraria</h6>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary mb-4">Pipeline e oportunidades identificadas de prospecção e vendas.</p>
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Cliente</th>
+            <th>Projeto</th>
+            <th>Valor</th>
+            <th>Estágio do Funil</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for opportunity in opportunities %}
+          <tr>
+            <td><strong>{{ opportunity.client }}</strong></td>
+            <td>{{ opportunity.project }}</td>
+            <td>R$ {{ opportunity.value|floatformat:2 }}</td>
+            <td>
+              {% if opportunity.stage == 'Fechamento' %}
+                <span class="badge bg-success">Fechamento</span>
+              {% elif opportunity.stage == 'Negociação' %}
+                <span class="badge bg-primary">Negociação</span>
+              {% elif opportunity.stage == 'Proposta Enviada' %}
+                <span class="badge bg-info">Proposta Enviada</span>
+              {% else %}
+                <span class="badge bg-secondary">Qualificação</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

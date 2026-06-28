@@ -1,0 +1,41 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Gerenciador de Redes Sociais - Marmoraria360</h6>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary mb-4">Sugestões de postagens automáticas geradas pela inteligência de marketing para engajamento de arquitetos e clientes.</p>
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Canal</th>
+            <th>Título Sugerido</th>
+            <th>Legenda Sugerida</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <td><strong>{{ post.channel }}</strong></td>
+            <td>{{ post.suggested_title }}</td>
+            <td><small>{{ post.caption }}</small></td>
+            <td>
+              {% if post.status == 'Agendado' %}
+                <span class="badge bg-success">Agendado</span>
+              {% elif post.status == 'Revisão' %}
+                <span class="badge bg-warning text-dark">Revisão</span>
+              {% else %}
+                <span class="badge bg-secondary">Rascunho</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

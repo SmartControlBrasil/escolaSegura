@@ -155,4 +155,6 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 REFERRER_POLICY = 'same-origin'
 
-LOGIN_URL = '/admin/login/' # Can be changed later if a custom auth app is implemented
+LOGIN_URL = '/app/login/'
+LOGIN_REDIRECT_URL = '/app/'
+LOGOUT_REDIRECT_URL = '/app/login/'

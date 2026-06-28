@@ -1,0 +1,46 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Painel de Prospecção Atlas (Robô de Outreach)</h6>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary mb-4">Empresas e construtoras identificadas na região. Aprove ou rejeite para iniciar contato automático.</p>
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Empresa</th>
+            <th>Website</th>
+            <th>Contato</th>
+            <th>Cidade</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for prospect in prospects %}
+          <tr>
+            <td><strong>{{ prospect.company_name }}</strong></td>
+            <td><a href="{{ prospect.website }}" target="_blank">{{ prospect.website }}</a></td>
+            <td>{{ prospect.contact_name }} ({{ prospect.contact_email }})</td>
+            <td>{{ prospect.city }}/{{ prospect.state }}</td>
+            <td><span class="badge bg-info">{{ prospect.score }}%</span></td>
+            <td><span class="badge bg-warning text-dark">{{ prospect.get_status_display }}</span></td>
+            <td>
+              <button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i> Aprovar</button>
+              <button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i> Recusar</button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center">Nenhum prospect pendente de revisão.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

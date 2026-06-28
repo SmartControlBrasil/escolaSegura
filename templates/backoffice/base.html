@@ -134,7 +134,7 @@
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
-                    <a class="dropdown-item" href="authentication-signup-with-header-footer.html">
+                    <a class="dropdown-item" href="{% url 'backoffice:logout' %}">
                        <div class="d-flex align-items-center">
                          <div class="setting-icon"><i class="bi bi-lock-fill"></i></div>
                          <div class="setting-text ms-3"><span>Logout</span></div>
@@ -547,9 +547,10 @@
                     </div>
                     <small class="mb-0">Crescimento Acelerado</small>
                   </div>
-                  <a href="#" class="list-group-item"><i class="bi bi-lightning"></i>Growth Engine</a>
-                  <a href="#" class="list-group-item"><i class="bi bi-compass"></i>Atlas</a>
-                  <a href="#" class="list-group-item"><i class="bi bi-robot"></i>Assistente Virtual</a>
+                  <a href="/app/growth/" class="list-group-item"><i class="bi bi-lightning"></i>Growth Engine</a>
+                  <a href="/app/atlas/" class="list-group-item"><i class="bi bi-compass"></i>Atlas</a>
+                  <a href="/app/assistente/" class="list-group-item"><i class="bi bi-robot"></i>Assistente Virtual</a>
+                  <a href="/app/redes-sociais/" class="list-group-item"><i class="bi bi-share"></i>Redes Sociais</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-settings">
@@ -560,7 +561,7 @@
                     </div>
                     <small class="mb-0">Opções do Sistema</small>
                   </div>
-                  <a href="#" class="list-group-item"><i class="bi bi-gear"></i>Configurações</a>
+                  <a href="/app/configuracoes/" class="list-group-item"><i class="bi bi-gear"></i>Configurações</a>
                 </div>
               </div>
             </div>

@@ -1,0 +1,41 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Assistente Virtual Lívia - Leads Capturados</h6>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary mb-4">Sessões abertas no chat do site público capturadas pela inteligência conversacional.</p>
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Nome do Visitante</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Canal</th>
+            <th>Resumo da Demanda</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for session in sessions %}
+          <tr>
+            <td><strong>{{ session.visitor_name }}</strong></td>
+            <td>{{ session.visitor_email }}</td>
+            <td>{{ session.visitor_phone }}</td>
+            <td>{{ session.channel }}</td>
+            <td><small>{{ session.summary }}</small></td>
+            <td><span class="badge bg-success">Aberto</span></td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">Nenhuma sessão de assistente registrada.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

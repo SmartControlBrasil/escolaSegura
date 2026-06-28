@@ -1,0 +1,36 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3">
+    <h6 class="mb-0">Gerar Novo Orçamento de Marmoraria</h6>
+  </div>
+  <div class="card-body">
+    <form method="post" action="{% url 'backoffice:orcamentos_novo' %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="customer" class="form-label">Cliente</label>
+        <select name="customer" id="customer" class="form-select" required>
+          <option value="">Selecione um cliente...</option>
+          {% for customer in customers %}
+            <option value="{{ customer.id }}">{{ customer.name }} ({{ customer.get_type_display }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="title" class="form-label">Título do Projeto / Obra</label>
+        <input type="text" name="title" id="title" class="form-control" placeholder="Ex: Bancada de Cozinha em Mármore Carrara" required>
+      </div>
+      <div class="mb-3">
+        <label for="service_location" class="form-label">Local de Instalação (Endereço)</label>
+        <input type="text" name="service_location" id="service_location" class="form-control" placeholder="Ex: Av. Paulista, 1000 - Apto 50">
+      </div>
+      <div class="mb-3">
+        <label for="scope_summary" class="form-label">Resumo do Escopo / Detalhes</label>
+        <textarea name="scope_summary" id="scope_summary" class="form-control" rows="4" placeholder="Descreva as medidas gerais, acabamento (meia esquadria, bisotado), cuba embutida, etc."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar Rascunho</button>
+      <a href="{% url 'backoffice:orcamentos' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
