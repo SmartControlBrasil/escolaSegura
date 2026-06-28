@@ -1,50 +1,62 @@
 {% extends 'backoffice/base.html' %}
 {% block content %}
-<div class="card">
-  <div class="card-header py-3 d-flex justify-content-between align-items-center">
-    <h6 class="mb-0">Orçamentos de Marmoraria</h6>
-    <a href="{% url 'backoffice:orcamentos_novo' %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Novo Orçamento</a>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table align-middle table-striped table-hover">
-        <thead class="table-light">
-          <tr>
-            <th>Número</th>
-            <th>Título/Projeto</th>
-            <th>Cliente</th>
-            <th>Valor Total</th>
-            <th>Data de Criação</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for estimate in estimates %}
-          <tr>
-            <td><code><a href="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">{{ estimate.number }}</a></code></td>
-            <td><strong><a href="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">{{ estimate.title }}</a></strong></td>
-            <td>{{ estimate.customer.name }}</td>
-            <td>R$ {{ estimate.total_amount }}</td>
-            <td>{{ estimate.created_at|date:"d/m/Y H:i" }}</td>
-            <td>
-              {% if estimate.status == 'approved' %}
-                <span class="badge rounded-pill bg-success">Aprovado</span>
-              {% elif estimate.status == 'rejected' %}
-                <span class="badge rounded-pill bg-danger">Rejeitado</span>
-              {% elif estimate.status == 'sent' %}
-                <span class="badge rounded-pill bg-info">Enviado</span>
-              {% else %}
-                <span class="badge rounded-pill bg-warning text-dark">{{ estimate.get_status_display }}</span>
-              {% endif %}
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="6" class="text-center">Nenhum orçamento cadastrado.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Orçamentos Profissionais</h6>
+        <a href="{% url 'backoffice:orcamentos_novo' %}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Novo Orçamento</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-middle table-striped table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Número</th>
+                <th>Cliente</th>
+                <th>Obra</th>
+                <th>Valor Total</th>
+                <th>Status</th>
+                <th>Validade</th>
+                <th>Responsável</th>
+                <th class="text-end">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for est in estimates %}
+              <tr>
+                <td><strong><a href="{% url 'backoffice:orcamentos_detalhe' est.id %}">{{ est.number }}</a></strong></td>
+                <td>{{ est.customer.name }}</td>
+                <td>{{ est.title }}</td>
+                <td><strong>R$ {{ est.total_amount }}</strong></td>
+                <td>
+                  {% if est.status == 'draft' %}<span class="badge rounded-pill bg-secondary">Rascunho</span>
+                  {% elif est.status == 'sent' %}<span class="badge rounded-pill bg-info">Enviado</span>
+                  {% elif est.status == 'approved' %}<span class="badge rounded-pill bg-success">Aprovado</span>
+                  {% elif est.status == 'rejected' %}<span class="badge rounded-pill bg-danger">Recusado</span>
+                  {% elif est.status == 'expired' %}<span class="badge rounded-pill bg-warning text-dark">Expirado</span>
+                  {% else %}<span class="badge rounded-pill bg-secondary">{{ est.get_status_display }}</span>{% endif %}
+                </td>
+                <td>{{ est.valid_until|date:"d/m/Y" }}</td>
+                <td>{{ est.created_by.username|default:"-" }}</td>
+                <td class="text-end">
+                  <a href="{% url 'backoffice:orcamentos_preview' est.id %}" target="_blank" class="btn btn-outline-info btn-sm" title="Visualizar Proposta Comercial">
+                    <i class="bi bi-file-earmark-pdf"></i> Preview
+                  </a>
+                  <a href="{% url 'backoffice:orcamentos_detalhe' est.id %}" class="btn btn-outline-primary btn-sm" title="Editar Orçamento">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="8" class="text-center">Nenhum orçamento cadastrado.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

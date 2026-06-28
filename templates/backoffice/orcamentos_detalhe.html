@@ -1,127 +1,237 @@
 {% extends 'backoffice/base.html' %}
 {% block content %}
 <div class="row">
-  <div class="col-12 col-xl-8">
+  <div class="col-12 col-lg-12">
     <div class="card">
       <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="mb-0">Orçamento: {{ estimate.number }}</h6>
-        <span class="badge bg-primary">{{ estimate.get_status_display }}</span>
+        <div class="d-flex align-items-center gap-2">
+            <a href="{% url 'backoffice:orcamentos_preview' estimate.id %}" target="_blank" class="btn btn-info btn-sm text-white">
+                <i class="bi bi-eye"></i> Preview Comercial
+            </a>
+            <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update_status">
+                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="draft" {% if estimate.status == 'draft' %}selected{% endif %}>Rascunho</option>
+                    <option value="sent" {% if estimate.status == 'sent' %}selected{% endif %}>Enviado</option>
+                    <option value="approved" {% if estimate.status == 'approved' %}selected{% endif %}>Aprovado</option>
+                    <option value="rejected" {% if estimate.status == 'rejected' %}selected{% endif %}>Recusado</option>
+                    <option value="expired" {% if estimate.status == 'expired' %}selected{% endif %}>Expirado</option>
+                </select>
+            </form>
+        </div>
       </div>
       <div class="card-body">
         
-        <!-- Info Básica -->
-        <div class="row mb-4">
-          <div class="col-sm-6">
-            <p class="mb-1"><strong>Cliente:</strong> {{ estimate.customer.name }}</p>
-            <p class="mb-1"><strong>Projeto:</strong> {{ estimate.title }}</p>
-            <p class="mb-1"><strong>Local da Obra:</strong> {{ estimate.service_location|default:"Não informado" }}</p>
-          </div>
-          <div class="col-sm-6 text-sm-end">
-            <p class="mb-1"><strong>Data:</strong> {{ estimate.created_at|date:"d/m/Y" }}</p>
-            <p class="mb-1"><strong>Validade:</strong> {{ estimate.validity_days }} dias</p>
-          </div>
-        </div>
-
-        <!-- Mudar Status -->
-        <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}" class="d-flex align-items-center mb-4 p-3 bg-light rounded">
-          {% csrf_token %}
-          <input type="hidden" name="action" value="update_status">
-          <label class="me-2 fw-bold">Alterar Status:</label>
-          <select name="status" class="form-select form-select-sm w-auto me-2">
-            <option value="draft" {% if estimate.status == 'draft' %}selected{% endif %}>Rascunho</option>
-            <option value="pricing" {% if estimate.status == 'pricing' %}selected{% endif %}>Em orçamento</option>
-            <option value="sent" {% if estimate.status == 'sent' %}selected{% endif %}>Enviado ao cliente</option>
-            <option value="approved" {% if estimate.status == 'approved' %}selected{% endif %}>Aprovado</option>
-            <option value="rejected" {% if estimate.status == 'rejected' %}selected{% endif %}>Rejeitado</option>
-            <option value="cancelled" {% if estimate.status == 'cancelled' %}selected{% endif %}>Cancelado</option>
-          </select>
-          <button type="submit" class="btn btn-sm btn-outline-secondary">Aplicar</button>
-        </form>
-
-        <!-- Itens do Orçamento -->
-        <h6 class="mb-3 border-bottom pb-2">Itens Inclusos</h6>
-        <div class="table-responsive mb-4">
-          <table class="table table-bordered table-sm align-middle">
-            <thead class="table-light">
-              <tr>
-                <th>Descrição</th>
-                <th class="text-center">Qtd</th>
-                <th class="text-center">Unid.</th>
-                <th class="text-end">Valor Unitário</th>
-                <th class="text-end">Subtotal</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for line in estimate.lines.all %}
-              <tr>
-                <td>{{ line.description }}</td>
-                <td class="text-center">{{ line.quantity|stringformat:".2f" }}</td>
-                <td class="text-center">{{ line.unit }}</td>
-                <td class="text-end">R$ {{ line.unit_price }}</td>
-                <td class="text-end fw-bold">R$ {{ line.subtotal }}</td>
-                <td class="text-center">
-                  <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="remove_item">
-                    <input type="hidden" name="line_id" value="{{ line.id }}">
-                    <button type="submit" class="btn btn-sm btn-link text-danger p-0" title="Remover"><i class="bi bi-trash"></i></button>
-                  </form>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="6" class="text-center text-muted">Nenhum item adicionado ao orçamento.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-            <tfoot class="table-light">
-              <tr>
-                <td colspan="4" class="text-end fw-bold">Total do Orçamento:</td>
-                <td class="text-end fw-bold fs-6 text-primary">R$ {{ estimate.total_amount }}</td>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-
-        <div class="d-flex justify-content-between mt-4">
-          <a href="{% url 'backoffice:orcamentos' %}" class="btn btn-secondary">Voltar para a Lista</a>
-          <a href="{% url 'backoffice:orcamentos_preview' estimate.id %}" target="_blank" class="btn btn-success"><i class="bi bi-file-earmark-pdf"></i> Visualizar/Imprimir PDF</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-xl-4">
-    <!-- Adicionar Item -->
-    <div class="card bg-light shadow-none border">
-      <div class="card-header py-3">
-        <h6 class="mb-0">Adicionar Produto/Serviço</h6>
-      </div>
-      <div class="card-body">
-        <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
-          {% csrf_token %}
-          <input type="hidden" name="action" value="add_item">
+        <ul class="nav nav-tabs nav-primary" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-bs-toggle="tab" href="#dados" role="tab" aria-selected="true">
+              <div class="d-flex align-items-center">
+                <div class="tab-icon"><i class="bi bi-info-circle font-18 me-1"></i></div>
+                <div class="tab-title">Dados Gerais</div>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" data-bs-toggle="tab" href="#itens" role="tab" aria-selected="false">
+              <div class="d-flex align-items-center">
+                <div class="tab-icon"><i class="bi bi-list-check font-18 me-1"></i></div>
+                <div class="tab-title">Itens e Valores</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        
+        <div class="tab-content py-3">
           
-          <div class="mb-3">
-            <label class="form-label">Item do Catálogo</label>
-            <select name="product" class="form-select" required>
-              <option value="">Selecione...</option>
-              {% for p in products %}
-                <option value="{{ p.id }}">{{ p.name }} (R$ {{ p.sale_price }}/{{ p.unit }})</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Quantidade</label>
-            <input type="text" name="quantity" class="form-control" value="1.00" required>
+          <!-- Aba Dados -->
+          <div class="tab-pane fade show active" id="dados" role="tabpanel">
+            <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="">
+              
+              <div class="row g-3">
+                  <div class="col-md-6">
+                      <label class="form-label">Cliente</label>
+                      <input type="text" class="form-control" value="{{ estimate.customer.name }}" disabled>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Título da Obra</label>
+                      <input type="text" name="title" class="form-control" value="{{ estimate.title }}">
+                  </div>
+                  <div class="col-md-12">
+                      <label class="form-label">Endereço da Obra</label>
+                      <input type="text" name="service_location" class="form-control" value="{{ estimate.service_location }}">
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Ambiente Padrão</label>
+                      <input type="text" name="environment" class="form-control" value="{{ estimate.environment }}" placeholder="Ex: Cozinha">
+                  </div>
+                  <div class="col-md-3">
+                      <label class="form-label">Prazo (Dias)</label>
+                      <input type="number" name="deadline_days" class="form-control" value="{{ estimate.deadline_days }}">
+                  </div>
+                  <div class="col-md-3">
+                      <label class="form-label">Validade (Dias)</label>
+                      <input type="number" name="validity_days" class="form-control" value="{{ estimate.validity_days }}">
+                  </div>
+                  <div class="col-md-12">
+                      <label class="form-label">Condições Comerciais (Formas de Pagamento)</label>
+                      <textarea name="terms_and_conditions" class="form-control" rows="2">{{ estimate.terms_and_conditions }}</textarea>
+                  </div>
+                  <div class="col-md-12">
+                      <label class="form-label">Observações Internas (Não sai na proposta)</label>
+                      <textarea name="internal_notes" class="form-control" rows="2">{{ estimate.internal_notes }}</textarea>
+                  </div>
+                  <div class="col-md-12 text-end">
+                      <a href="{% url 'backoffice:orcamentos' %}" class="btn btn-secondary">Voltar</a>
+                      <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                  </div>
+              </div>
+            </form>
           </div>
           
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary"><i class="bi bi-plus"></i> Adicionar ao Orçamento</button>
+          <!-- Aba Itens -->
+          <div class="tab-pane fade" id="itens" role="tabpanel">
+              <div class="row">
+                  <div class="col-lg-8">
+                      <div class="table-responsive mb-4">
+                          <table class="table table-bordered align-middle">
+                              <thead class="table-light">
+                                  <tr>
+                                      <th>Material / Serviço</th>
+                                      <th>Qtd / Medidas</th>
+                                      <th>Preço Unit.</th>
+                                      <th>Desconto</th>
+                                      <th>Subtotal</th>
+                                      <th>Ação</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for item in estimate.lines.all %}
+                                  <tr>
+                                      <td>
+                                          <strong>{{ item.description }}</strong><br>
+                                          <small class="text-muted">{{ item.product.name }}</small>
+                                      </td>
+                                      <td>
+                                          {% if item.length > 0 and item.width > 0 %}
+                                            {{ item.length }}m x {{ item.width }}m = <strong>{{ item.quantity|floatformat:2 }} m²</strong>
+                                          {% else %}
+                                            <strong>{{ item.quantity|floatformat:2 }} {{ item.unit }}</strong>
+                                          {% endif %}
+                                      </td>
+                                      <td>R$ {{ item.unit_price }}</td>
+                                      <td>R$ {{ item.discount_amount }}</td>
+                                      <td><strong>R$ {{ item.subtotal }}</strong></td>
+                                      <td>
+                                          <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}" onsubmit="return confirm('Remover item?');">
+                                              {% csrf_token %}
+                                              <input type="hidden" name="action" value="remove_item">
+                                              <input type="hidden" name="line_id" value="{{ item.id }}">
+                                              <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                          </form>
+                                      </td>
+                                  </tr>
+                                  {% empty %}
+                                  <tr>
+                                      <td colspan="6" class="text-center">Nenhum item adicionado.</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                      
+                      <div class="card bg-light border-0">
+                          <div class="card-body">
+                              <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
+                                  {% csrf_token %}
+                                  <input type="hidden" name="action" value="update_totals">
+                                  <div class="row align-items-center">
+                                      <div class="col-md-6">
+                                          <h6>Totais do Orçamento</h6>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <label class="form-label mb-0">Desconto Global (R$)</label>
+                                          <input type="text" name="discount_amount" class="form-control form-control-sm" value="{{ estimate.discount_amount|floatformat:2 }}">
+                                      </div>
+                                      <div class="col-md-3 text-end mt-4">
+                                          <button type="submit" class="btn btn-sm btn-dark">Atualizar Totais</button>
+                                      </div>
+                                  </div>
+                              </form>
+                              
+                              <hr>
+                              
+                              <div class="d-flex justify-content-end text-end mt-3">
+                                  <div style="width: 300px;">
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <span>Soma dos Itens:</span>
+                                          <strong>R$ {{ estimate.subtotal_amount|add:estimate.discount_amount|floatformat:2 }}</strong>
+                                      </div>
+                                      <div class="d-flex justify-content-between mb-2 text-danger">
+                                          <span>Desconto Global:</span>
+                                          <strong>- R$ {{ estimate.discount_amount }}</strong>
+                                      </div>
+                                      <div class="d-flex justify-content-between border-top pt-2">
+                                          <span class="fs-5">Total a Pagar:</span>
+                                          <strong class="fs-5 text-primary">R$ {{ estimate.total_amount }}</strong>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                  </div>
+                  
+                  <div class="col-lg-4 border-start">
+                      <h6 class="mb-3">Adicionar Novo Item</h6>
+                      <form method="post" action="{% url 'backoffice:orcamentos_detalhe' estimate.id %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="add_item">
+                          
+                          <div class="mb-3">
+                              <label class="form-label">Material / Serviço</label>
+                              <select name="product" class="form-select" required>
+                                  <option value="">Selecione...</option>
+                                  {% for p in products %}
+                                      <option value="{{ p.id }}">{{ p.name }} (R$ {{ p.sale_price }} / {{ p.unit }})</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          
+                          <div class="row mb-3">
+                              <div class="col-12 mb-2"><small class="text-muted">Preencha L x C para m² automático, OU apenas a Quantidade.</small></div>
+                              <div class="col-6">
+                                  <label class="form-label">Comprimento (m)</label>
+                                  <input type="text" name="length" class="form-control" placeholder="Ex: 2.5">
+                              </div>
+                              <div class="col-6">
+                                  <label class="form-label">Largura (m)</label>
+                                  <input type="text" name="width" class="form-control" placeholder="Ex: 0.6">
+                              </div>
+                          </div>
+                          
+                          <div class="mb-3">
+                              <label class="form-label">Quantidade Numérica (un/m²)</label>
+                              <input type="text" name="quantity" class="form-control" placeholder="Ex: 1" value="1">
+                          </div>
+                          
+                          <div class="mb-3">
+                              <label class="form-label">Desconto no Item (R$)</label>
+                              <input type="text" name="discount_amount" class="form-control" placeholder="Ex: 50.00">
+                          </div>
+                          
+                          <div class="d-grid">
+                              <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i> Inserir Item no Orçamento</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
           </div>
-        </form>
+          
+        </div>
       </div>
     </div>
   </div>

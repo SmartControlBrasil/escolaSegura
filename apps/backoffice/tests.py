@@ -131,3 +131,33 @@ class BackofficeTests(TestCase):
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get('/app/login/')
         self.assertRedirects(response, '/app/')
+
+    def test_estimate_line_calculation(self):
+        call_command('seed_marmoraria_demo')
+        from apps.estimates.infrastructure.models import Estimate, EstimateLine
+        from apps.catalog.infrastructure.models import Product
+        from decimal import Decimal
+        
+        est = Estimate.objects.first()
+        prod = Product.objects.first()
+        
+        # Test calculation with length and width
+        line = EstimateLine.objects.create(
+            estimate=est,
+            product=prod,
+            length=Decimal('2.000'),
+            width=Decimal('3.000'),
+            unit_price=Decimal('100.00'),
+            discount_amount=Decimal('50.00')
+        )
+        
+        self.assertEqual(line.quantity, Decimal('6.000')) # 2 * 3
+        self.assertEqual(line.subtotal, Decimal('550.00')) # (6 * 100) - 50
+        
+    def test_orcamento_preview_route(self):
+        call_command('seed_marmoraria_demo')
+        from apps.estimates.infrastructure.models import Estimate
+        est = Estimate.objects.first()
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(f'/app/orcamentos/{est.id}/preview/')
+        self.assertEqual(response.status_code, 200)

@@ -55,6 +55,11 @@ class Estimate(TimeStampedModel):
             self.save(update_fields=['number', 'updated_at'])
         return self.number
 
+    @property
+    def valid_until(self):
+        from datetime import timedelta
+        return self.created_at + timedelta(days=self.validity_days)
+
     def __str__(self):
         return self.number or self.title
 
@@ -73,6 +78,8 @@ class EstimateLine(TimeStampedModel):
     description = models.CharField(max_length=240)
     unit = models.CharField(max_length=20, default='un')
     quantity = models.DecimalField(max_digits=12, decimal_places=3, default=Decimal('1.000'))
+    length = models.DecimalField(max_digits=8, decimal_places=3, default=Decimal('0.000'), help_text="Comprimento em metros")
+    width = models.DecimalField(max_digits=8, decimal_places=3, default=Decimal('0.000'), help_text="Largura em metros")
     unit_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('0.00'))
     discount_amount = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal('0.00'))
     subtotal = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00'))
@@ -83,6 +90,9 @@ class EstimateLine(TimeStampedModel):
         ordering = ['sort_order', 'created_at']
 
     def save(self, *args, **kwargs):
+        if self.length and self.length > 0 and self.width and self.width > 0:
+            self.quantity = self.length * self.width
+            
         self.subtotal = ((self.quantity or Decimal('0')) * (self.unit_price or Decimal('0'))) - (self.discount_amount or Decimal('0'))
         if self.subtotal < 0:
             self.subtotal = Decimal('0.00')

@@ -1,121 +1,200 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Orçamento {{ estimate.number }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { font-family: 'Arial', sans-serif; background-color: #f8f9fa; padding: 20px; }
-    .document-container { background: #fff; max-width: 800px; margin: 0 auto; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .doc-header { border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
-    .logo-placeholder { width: 150px; height: 60px; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #555; }
-    .info-label { font-size: 0.85rem; color: #666; text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
-    .info-value { font-size: 1rem; margin-bottom: 15px; }
-    .totals-box { background: #f8f9fa; padding: 20px; border-radius: 5px; margin-top: 30px; }
-    .total-line { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; }
-    @media print {
-      body { background: transparent; padding: 0; }
-      .document-container { box-shadow: none; max-width: 100%; padding: 0; }
-      .no-print { display: none !important; }
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proposta {{ estimate.number }} - {{ estimate.customer.name }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'backoffice/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .invoice-container {
+            background-color: #fff;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .invoice-header {
+            border-bottom: 2px solid #343a40;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo-placeholder {
+            font-size: 24px;
+            font-weight: bold;
+            color: #343a40;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .invoice-title {
+            font-size: 28px;
+            color: #17a2b8;
+            font-weight: 700;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .totals-row td {
+            font-weight: bold;
+        }
+        .total-highlight {
+            font-size: 20px;
+            color: #28a745;
+        }
+        .signature-area {
+            margin-top: 80px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            width: 300px;
+        }
+        @media print {
+            body { background-color: #fff; }
+            .invoice-container { margin: 0; padding: 20px; box-shadow: none; max-width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
 </head>
 <body>
-  
-  <div class="text-center mb-4 no-print">
-    <button onclick="window.print()" class="btn btn-primary">Imprimir PDF</button>
-    <button onclick="window.close()" class="btn btn-secondary">Fechar Janela</button>
-  </div>
-
-  <div class="document-container">
-    <div class="doc-header d-flex justify-content-between align-items-center">
-      <div>
-        <h2>PROPOSTA COMERCIAL</h2>
-        <h5 class="text-muted">Nº {{ estimate.number }}</h5>
-      </div>
-      <div class="text-end">
-        <h4>{{ organization.name|default:"Marmoraria360" }}</h4>
-        <p class="mb-0 text-muted">{{ organization.email|default:"contato@marmoraria.com.br" }}</p>
-        <p class="mb-0 text-muted">{{ organization.phone|default:"(00) 0000-0000" }}</p>
-      </div>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-sm-6">
-        <div class="info-label">Cliente</div>
-        <div class="info-value">
-          <strong>{{ estimate.customer.name }}</strong><br>
-          {% if estimate.customer.document %}Doc: {{ estimate.customer.document }}<br>{% endif %}
-          {{ estimate.customer.email }}<br>
-          {{ estimate.customer.phone }}
-        </div>
-      </div>
-      <div class="col-sm-6 text-sm-end">
-        <div class="info-label">Data do Orçamento</div>
-        <div class="info-value">{{ estimate.created_at|date:"d/m/Y" }}</div>
-        
-        <div class="info-label">Validade da Proposta</div>
-        <div class="info-value">{{ estimate.validity_days }} dias</div>
-      </div>
-    </div>
-
-    <div class="mb-4">
-      <div class="info-label">Projeto / Local</div>
-      <div class="info-value"><strong>{{ estimate.title }}</strong> - {{ estimate.service_location }}</div>
-    </div>
-
-    <table class="table table-bordered mb-0">
-      <thead class="table-light">
-        <tr>
-          <th>Descrição dos Itens / Serviços</th>
-          <th class="text-center" width="10%">Qtd</th>
-          <th class="text-center" width="10%">Unid.</th>
-          <th class="text-end" width="15%">V. Unitário</th>
-          <th class="text-end" width="20%">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for line in estimate.lines.all %}
-        <tr>
-          <td>{{ line.description }}</td>
-          <td class="text-center">{{ line.quantity|stringformat:".2f" }}</td>
-          <td class="text-center">{{ line.unit }}</td>
-          <td class="text-end">R$ {{ line.unit_price }}</td>
-          <td class="text-end">R$ {{ line.subtotal }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5" class="text-center text-muted">Nenhum item listado.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <div class="row">
-      <div class="col-sm-7 offset-sm-5">
-        <div class="totals-box">
-          <div class="total-line">
-            <span>TOTAL GERAL:</span>
-            <span class="text-primary">R$ {{ estimate.total_amount }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <div class="info-label">Termos e Condições</div>
-      <div class="info-value text-muted" style="font-size: 0.9rem;">
-        {{ estimate.terms_and_conditions|default:"1. O pagamento deve ser realizado em até 3 parcelas iguais, sendo a primeira na assinatura.<br>2. Prazo de entrega de 15 dias úteis após medição final.<br>3. Materiais naturais podem apresentar pequenas variações de veios e tonalidades."|safe }}
-      </div>
-    </div>
     
-    <div class="mt-5 pt-5 text-center">
-      <div style="border-top: 1px solid #333; width: 60%; margin: 0 auto; padding-top: 10px;">
-        <strong>Assinatura do Cliente / Aceite</strong><br>
-        {{ estimate.customer.name }}
-      </div>
+    <div class="text-center mt-4 no-print">
+        <button onclick="window.print()" class="btn btn-dark px-4 py-2 fw-bold shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer me-2" viewBox="0 0 16 16">
+              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+              <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+            </svg>
+            Imprimir Proposta
+        </button>
+        <a href="{% url 'backoffice:orcamentos_detalhe' estimate.id %}" class="btn btn-outline-secondary ms-2">Voltar ao Painel</a>
     </div>
 
-  </div>
+    <div class="invoice-container">
+        <div class="row invoice-header align-items-center">
+            <div class="col-sm-6">
+                <div class="logo-placeholder">MARMORARIA 360</div>
+                <div class="text-muted mt-2">
+                    CNPJ: 00.000.000/0001-00<br>
+                    {{ organization.name }}<br>
+                    Av. Exemplo Comercial, 1000 - Centro
+                </div>
+            </div>
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                <div class="invoice-title">PROPOSTA COMERCIAL</div>
+                <div class="mt-2">
+                    <strong>Nº:</strong> {{ estimate.number }}<br>
+                    <strong>Data:</strong> {{ estimate.created_at|date:"d/m/Y" }}<br>
+                    <strong>Validade:</strong> {{ estimate.valid_until|date:"d/m/Y" }} ({{ estimate.validity_days }} dias)
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                <h6 class="text-uppercase text-muted fw-bold">Cliente</h6>
+                <div class="p-3 bg-light border rounded">
+                    <strong>{{ estimate.customer.name }}</strong><br>
+                    {% if estimate.customer.document %}Doc: {{ estimate.customer.document }}<br>{% endif %}
+                    {% if estimate.customer.phone %}Tel: {{ estimate.customer.phone }}<br>{% endif %}
+                    {% if estimate.customer.email %}{{ estimate.customer.email }}{% endif %}
+                </div>
+            </div>
+            <div class="col-sm-6 mt-3 mt-sm-0">
+                <h6 class="text-uppercase text-muted fw-bold">Dados da Obra</h6>
+                <div class="p-3 bg-light border rounded">
+                    <strong>Obra:</strong> {{ estimate.title }}<br>
+                    <strong>Endereço:</strong> {{ estimate.service_location|default:"Não informado" }}<br>
+                    <strong>Ambiente:</strong> {{ estimate.environment|default:"Não informado" }}<br>
+                    <strong>Prazo de Entrega Estimado:</strong> {{ estimate.deadline_days }} dias úteis após medição e aprovação.
+                </div>
+            </div>
+        </div>
+
+        <h6 class="text-uppercase text-muted fw-bold mt-5 mb-3">Detalhamento dos Itens</h6>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th width="5%">Item</th>
+                        <th width="45%">Descrição / Material</th>
+                        <th width="15%" class="text-center">Medidas / Qtd</th>
+                        <th width="15%" class="text-end">V. Unit (R$)</th>
+                        <th width="20%" class="text-end">Subtotal (R$)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in estimate.lines.all %}
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td>
+                            <strong>{{ item.description }}</strong><br>
+                            <small class="text-muted">{{ item.product.name }}</small>
+                        </td>
+                        <td class="text-center">
+                            {% if item.length > 0 and item.width > 0 %}
+                                {{ item.length }}x{{ item.width }}<br>
+                                <span class="badge bg-secondary">{{ item.quantity|floatformat:2 }} m²</span>
+                            {% else %}
+                                {{ item.quantity|floatformat:2 }} {{ item.unit }}
+                            {% endif %}
+                        </td>
+                        <td class="text-end">{{ item.unit_price|floatformat:2 }}</td>
+                        <td class="text-end">{{ item.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">Nenhum item adicionado a este orçamento ainda.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-7">
+                <h6 class="text-uppercase text-muted fw-bold mb-2">Condições Comerciais</h6>
+                <div class="p-3 bg-light rounded text-muted small">
+                    {{ estimate.terms_and_conditions|default:"- Pagamento de 50% na aprovação (Sinal) e 50% na entrega.<br>- Medição exata será feita na obra antes do corte.<br>- Materiais naturais (mármore e granito) podem sofrer variações de tonalidade e veios."|safe|linebreaks }}
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <table class="table table-borderless table-sm text-end">
+                    <tr>
+                        <td>Total dos Itens:</td>
+                        <td>R$ {{ estimate.subtotal_amount|add:estimate.discount_amount|floatformat:2 }}</td>
+                    </tr>
+                    {% if estimate.discount_amount > 0 %}
+                    <tr class="text-danger">
+                        <td>Desconto:</td>
+                        <td>- R$ {{ estimate.discount_amount|floatformat:2 }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr class="totals-row border-top">
+                        <td class="pt-3">TOTAL A PAGAR:</td>
+                        <td class="pt-3 total-highlight">R$ {{ estimate.total_amount|floatformat:2 }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="signature-area">
+                <span class="d-block fw-bold">{{ estimate.customer.name }}</span>
+                <span class="d-block text-muted small">De acordo - Data: ___/___/20__</span>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 pt-3 border-top text-muted small">
+            Orçamento gerado por <strong>{{ estimate.created_by.username|default:"Sistema" }}</strong> - Marmoraria 360 CRM.
+        </div>
+    </div>
+
 </body>
 </html>

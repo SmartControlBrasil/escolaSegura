@@ -256,9 +256,20 @@ def orcamentos_detalhe(request, id):
             deadline_days = request.POST.get('deadline_days')
             if deadline_days and deadline_days.isdigit():
                 estimate.deadline_days = int(deadline_days)
+            validity_days = request.POST.get('validity_days')
+            if validity_days and validity_days.isdigit():
+                estimate.validity_days = int(validity_days)
+            
+            discount_amount = request.POST.get('discount_amount')
+            if discount_amount:
+                estimate.discount_amount = Decimal(discount_amount.replace(',', '.'))
+                
             estimate.title = request.POST.get('title', estimate.title)
             estimate.service_location = request.POST.get('service_location', estimate.service_location)
+            estimate.terms_and_conditions = request.POST.get('terms_and_conditions', estimate.terms_and_conditions)
+            estimate.internal_notes = request.POST.get('internal_notes', estimate.internal_notes)
             estimate.save()
+            estimate.recalculate_totals() # recalculate just in case discount changed
             log_activity(request, request.user, 'estimate_updated', obj=estimate)
 
         elif action == 'update_status':
@@ -270,6 +281,10 @@ def orcamentos_detalhe(request, id):
         elif action == 'add_item':
             product_id = request.POST.get('product')
             quantity = request.POST.get('quantity', '1')
+            length = request.POST.get('length', '0')
+            width = request.POST.get('width', '0')
+            discount = request.POST.get('discount_amount', '0')
+            
             if product_id:
                 product = get_object_or_404(Product, id=product_id)
                 EstimateLine.objects.create(
@@ -278,7 +293,10 @@ def orcamentos_detalhe(request, id):
                     kind=product.type,
                     description=f'Fornecimento de {product.name}',
                     unit=product.unit,
-                    quantity=Decimal(quantity.replace(',', '.')),
+                    quantity=Decimal(quantity.replace(',', '.') or '0'),
+                    length=Decimal(length.replace(',', '.') or '0'),
+                    width=Decimal(width.replace(',', '.') or '0'),
+                    discount_amount=Decimal(discount.replace(',', '.') or '0'),
                     unit_price=product.sale_price
                 )
                 log_activity(request, request.user, 'estimate_item_added', obj=estimate)

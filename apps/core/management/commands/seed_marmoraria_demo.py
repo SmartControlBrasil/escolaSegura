@@ -202,7 +202,9 @@ class Command(BaseCommand):
                         kind='product',
                         description=f'Fornecimento de {mat.name}',
                         unit='m²',
-                        quantity=Decimal(random.randint(3, 9)),
+                        quantity=Decimal('0.000'), # Will be calculated by save()
+                        length=Decimal('2.500'),
+                        width=Decimal('0.600'),
                         unit_price=mat.sale_price
                     )
                 # Add services
