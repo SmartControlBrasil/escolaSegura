@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.inventory',
     'apps.sales',
     'apps.finance',
+    'apps.saas',
     'apps.agents',
     'apps.escola_segura_assistant',
     'apps.policy_guard',
