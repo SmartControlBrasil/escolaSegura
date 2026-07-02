@@ -6,6 +6,27 @@ class PublicSiteTests(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+
+
+    def test_home_page_contains_escola_segura_brand(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'EscolaSegura')
+
+    def test_home_page_contains_app_link(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'href="/app/"')
+
+    def test_home_page_contains_family_portal_link(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'href="/familia/"')
+
+    def test_home_page_does_not_contain_old_branding(self):
+        response = self.client.get('/')
+        content = response.content.decode('utf-8')
+        self.assertNotIn('Intereal', content)
+        self.assertNotIn('Marmoraria', content)
+        self.assertNotIn('Santander', content)
+
     def test_about_page_status_code(self):
         response = self.client.get('/sobre/')
         self.assertEqual(response.status_code, 200)

@@ -1,53 +1,26 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EscolaSegura - Política de Privacidade</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'public_site/css/style.css' %}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidade | EscolaSegura</title>
+  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
 </head>
-<body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="/">EscolaSegura ® Mármores e Granitos</a>
-      <a href="/" class="btn btn-outline-light btn-sm">Voltar ao Site</a>
-    </div>
-  </nav>
-
-  <div class="container py-5 my-4 bg-white shadow-sm rounded">
-    <h1 class="mb-4">Política de Privacidade</h1>
-    <p class="text-secondary">Última atualização: 28 de Junho de 2026</p>
-    <hr>
-    
-    <h4 class="mt-4">1. Quais dados são coletados?</h4>
-    <p>Ao utilizar o formulário de contato do nosso site, coletamos as seguintes informações fornecidas por você:</p>
-    <ul>
-      <li>Nome completo</li>
-      <li>Endereço de e-mail</li>
-      <li>Número de telefone</li>
-      <li>Mensagem descritiva</li>
-    </ul>
-
-    <h4 class="mt-4">2. Qual a finalidade do uso dos dados?</h4>
-    <p>Os dados coletados são utilizados única e exclusivamente para responder às suas solicitações de orçamento, dúvidas e contatos comerciais. Não utilizamos seus dados para envio de spam ou e-mails de marketing não autorizados.</p>
-
-    <h4 class="mt-4">3. Base Legal para o Tratamento</h4>
-    <p>Em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/18), a base legal utilizada para o tratamento de seus dados é o <b>consentimento explícito</b> fornecido por você ao marcar a caixa de aceitação no formulário de contato, bem como os procedimentos preliminares para execução de contrato de prestação de serviços a seu pedido.</p>
-
-    <h4 class="mt-4">4. Compartilhamento de Dados</h4>
-    <p>A EscolaSegura não vende, aluga ou compartilha seus dados pessoais com terceiros ou parceiros comerciais externos.</p>
-
-    <h4 class="mt-4">5. Retenção dos Dados</h4>
-    <p>Mantemos seus dados pessoais em nossa base pelo período necessário para atender à finalidade do contato comercial ou até que você solicite a exclusão de suas informações de nossa base de dados.</p>
-
-    <h4 class="mt-4">6. Direitos do Titular</h4>
-    <p>Você, como titular dos dados, possui o direito de solicitar a qualquer momento a confirmação da existência do tratamento, o acesso aos seus dados, a correção de dados incompletos ou inexatos, e a eliminação dos seus dados pessoais tratados com o seu consentimento.</p>
-
-    <h4 class="mt-4">7. Canal de Contato</h4>
-    <p>Para exercer seus direitos de titular ou tirar qualquer dúvida relacionada a esta política, entre em contato através de nosso e-mail oficial: <b>comercial@santanderescola.com.br</b>.</p>
-  </div>
-  {% include 'escola_segura_assistant/chat_widget.html' %}
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <a class="brand" href="/">EscolaSegura</a>
+      <div class="menu">
+        <a href="/#inicio">Início</a>
+        <a href="/#recursos">Recursos</a>
+        <a href="/#escolas">Para Escolas</a>
+        <a href="/#familias">Para Famílias</a>
+        <a href="/#seguranca">Segurança/LGPD</a>
+        <a href="/app/">Acessar Sistema</a>
+      </div>
+    </nav>
+  </header>
+<main class="section"><span class="eyebrow">Privacidade</span><h1>Política de Privacidade</h1><p class="lead">O EscolaSegura trata dados escolares e familiares com foco em segurança, transparência e conformidade com a LGPD.</p><p>Para solicitações relacionadas a privacidade, fale com a Smart Control Brasil pelos canais oficiais do produto.</p></main>  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
 </body>
 </html>
