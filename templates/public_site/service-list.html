@@ -1,26 +1,14 @@
-{% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Recursos | EscolaSegura</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
-</head>
-<body>
-  <header class="header">
-    <nav class="navbar">
-      <a class="brand" href="/">EscolaSegura</a>
-      <div class="menu">
-        <a href="/#inicio">Início</a>
-        <a href="/#recursos">Recursos</a>
-        <a href="/#escolas">Para Escolas</a>
-        <a href="/#familias">Para Famílias</a>
-        <a href="/#seguranca">Segurança/LGPD</a>
-        <a href="/app/">Acessar Sistema</a>
-      </div>
-    </nav>
-  </header>
-<main class="section"><span class="eyebrow">Recursos</span><h1>Gestão escolar conectada</h1><div class="grid"><article class="card"><h3>Frequência</h3><p>Registro de presença por turma.</p></article><article class="card"><h3>Comunicação</h3><p>Comunicados, mensagens e autorizações.</p></article><article class="card"><h3>Boletim</h3><p>Notas e boletins publicados para famílias.</p></article><article class="card"><h3>SaaS</h3><p>Planos, escolas e assinaturas.</p></article></div></main>  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
-</body>
-</html>
+{% extends 'public_site/base_public.html' %}
+{% block title %}Recursos{% endblock %}
+{% block body %}
+<main class="section">
+  <span class="eyebrow">Recursos</span>
+  <h1>Gestão escolar conectada</h1>
+  <div class="grid">
+    <article class="card"><h3>Frequência</h3><p>Registro de presença por turma.</p></article>
+    <article class="card"><h3>Comunicação</h3><p>Comunicados, mensagens e autorizações.</p></article>
+    <article class="card"><h3>Boletim</h3><p>Notas e boletins publicados para famílias.</p></article>
+    <article class="card"><h3>SaaS</h3><p>Planos, escolas e assinaturas.</p></article>
+  </div>
+</main>
+{% endblock %}

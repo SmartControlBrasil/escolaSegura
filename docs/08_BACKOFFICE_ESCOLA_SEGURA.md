@@ -6,7 +6,7 @@ Este documento descreve a estrutura do painel de controle (backoffice) da Escola
 
 O objetivo principal desta versão do painel é servir como um piloto comercial robusto, realista e de alto impacto visual. Ele foi desenhado para simular todos os principais fluxos de uma escola no dia a dia, com inteligência artificial e prospecção ativa prontas para demonstração a potenciais clientes (proprietários de escolas).
 
-## Rotas Mapeadas no Skodash
+## Rotas do backoffice
 
 O painel é acessado através do prefixo `/app/` e possui as seguintes telas:
 

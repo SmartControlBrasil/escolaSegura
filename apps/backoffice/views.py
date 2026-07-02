@@ -803,25 +803,25 @@ def configuracoes_empresa(request):
         org = Organization.objects.first()
         
     if not org:
-        org = Organization.objects.create(name="EscolaSegura", legal_name="EscolaSegura Mármores e Granitos LTDA")
+        org = Organization.objects.create(name="EscolaSegura", legal_name="EscolaSegura LTDA")
         
     profile, created = CompanyProfile.objects.get_or_create(
         organization=org,
         defaults={
             'trade_name': org.name or "EscolaSegura",
-            'legal_name': org.legal_name or "EscolaSegura Mármores e Granitos LTDA",
+            'legal_name': org.legal_name or "EscolaSegura LTDA",
             'cnpj': org.document or "12.345.678/0001-99",
             'phone': org.phone or "(11) 4142-1413",
             'whatsapp': "(11) 99999-8888",
-            'email': org.email or "comercial@santanderescola.com.br",
-            'website': "www.santanderescola.com.br",
+            'email': org.email or "contato@escolasegura360.com.br",
+            'website': "https://escolasegura360.com.br",
             'address': "Av. Exemplo Comercial, 1000 - Centro",
             'city': "São Paulo",
             'state': "SP",
             'business_hours': "Segunda a Sexta: 08:00 às 18:00",
-            'slogan': "Qualidade e sofisticação em mármores e granitos",
-            'footer_text': "Orçamento gerado por EscolaSegura - Todos os direitos reservados.",
-            'default_terms': "Pagamento: 50% de sinal e 50% na entrega. Prazo de entrega: 15 dias úteis após medição final.",
+            'slogan': "Gestão escolar conectada e segura",
+            'footer_text': "Documento gerado por EscolaSegura - Todos os direitos reservados.",
+            'default_terms': "Condições comerciais definidas pela escola contratante.",
             'default_estimate_validity': 15,
             'privacy_policy': "Esta é a política de privacidade da EscolaSegura.",
             'terms_of_use': "Estes são os termos de uso do sistema da EscolaSegura.",

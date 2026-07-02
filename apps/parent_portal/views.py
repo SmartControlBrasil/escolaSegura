@@ -183,22 +183,10 @@ def manifest_json(request):
         'orientation': 'portrait-primary',
         'icons': [
             {
-                'src': static('backoffice/assets/images/favicon-32x32.png'),
-                'sizes': '32x32',
-                'type': 'image/png',
-                'purpose': 'any maskable',
-            },
-            {
-                'src': static('backoffice/assets/images/logo-icon.png'),
-                'sizes': '192x192',
-                'type': 'image/png',
-                'purpose': 'any maskable',
-            },
-            {
-                'src': static('backoffice/assets/images/brand-logo-2.png'),
+                'src': static('parent_portal/icons/icon.svg'),
                 'sizes': '512x512',
-                'type': 'image/png',
-                'purpose': 'any',
+                'type': 'image/svg+xml',
+                'purpose': 'any maskable',
             },
         ],
     }, content_type='application/manifest+json')
@@ -207,9 +195,7 @@ def manifest_json(request):
 def service_worker_js(request):
     asset_urls = [
         static('parent_portal/css/parent_portal.css'),
-        static('backoffice/assets/images/favicon-32x32.png'),
-        static('backoffice/assets/images/logo-icon.png'),
-        static('backoffice/assets/images/brand-logo-2.png'),
+        static('parent_portal/icons/icon.svg'),
     ]
     asset_list = ',\n  '.join(repr(url) for url in asset_urls)
     body = f"""const CACHE_NAME = 'escolasegura-familia-assets-v1';

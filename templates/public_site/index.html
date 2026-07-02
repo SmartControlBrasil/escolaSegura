@@ -1,89 +1,33 @@
-{% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EscolaSegura | Gestão escolar SaaS</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
-</head>
-<body>
-  <header class="header">
-    <nav class="navbar">
-      <a class="brand" href="/">EscolaSegura</a>
-      <div class="menu">
-        <a href="/#inicio">Início</a>
-        <a href="/#recursos">Recursos</a>
-        <a href="/#escolas">Para Escolas</a>
-        <a href="/#familias">Para Famílias</a>
-        <a href="/#seguranca">Segurança/LGPD</a>
-        <a href="/app/">Acessar Sistema</a>
-      </div>
-    </nav>
-  </header>
-
-  <main id="inicio" class="section hero">
-    <div>
-      <span class="eyebrow">SaaS escolar multi-escola</span>
-      <h1>Gestão escolar, comunicação com famílias e segurança de dados em uma só plataforma.</h1>
-      <p class="lead">O EscolaSegura conecta direção, secretaria, professores, responsáveis e alunos em um ambiente online, rastreável e preparado para LGPD.</p>
-      <div class="actions">
-        <a class="btn primary" href="/app/">Acessar painel</a>
-        <a class="btn secondary" href="/familia/">Portal da família</a>
-      </div>
+{% extends 'public_site/base_public.html' %}
+{% block title %}Início{% endblock %}
+{% block body %}
+<main id="inicio" class="section hero">
+  <div>
+    <span class="eyebrow">SaaS escolar multi-escola</span>
+    <h1>EscolaSegura</h1>
+    <p class="lead">Gestão escolar, comunicação com famílias e segurança de dados em uma plataforma SaaS da Smart Control Brasil.</p>
+    <div class="actions">
+      <a class="btn primary" href="/app/">Acessar Sistema</a>
+      <a class="btn secondary" href="/familia/">Portal da família</a>
     </div>
-    <aside class="hero-panel">
-      <h2>Operação escolar conectada</h2>
-      <p>Base pronta para planos, escolas, alunos, responsáveis, turmas, frequência, comunicados, autorizações, notas e boletins.</p>
-      <div class="metric">
-        <div class="metric-card"><strong>SaaS</strong><span>multi-escola</span></div>
-        <div class="metric-card"><strong>LGPD</strong><span>por desenho</span></div>
-        <div class="metric-card"><strong>Família</strong><span>portal web</span></div>
-        <div class="metric-card"><strong>Dados</strong><span>rastreáveis</span></div>
-      </div>
-    </aside>
-  </main>
-  <section id="recursos" class="section">
-    <h2>Recursos</h2>
-    <p class="muted">Uma fundação enxuta para digitalizar a gestão escolar sem perder controle operacional.</p>
-    <div class="grid" style="margin-top:22px;">
-      <article class="card"><h3>Gestão SaaS multi-escola</h3><p>Controle de tenants, planos e assinaturas.</p></article>
-      <article class="card"><h3>Alunos e responsáveis</h3><p>Cadastro escolar com vínculos familiares.</p></article>
-      <article class="card"><h3>Frequência escolar</h3><p>Registros por aula, turma e aluno.</p></article>
-      <article class="card"><h3>Comunicados com leitura</h3><p>Públicos por escola, turma, aluno ou responsável.</p></article>
-      <article class="card"><h3>Notas e boletins</h3><p>Avaliações, médias e boletins publicados.</p></article>
-      <article class="card"><h3>Autorizações digitais</h3><p>Solicitações e respostas de responsáveis.</p></article>
-      <article class="card"><h3>Portal dos pais</h3><p>Acesso web simples para famílias acompanharem alunos.</p></article>
-      <article class="card"><h3>Segurança e LGPD</h3><p>Rastreabilidade e separação por cliente SaaS.</p></article>
+  </div>
+  <div class="hero-panel">
+    <strong>Plataforma em evolução</strong>
+    <p>Admin Master, backoffice e portal da família prontos para crescer com planos e módulos por escola.</p>
+    <div class="metric">
+      <div class="metric-card"><strong>LGPD</strong><span>dados por tenant</span></div>
+      <div class="metric-card"><strong>SaaS</strong><span>multi-escola</span></div>
     </div>
-  </section>
-  <section id="escolas" class="section">
-    <h2>O que já está na base</h2>
-    <ul class="check-list">
-      <li>Admin Master SaaS</li>
-      <li>Planos e assinaturas</li>
-      <li>Núcleo escolar</li>
-      <li>Frequência</li>
-      <li>Comunicação</li>
-      <li>Avaliações e boletim</li>
-      <li>Portal dos pais</li>
-    </ul>
-  </section>
-  <section id="familias" class="section">
-    <h2>Acessos rápidos</h2>
-    <div class="quick" style="margin-top:18px;">
-      <a href="/admin/">Django Admin</a>
-      <a href="/app/">Backoffice</a>
-      <a href="/app/saas/">SaaS Admin</a>
-      <a href="/familia/">Portal Família</a>
-    </div>
-  </section>
-  <section id="seguranca" class="section">
-    <div class="card">
-      <h2>Segurança/LGPD</h2>
-      <p>O EscolaSegura nasce com organização por cliente, autenticação, registros operacionais e cuidado para que dados escolares e familiares sejam tratados com responsabilidade.</p>
-    </div>
-  </section>
-  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
-</body>
-</html>
+  </div>
+</main>
+<section class="section">
+  <span class="eyebrow">Recursos</span>
+  <h2>Módulos do EscolaSegura</h2>
+  <div class="grid">
+    <article class="card"><h3>Gestão SaaS</h3><p>Escolas, planos, assinaturas e features por tenant.</p></article>
+    <article class="card"><h3>Acadêmico</h3><p>Alunos, turmas, frequência, comunicação e avaliações.</p></article>
+    <article class="card"><h3>Portal da família</h3><p>Comunicados, mensagens, autorizações e boletim.</p></article>
+    <article class="card"><h3>Segurança</h3><p>Baseline LGPD, consentimentos e auditoria evolutiva.</p></article>
+  </div>
+</section>
+{% endblock %}

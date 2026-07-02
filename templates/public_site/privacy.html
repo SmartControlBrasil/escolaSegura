@@ -1,26 +1,9 @@
-{% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Privacidade | EscolaSegura</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
-</head>
-<body>
-  <header class="header">
-    <nav class="navbar">
-      <a class="brand" href="/">EscolaSegura</a>
-      <div class="menu">
-        <a href="/#inicio">Início</a>
-        <a href="/#recursos">Recursos</a>
-        <a href="/#escolas">Para Escolas</a>
-        <a href="/#familias">Para Famílias</a>
-        <a href="/#seguranca">Segurança/LGPD</a>
-        <a href="/app/">Acessar Sistema</a>
-      </div>
-    </nav>
-  </header>
-<main class="section"><span class="eyebrow">Privacidade</span><h1>Política de Privacidade</h1><p class="lead">O EscolaSegura trata dados escolares e familiares com foco em segurança, transparência e conformidade com a LGPD.</p><p>Para solicitações relacionadas a privacidade, fale com a Smart Control Brasil pelos canais oficiais do produto.</p></main>  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
-</body>
-</html>
+{% extends 'public_site/base_public.html' %}
+{% block title %}Privacidade{% endblock %}
+{% block body %}
+<main class="section">
+  <span class="eyebrow">LGPD</span>
+  <h1>Política de Privacidade</h1>
+  <p class="lead">O EscolaSegura trata dados pessoais conforme a LGPD, com consentimento, finalidade definida e segurança por escola/tenant.</p>
+</main>
+{% endblock %}

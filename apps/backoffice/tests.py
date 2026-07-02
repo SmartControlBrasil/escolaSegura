@@ -202,7 +202,7 @@ class BackofficeTests(TestCase):
         from apps.core.infrastructure.models import CompanyProfile
         CompanyProfile.objects.all().delete()
         call_command('seed_escola_segura_demo')
-        self.assertTrue(CompanyProfile.objects.filter(trade_name='EscolaSegura Mármores e Granitos').exists())
+        self.assertTrue(CompanyProfile.objects.filter(trade_name='EscolaSegura Demo').exists())
 
     def test_configuracoes_empresa_post_success(self):
         from apps.core.infrastructure.models import CompanyProfile

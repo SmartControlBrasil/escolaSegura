@@ -26,26 +26,26 @@ class Command(BaseCommand):
             defaults={
                 'legal_name': 'EscolaSegura LTDA',
                 'document': '12345678000199',
-                'email': 'comercial@santanderescola.com.br',
+                'email': 'contato@escolasegura360.com.br',
                 'phone': '(11) 4142-1413',
             }
         )
 
         profile, created = CompanyProfile.objects.get_or_create(organization=org)
-        profile.trade_name = 'EscolaSegura Mármores e Granitos'
-        profile.legal_name = 'EscolaSegura Mármores e Granitos LTDA'
+        profile.trade_name = 'EscolaSegura Demo'
+        profile.legal_name = 'EscolaSegura Demo LTDA'
         profile.cnpj = '12.345.678/0001-99'
         profile.phone = '(11) 4142-1413'
         profile.whatsapp = '(11) 99999-8888'
-        profile.email = 'comercial@santanderescola.com.br'
-        profile.website = 'www.santanderescola.com.br'
+        profile.email = 'contato@escolasegura360.com.br'
+        profile.website = 'https://escolasegura360.com.br'
         profile.address = 'Av. Exemplo Comercial, 1000 - Centro'
         profile.city = 'São Paulo'
         profile.state = 'SP'
         profile.business_hours = 'Segunda a Sexta: 08:00 às 18:00'
-        profile.slogan = 'Qualidade e sofisticação em mármores e granitos'
-        profile.footer_text = 'Orçamento gerado por EscolaSegura - Todos os direitos reservados.'
-        profile.default_terms = 'Pagamento: 50% de sinal e 50% na entrega. Prazo de entrega: 15 dias úteis após medição final.'
+        profile.slogan = 'Gestão escolar conectada e segura'
+        profile.footer_text = 'Documento gerado por EscolaSegura - Todos os direitos reservados.'
+        profile.default_terms = 'Condições comerciais definidas pela escola contratante.'
         profile.default_estimate_validity = 15
         profile.privacy_policy = 'Esta é a política de privacidade da EscolaSegura.'
         profile.terms_of_use = 'Estes são os termos de uso do sistema da EscolaSegura.'

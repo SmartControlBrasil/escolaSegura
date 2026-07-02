@@ -1,26 +1,9 @@
-{% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Conteúdos | EscolaSegura</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
-</head>
-<body>
-  <header class="header">
-    <nav class="navbar">
-      <a class="brand" href="/">EscolaSegura</a>
-      <div class="menu">
-        <a href="/#inicio">Início</a>
-        <a href="/#recursos">Recursos</a>
-        <a href="/#escolas">Para Escolas</a>
-        <a href="/#familias">Para Famílias</a>
-        <a href="/#seguranca">Segurança/LGPD</a>
-        <a href="/app/">Acessar Sistema</a>
-      </div>
-    </nav>
-  </header>
-<main class="section"><span class="eyebrow">Conteúdos</span><h1>Atualizações EscolaSegura</h1><p class="lead">Em breve, novidades sobre gestão escolar, proteção de dados e relacionamento com famílias.</p></main>  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
-</body>
-</html>
+{% extends 'public_site/base_public.html' %}
+{% block title %}Blog{% endblock %}
+{% block body %}
+<main class="section">
+  <span class="eyebrow">Blog</span>
+  <h1>Novidades EscolaSegura</h1>
+  <p class="lead">Conteúdo institucional em preparação.</p>
+</main>
+{% endblock %}

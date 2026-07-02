@@ -45,7 +45,7 @@ class Command(BaseCommand):
             defaults={
                 'legal_name': 'EscolaSegura LTDA',
                 'document': '12345678000199',
-                'email': 'comercial@santanderescola.com.br',
+                'email': 'contato@escolasegura360.com.br',
                 'phone': '(11) 4142-1413',
             }
         )
@@ -77,7 +77,7 @@ class Command(BaseCommand):
         demo_obj, demo_created = User.objects.get_or_create(
             username=demo_user or 'fabrizio',
             defaults={
-                'email': demo_email or 'comercial@santanderescola.com.br',
+                'email': demo_email or 'contato@escolasegura360.com.br',
                 'is_staff': False,
                 'is_superuser': False,
                 'role': 'owner',

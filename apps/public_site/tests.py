@@ -20,6 +20,11 @@ class PublicSiteTests(TestCase):
         response = self.client.get('/')
         self.assertContains(response, 'href="/familia/"')
 
+    def test_home_page_uses_minimal_landing_structure(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'EscolaSegura')
+        self.assertContains(response, 'class="section hero"')
+
     def test_home_page_does_not_contain_old_branding(self):
         response = self.client.get('/')
         content = response.content.decode('utf-8')

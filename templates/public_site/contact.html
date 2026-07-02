@@ -1,42 +1,19 @@
-{% load static %}
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contato | EscolaSegura</title>
-  <link rel="stylesheet" href="{% static 'public_site/css/escola_segura_landing.css' %}">
-</head>
-<body>
-  <header class="header">
-    <nav class="navbar">
-      <a class="brand" href="/">EscolaSegura</a>
-      <div class="menu">
-        <a href="/#inicio">Início</a>
-        <a href="/#recursos">Recursos</a>
-        <a href="/#escolas">Para Escolas</a>
-        <a href="/#familias">Para Famílias</a>
-        <a href="/#seguranca">Segurança/LGPD</a>
-        <a href="/app/">Acessar Sistema</a>
-      </div>
-    </nav>
-  </header>
-
-  <main class="section">
-    <span class="eyebrow">Contato</span>
-    <h1>Fale com o EscolaSegura</h1>
-    <p class="lead">Converse com a Smart Control Brasil sobre gestão escolar, portal da família e implantação SaaS.</p>
-    {% if success %}<div class="notice">Mensagem registrada com sucesso.</div>{% endif %}
-    <form class="form" method="post" action="/contato/">
-      {% csrf_token %}
-      <input class="input" type="text" name="full-name" placeholder="Nome completo" required>
-      <input class="input" type="email" name="email" placeholder="E-mail" required>
-      <input class="input" type="text" name="phone" placeholder="Telefone">
-      <textarea name="message" placeholder="Mensagem"></textarea>
-      <label><input type="checkbox" name="lgpd_consent" required> Li e aceito a Política de Privacidade e autorizo contato sobre minha solicitação.</label>
-      <button class="btn primary" type="submit">Enviar contato</button>
-    </form>
-  </main>
-  <footer class="footer">EscolaSegura360.com.br — Smart Control Brasil</footer>
-</body>
-</html>
+{% extends 'public_site/base_public.html' %}
+{% block title %}Contato{% endblock %}
+{% block body %}
+<main class="section">
+  <span class="eyebrow">Contato</span>
+  <h1>Fale com o EscolaSegura</h1>
+  <p class="lead">Converse com a Smart Control Brasil sobre gestão escolar, portal da família e implantação SaaS.</p>
+  {% if success %}<div class="notice">Mensagem registrada com sucesso.</div>{% endif %}
+  <form class="form" method="post" action="/contato/">
+    {% csrf_token %}
+    <input class="input" type="text" name="full-name" placeholder="Nome completo" required>
+    <input class="input" type="email" name="email" placeholder="E-mail" required>
+    <input class="input" type="text" name="phone" placeholder="Telefone">
+    <textarea name="message" placeholder="Mensagem"></textarea>
+    <label><input type="checkbox" name="lgpd_consent" required> Li e aceito a Política de Privacidade e autorizo contato sobre minha solicitação.</label>
+    <button class="btn primary" type="submit">Enviar contato</button>
+  </form>
+</main>
+{% endblock %}

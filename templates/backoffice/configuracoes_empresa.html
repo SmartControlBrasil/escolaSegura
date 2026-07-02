@@ -175,13 +175,13 @@
                 {{ profile.trade_name|default:"EscolaSegura" }}
               </h5>
               <div id="preview_slogan" class="text-muted fst-italic mb-2" style="font-size: 10px;">
-                {{ profile.slogan|default:"Qualidade e sofisticação em mármores" }}
+                {{ profile.slogan|default:"Gestão escolar conectada e segura" }}
               </div>
               <div style="font-size: 9px;" class="text-muted">
                 <strong>CNPJ:</strong> <span id="preview_cnpj">{{ profile.cnpj|default:"00.000.000/0001-00" }}</span><br>
                 <strong>Razão:</strong> <span id="preview_legal_name">{{ profile.legal_name|default:"EscolaSegura LTDA" }}</span><br>
                 <strong>End:</strong> <span id="preview_address">{{ profile.address|default:"Av. Exemplo Comercial, 1000" }}</span> - <span id="preview_city_state">{{ profile.city|default:"São Paulo" }}/{{ profile.state|default:"SP" }}</span><br>
-                <strong>Contato:</strong> <span id="preview_contact">{{ profile.phone|default:"(11) 4142-1413" }}</span> | <span id="preview_email">{{ profile.email|default:"comercial@santanderescola.com.br" }}</span>
+                <strong>Contato:</strong> <span id="preview_contact">{{ profile.phone|default:"(11) 4142-1413" }}</span> | <span id="preview_email">{{ profile.email|default:"contato@escolasegura360.com.br" }}</span>
               </div>
             </div>
             <div class="col-5 text-end">
@@ -248,7 +248,7 @@
     const previewFooter = document.getElementById('preview_footer_text');
 
     if (tradeNameInput) tradeNameInput.addEventListener('input', (e) => { previewTradeName.textContent = e.target.value.trim() || 'EscolaSegura'; });
-    if (sloganInput) sloganInput.addEventListener('input', (e) => { previewSlogan.textContent = e.target.value.trim() || 'Qualidade e sofisticação em mármores'; });
+    if (sloganInput) sloganInput.addEventListener('input', (e) => { previewSlogan.textContent = e.target.value.trim() || 'Gestão escolar conectada e segura'; });
     if (cnpjInput) cnpjInput.addEventListener('input', (e) => { previewCnpj.textContent = e.target.value.trim() || '00.000.000/0001-00'; });
     if (legalNameInput) legalNameInput.addEventListener('input', (e) => { previewLegalName.textContent = e.target.value.trim() || 'EscolaSegura LTDA'; });
     if (addressInput) addressInput.addEventListener('input', (e) => { updateAddress(); });
@@ -256,7 +256,7 @@
     if (stateInput) stateInput.addEventListener('input', (e) => { updateAddress(); });
     
     if (phoneInput) phoneInput.addEventListener('input', (e) => { previewContact.textContent = e.target.value.trim() || '(11) 4142-1413'; });
-    if (emailInput) emailInput.addEventListener('input', (e) => { previewEmail.textContent = e.target.value.trim() || 'comercial@santanderescola.com.br'; });
+    if (emailInput) emailInput.addEventListener('input', (e) => { previewEmail.textContent = e.target.value.trim() || 'contato@escolasegura360.com.br'; });
     if (termsInput) termsInput.addEventListener('input', (e) => { previewTerms.textContent = e.target.value || 'Termos padrão de faturamento e instalação.'; });
     if (footerInput) footerInput.addEventListener('input', (e) => { previewFooter.textContent = e.target.value || 'Orçamento gerado por Sistema - Escola 360.'; });
 
