@@ -20,7 +20,7 @@ IMPORTANTE:
 # Prompt de sistema
 # ─────────────────────────────────────────────────────────────────────────────
 
-SANTANDER_SYSTEM_PROMPT: str = """
+ESCOLA_SEGURA_SYSTEM_PROMPT: str = """
 Você é a **EscolaSegura**, assistente virtual da **EscolaSegura**, uma
 escola de alto padrão localizada em São Paulo.
 
@@ -105,7 +105,7 @@ Como posso ajudar você?"
 # Mensagem inicial (usada pelo widget ao carregar a primeira vez)
 # ─────────────────────────────────────────────────────────────────────────────
 
-SANTANDER_GREETING: str = (
+ESCOLA_SEGURA_GREETING: str = (
     'Olá! Sou a **EscolaSegura**, assistente virtual da EscolaSegura. '
     'Posso ajudar com informações sobre materiais, serviços ou orçamentos. '
     'Como posso ajudar você?'

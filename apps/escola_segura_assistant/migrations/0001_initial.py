@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('role', models.CharField(choices=[('user', 'Visitante'), ('assistant', 'Assistente'), ('system', 'Sistema')], max_length=20, verbose_name='Papel')),
                 ('content', models.TextField(verbose_name='Conteúdo')),
-                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='escola_segura_assistant.santanderchatsession', verbose_name='Sessão')),
+                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='escola_segura_assistant.escolasegurachatsession', verbose_name='Sessão')),
             ],
             options={
                 'verbose_name': 'Mensagem',

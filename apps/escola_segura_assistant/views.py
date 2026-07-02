@@ -20,7 +20,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from apps.escola_segura_assistant.prompts import SANTANDER_GREETING
+from apps.escola_segura_assistant.prompts import ESCOLA_SEGURA_GREETING
 from apps.escola_segura_assistant.services import EscolaSeguraAssistantService
 
 logger = logging.getLogger(__name__)
@@ -134,7 +134,7 @@ def greeting_endpoint(request):
     Usado pelo widget para exibir a primeira mensagem sem POST.
     """
     return JsonResponse({
-        'greeting': SANTANDER_GREETING,
+        'greeting': ESCOLA_SEGURA_GREETING,
         'assistant_name': 'EscolaSegura',
         'enabled': getattr(settings, 'SANTANDER_ASSISTANT_ENABLED', True),
     })

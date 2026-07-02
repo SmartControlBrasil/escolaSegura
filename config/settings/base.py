@@ -218,5 +218,5 @@ LOGIN_REDIRECT_URL = '/app/'
 LOGOUT_REDIRECT_URL = '/app/login/'
 
 # Webhook para envio de leads qualificados da Assistente EscolaSegura
-SANTANDER_LEAD_WEBHOOK_URL = os.getenv('SANTANDER_LEAD_WEBHOOK_URL', '')
+ESCOLA_SEGURA_LEAD_WEBHOOK_URL = os.getenv('ESCOLA_SEGURA_LEAD_WEBHOOK_URL', '')
 

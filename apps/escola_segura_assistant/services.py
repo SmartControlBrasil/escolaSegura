@@ -46,8 +46,8 @@ from apps.escola_segura_assistant.models import (
 )
 from apps.escola_segura_assistant.prompts import (
     LEAD_COLLECT_PROMPTS,
-    SANTANDER_GREETING,
-    SANTANDER_SYSTEM_PROMPT,
+    ESCOLA_SEGURA_GREETING,
+    ESCOLA_SEGURA_SYSTEM_PROMPT,
 )
 
 logger = logging.getLogger(__name__)
@@ -545,7 +545,7 @@ class EscolaSeguraAssistantService:
 
         model = genai.GenerativeModel(
             model_name=model_name,
-            system_instruction=SANTANDER_SYSTEM_PROMPT,
+            system_instruction=ESCOLA_SEGURA_SYSTEM_PROMPT,
             generation_config=genai.types.GenerationConfig(
                 temperature=temperature,
                 max_output_tokens=max_tokens,
@@ -591,7 +591,7 @@ class EscolaSeguraAssistantService:
         # Saudações
         saudacoes = ('oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'hey', 'eae')
         if any(texto.startswith(s) or texto == s for s in saudacoes):
-            return SANTANDER_GREETING
+            return ESCOLA_SEGURA_GREETING
 
         # Materiais
         if any(m in texto for m in ('mármore', 'marmore', 'granito', 'quartzo', 'quartzito')):
@@ -657,9 +657,9 @@ class EscolaSeguraAssistantService:
         Lê a URL de destino das configurações de ambiente. Se vazia,
         o envio é silenciado com log informativo.
         """
-        url = getattr(settings, 'SANTANDER_LEAD_WEBHOOK_URL', '')
+        url = getattr(settings, 'ESCOLA_SEGURA_LEAD_WEBHOOK_URL', '')
         if not url:
-            logger.info('EscolaSegura Assistant: Webhook de leads não configurado (SANTANDER_LEAD_WEBHOOK_URL vazio).')
+            logger.info('EscolaSegura Assistant: Webhook de leads não configurado (ESCOLA_SEGURA_LEAD_WEBHOOK_URL vazio).')
             return
 
         payload = {
