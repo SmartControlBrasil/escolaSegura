@@ -1,0 +1,604 @@
+{# Widget de Chat Flutuante da Assistente Santander #}
+<div id="santander-chat-widget" class="santander-chat-container">
+  
+  {# Bolha Flutuante (Toggle) #}
+  <button id="santander-chat-toggle" class="santander-chat-bubble" aria-label="Abrir chat com a Assistente Santander">
+    <i class="bi bi-chat-left-text-fill bubble-icon-open"></i>
+    <i class="bi bi-x-lg bubble-icon-close d-none"></i>
+    <span class="bubble-pulse"></span>
+  </button>
+
+  {# Janela do Chat #}
+  <div id="santander-chat-window" class="santander-chat-window d-none">
+    
+    {# Cabeçalho #}
+    <div class="santander-chat-header">
+      <div class="header-avatar-container">
+        <div class="header-avatar">S</div>
+        <span class="status-indicator online"></span>
+      </div>
+      <div class="header-info">
+        <h6 class="header-title">Santander</h6>
+        <p class="header-subtitle">Assistente Virtual • Online</p>
+      </div>
+      <button id="santander-chat-close" class="header-close-btn" aria-label="Minimizar chat">
+        <i class="bi bi-dash-lg"></i>
+      </button>
+    </div>
+
+    {# Área de Mensagens #}
+    <div id="santander-chat-messages" class="santander-chat-messages">
+      {# As mensagens serão injetadas via JavaScript #}
+    </div>
+
+    {# Campo de Entrada de Mensagem #}
+    <form id="santander-chat-form" class="santander-chat-footer">
+      <input 
+        type="text" 
+        id="santander-chat-input" 
+        class="form-control chat-input" 
+        placeholder="Escreva sua mensagem..." 
+        autocomplete="off"
+        maxlength="2000"
+        required
+      />
+      <button type="submit" id="santander-chat-send" class="btn chat-send-btn" aria-label="Enviar mensagem">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </form>
+
+  </div>
+</div>
+
+{# Estilos CSS Premium Embutidos #}
+<style>
+  :root {
+    --std-primary: #1c1c1c;        /* Charcoal escuro luxo */
+    --std-accent: #c5a059;         /* Dourado fosco elegante */
+    --std-accent-light: #f7f3eb;   /* Fundo dourado muito suave */
+    --std-bg-light: #fdfdfd;       /* Fundo da janela */
+    --std-text-dark: #2d2d2d;
+    --std-text-muted: #757575;
+    --std-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --std-border-radius: 16px;
+  }
+
+  /* Container Principal */
+  .santander-chat-container {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 1050;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Bolha Flutuante */
+  .santander-chat-bubble {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--std-primary);
+    border: 2px solid var(--std-accent);
+    color: #ffffff;
+    box-shadow: var(--std-shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease;
+    outline: none;
+  }
+
+  .santander-chat-bubble:hover {
+    transform: scale(1.08);
+    background-color: #2b2b2b;
+  }
+
+  .santander-chat-bubble i {
+    font-size: 24px;
+    color: var(--std-accent);
+    transition: opacity 0.25s ease;
+  }
+
+  /* Pulso indicador de atividade */
+  .bubble-pulse {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background-color: #2ec4b6; /* Verde-água dinâmico */
+    border: 2px solid var(--std-primary);
+    border-radius: 50%;
+  }
+
+  /* Janela de Chat */
+  .santander-chat-window {
+    position: absolute;
+    bottom: 76px;
+    left: 0;
+    width: 380px;
+    height: 520px;
+    background-color: var(--std-bg-light);
+    border-radius: var(--std-border-radius);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    box-shadow: var(--std-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: stdChatFadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  @keyframes stdChatFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Cabeçalho */
+  .santander-chat-header {
+    background: linear-gradient(135deg, var(--std-primary) 0%, #2c2c2c 100%);
+    color: #ffffff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--std-accent);
+  }
+
+  .header-avatar-container {
+    position: relative;
+    margin-right: 12px;
+  }
+
+  .header-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: var(--std-primary);
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--std-accent);
+  }
+
+  .status-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--std-primary);
+  }
+
+  .status-indicator.online {
+    background-color: #2ec4b6;
+  }
+
+  .header-info {
+    flex-grow: 1;
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+  }
+
+  .header-subtitle {
+    margin: 0;
+    font-size: 11px;
+    color: #b0b0b0;
+  }
+
+  .header-close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    padding: 0 4px;
+  }
+
+  .header-close-btn:hover {
+    opacity: 1;
+    color: var(--std-accent);
+  }
+
+  /* Corpo das Mensagens */
+  .santander-chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+  }
+
+  /* Custom Scrollbar */
+  .santander-chat-messages::-webkit-scrollbar {
+    width: 5px;
+  }
+  .santander-chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .santander-chat-messages::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+  }
+
+  /* Bolhas de Mensagem */
+  .std-msg-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .std-msg-bubble p {
+    margin: 0;
+  }
+
+  /* Mensagem do Usuário */
+  .std-msg-user {
+    background-color: var(--std-primary);
+    color: #ffffff;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+  }
+
+  /* Mensagem da Assistente */
+  .std-msg-assistant {
+    background-color: #ffffff;
+    color: var(--std-text-dark);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .std-msg-assistant strong {
+    color: #9d7c39; /* Destaque sutil para materiais nos negritos */
+  }
+
+  /* Rodapé do Chat */
+  .santander-chat-footer {
+    display: flex;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    border-top: 1px solid #eeeeee;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .chat-input {
+    border-radius: 20px;
+    border: 1px solid #dddddd;
+    padding: 8px 16px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease;
+  }
+
+  .chat-input:focus {
+    border-color: var(--std-accent);
+  }
+
+  .chat-send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--std-primary);
+    border: 1px solid var(--std-accent);
+    color: var(--std-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .chat-send-btn:hover {
+    background-color: #2b2b2b;
+    color: #ffffff;
+  }
+
+  .chat-send-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Efeito de Digitanto */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border-radius: 14px;
+    border-bottom-left-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    align-self: flex-start;
+    max-width: 80%;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--std-accent);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: stdTypingBounce 1.4s infinite both;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes stdTypingBounce {
+    0%, 80%, 100% {
+      transform: scale(0.6);
+    }
+    40% {
+      transform: scale(1) translateY(-4px);
+    }
+  }
+
+  /* Responsividade Básica */
+  @media (max-width: 480px) {
+    .santander-chat-container {
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .santander-chat-window {
+      width: calc(100vw - 24px);
+      height: calc(100vh - 100px);
+      max-height: 480px;
+    }
+  }
+</style>
+
+{# Lógica JavaScript no Widget #}
+<script>
+  (function() {
+    // ── Referências do DOM ───────────────────────────────────────────────────
+    const chatWidget = document.getElementById('santander-chat-widget');
+    const chatToggle = document.getElementById('santander-chat-toggle');
+    const chatWindow = document.getElementById('santander-chat-window');
+    const chatClose = document.getElementById('santander-chat-close');
+    const chatMessages = document.getElementById('santander-chat-messages');
+    const chatForm = document.getElementById('santander-chat-form');
+    const chatInput = document.getElementById('santander-chat-input');
+    const chatSend = document.getElementById('santander-chat-send');
+
+    const iconOpen = chatToggle.querySelector('.bubble-icon-open');
+    const iconClose = chatToggle.querySelector('.bubble-icon-close');
+
+    let isGreetingLoaded = false;
+
+    // ── Gerenciamento da Sessão via localStorage ──────────────────────────────
+    function getOrCreateSessionKey() {
+      let key = localStorage.getItem('santander_session_key');
+      if (!key) {
+        // Gera um UUIDv4 simples no cliente
+        key = 'std-' + crypto.randomUUID();
+        localStorage.setItem('santander_session_key', key);
+      }
+      return key;
+    }
+
+    const sessionKey = getOrCreateSessionKey();
+
+    // ── Utilitários de Interface ─────────────────────────────────────────────
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Processa markdown básico (negrito e quebras de linha)
+    function formatMessageText(text) {
+      if (!text) return '';
+      // Escapa HTML básico para evitar XSS do visitante
+      let escaped = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      
+      // Converte **negrito** para <strong>
+      escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      
+      // Converte quebras de linha para <br>
+      return escaped.replace(/\n/g, '<br>');
+    }
+
+    // Cria e insere bolha de mensagem no DOM
+    function appendMessage(sender, text) {
+      const bubble = document.createElement('div');
+      bubble.className = `std-msg-bubble std-msg-${sender}`;
+      bubble.innerHTML = formatMessageText(text);
+      chatMessages.appendChild(bubble);
+      scrollToBottom();
+      return bubble;
+    }
+
+    // Efeito de "Digitando..."
+    let typingIndicatorElement = null;
+
+    function showTypingIndicator() {
+      if (typingIndicatorElement) return;
+
+      typingIndicatorElement = document.createElement('div');
+      typingIndicatorElement.className = 'typing-indicator';
+      typingIndicatorElement.innerHTML = `
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      `;
+      chatMessages.appendChild(typingIndicatorElement);
+      scrollToBottom();
+    }
+
+    function removeTypingIndicator() {
+      if (typingIndicatorElement) {
+        typingIndicatorElement.remove();
+        typingIndicatorElement = null;
+      }
+    }
+
+    // ── Comunicação com a API ────────────────────────────────────────────────
+
+    // Carrega a mensagem inicial (Greeting)
+    async function loadGreeting() {
+      if (isGreetingLoaded) return;
+      isGreetingLoaded = true;
+      
+      showTypingIndicator();
+      
+      try {
+        const response = await fetch('/assistant/greeting/');
+        const data = await response.json();
+        
+        // Simula um tempo de digitação natural para a mensagem de entrada
+        setTimeout(() => {
+          removeTypingIndicator();
+          if (data.greeting) {
+            appendMessage('assistant', data.greeting);
+          }
+        }, 600);
+      } catch (err) {
+        console.error('[Santander Assistant] Erro ao carregar greeting:', err);
+        removeTypingIndicator();
+        appendMessage('assistant', 'Olá! Sou a **Santander**, assistente virtual da Marmoraria Santander. Como posso ajudar você hoje?');
+      }
+    }
+
+    // Envia mensagem do usuário para o backend
+    async function sendMessage(text) {
+      showTypingIndicator();
+      
+      const payload = {
+        message: text,
+        session_key: sessionKey,
+        source_page: window.location.pathname
+      };
+
+      try {
+        const response = await fetch('/assistant/chat/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        // Aguarda um pequeno delay de digitação artificial (UX)
+        setTimeout(() => {
+          removeTypingIndicator();
+          if (response.ok && data.reply) {
+            appendMessage('assistant', data.reply);
+            // Atualiza a chave de sessão caso o servidor tenha gerado uma nova
+            if (data.session_key && data.session_key !== sessionKey) {
+              localStorage.setItem('santander_session_key', data.session_key);
+            }
+          } else {
+            appendMessage('assistant', data.error || 'Desculpe, ocorreu um erro inesperado. Poderia tentar novamente?');
+          }
+          enableForm();
+        }, 750);
+
+      } catch (err) {
+        console.error('[Santander Assistant] Erro no envio:', err);
+        setTimeout(() => {
+          removeTypingIndicator();
+          appendMessage('assistant', 'Não consegui me comunicar com o servidor. Verifique sua conexão e tente de novo.');
+          enableForm();
+        }, 500);
+      }
+    }
+
+    function disableForm() {
+      chatInput.disabled = true;
+      chatSend.disabled = true;
+    }
+
+    function enableForm() {
+      chatInput.disabled = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+    }
+
+    // ── Tratamento de Eventos ─────────────────────────────────────────────────
+
+    // Toggle abrir/fechar janela do chat
+    function toggleChat() {
+      const isOpen = !chatWindow.classList.contains('d-none');
+      
+      if (isOpen) {
+        // Minimizar
+        chatWindow.classList.add('d-none');
+        iconOpen.classList.remove('d-none');
+        iconClose.classList.add('d-none');
+      } else {
+        // Abrir
+        chatWindow.classList.remove('d-none');
+        iconOpen.classList.add('d-none');
+        iconClose.classList.remove('d-none');
+        chatInput.focus();
+        
+        // Disparo boad-vindas se for a primeira abertura
+        loadGreeting();
+      }
+    }
+
+    chatToggle.addEventListener('click', toggleChat);
+    chatClose.addEventListener('click', toggleChat);
+
+    // Envio do formulário
+    chatForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const messageText = chatInput.value.trim();
+      if (!messageText) return;
+
+      // Limpa e bloqueia formulário
+      chatInput.value = '';
+      disableForm();
+
+      // Exibe mensagem do usuário
+      appendMessage('user', messageText);
+
+      // Envia assincronamente ao backend
+      sendMessage(messageText);
+    });
+
+  })();
+</script>

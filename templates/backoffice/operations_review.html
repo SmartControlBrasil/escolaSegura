@@ -1,0 +1,775 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+
+{# ════════════════════════════════════════════════════════════════════════
+   CABEÇALHO DA TELA
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="mb-1 fw-bold text-dark">
+      <i class="bi bi-ui-checks-grid me-2 text-primary"></i>
+      Fila de Operações Unificada
+    </h4>
+    <p class="text-muted mb-0 small">
+      Gerenciamento centralizado de leads inbound (assistente de chat) e outbound (prospecção automatizada Atlas).
+    </p>
+  </div>
+  <div>
+    <span class="badge bg-primary px-3 py-2 fs-7 shadow-sm">
+      Total Pendentes: <span id="badge-total-geral">{{ inbound_leads|length|add:outbound_leads|length }}</span>
+    </span>
+  </div>
+</div>
+
+{# ════════════════════════════════════════════════════════════════════════
+   NAVEGAÇÃO POR ABAS (TABS)
+   ════════════════════════════════════════════════════════════════════════ #}
+<ul class="nav nav-tabs nav-fill mb-4" id="reviewQueueTabs" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active fw-semibold py-3 position-relative" 
+            id="inbound-tab" data-bs-toggle="tab" data-bs-target="#inbound-pane" 
+            type="button" role="tab" aria-controls="inbound-pane" aria-selected="true">
+      <i class="bi bi-chat-dots-fill me-2 text-success"></i>
+      Contatos do Site (Inbound)
+      <span class="badge bg-success ms-2" id="badge-inbound-count">{{ inbound_leads|length }}</span>
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link fw-semibold py-3 position-relative" 
+            id="outbound-tab" data-bs-toggle="tab" data-bs-target="#outbound-pane" 
+            type="button" role="tab" aria-controls="outbound-pane" aria-selected="false">
+      <i class="bi bi-robot me-2 text-warning"></i>
+      Prospecção Ativa (Outbound / Atlas)
+      <span class="badge bg-warning text-dark ms-2" id="badge-outbound-count">{{ outbound_leads|length }}</span>
+    </button>
+  </li>
+</ul>
+
+{# ════════════════════════════════════════════════════════════════════════
+   CONTEÚDO DAS ABAS
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="tab-content" id="reviewQueueTabsContent">
+  
+  {# ─────────────────────────────────────────────────────────────────────────
+     ABA 1: INBOUND LEADS
+     ───────────────────────────────────────────────────────────────────────── #}
+  <div class="tab-pane fade show active" id="inbound-pane" role="tabpanel" aria-labelledby="inbound-tab" tabindex="0">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        {% if inbound_leads %}
+        <div class="table-responsive" id="wrapper-inbound">
+          <table class="table table-hover align-middle mb-0" id="table-inbound">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">Cliente</th>
+                <th>Empresa</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Cidade</th>
+                <th>Status Funil</th>
+                <th>Qualificado Em</th>
+                <th class="text-end pe-4">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for session in inbound_leads %}
+              <tr id="row-inbound-{{ session.pk }}">
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-circle-sm me-2 bg-success text-white">
+                      {{ session.client_name|slice:":1"|default:"V" }}
+                    </div>
+                    <div>
+                      <strong class="text-dark">{{ session.client_name|default:"Visitante anônimo" }}</strong>
+                      <div class="text-muted small">Origem: {{ session.source_page|default:"Direto" }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ session.client_company|default:"—" }}</td>
+                <td>{{ session.client_email|default:"—" }}</td>
+                <td>{{ session.client_phone|default:"—" }}</td>
+                <td>{{ session.client_city|default:"—" }}</td>
+                <td>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle">
+                    {{ session.get_current_state_display }}
+                  </span>
+                </td>
+                <td>
+                  <span class="text-muted small" title="{{ session.qualified_at|date:'d/m/Y H:i' }}">
+                    {{ session.qualified_at|default:session.created_at|date:"d/m/Y H:i" }}
+                  </span>
+                </td>
+                <td class="text-end pe-4">
+                  <button class="btn btn-outline-primary btn-sm px-3"
+                          onclick="abrirHistoricoChat('{{ session.pk }}', this)"
+                          title="Visualizar histórico completo de mensagens">
+                    <i class="bi bi-file-earmark-text me-1"></i> Ver Histórico
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5" id="msg-inbound-vazia">
+          <div class="avatar-circle-lg mx-auto bg-light text-muted mb-3 fs-3">
+            <i class="bi bi-chat-square-text"></i>
+          </div>
+          <h5 class="text-dark">Nenhum contato inbound qualificado</h5>
+          <p class="text-secondary small">Os contatos preenchidos na assistente do site aparecerão aqui.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {# ─────────────────────────────────────────────────────────────────────────
+     ABA 2: OUTBOUND LEADS (ATLAS)
+     ───────────────────────────────────────────────────────────────────────── #}
+  <div class="tab-pane fade" id="outbound-pane" role="tabpanel" aria-labelledby="outbound-tab" tabindex="0">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        {% if outbound_leads %}
+        <div class="table-responsive" id="wrapper-outbound">
+          <table class="table table-hover align-middle mb-0" id="table-outbound">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">Empresa</th>
+                <th>Website</th>
+                <th>Contato</th>
+                <th>Cidade/UF</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th class="text-end pe-4">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in outbound_leads %}
+              <tr id="row-{{ p.pk }}">
+                <td class="ps-4">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-circle-sm me-2 bg-warning text-dark">
+                      {{ p.company_name|slice:":1" }}
+                    </div>
+                    <strong>{{ p.company_name }}</strong>
+                  </div>
+                </td>
+                <td>
+                  {% if p.website %}
+                    <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer"
+                       class="text-truncate d-inline-block" style="max-width:160px;">
+                      {{ p.website }}
+                    </a>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {{ p.contact_name|default:"—" }}
+                  {% if p.contact_email %}
+                    <br><small class="text-muted">{{ p.contact_email }}</small>
+                  {% endif %}
+                </td>
+                <td>{{ p.city|default:"—" }}{% if p.state %}/{{ p.state }}{% endif %}</td>
+                <td>
+                  <span class="badge bg-info text-dark">{{ p.score }}%</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">{{ p.get_status_display }}</span>
+                </td>
+                <td class="text-end pe-4" id="actions-{{ p.pk }}">
+                  <button
+                    class="btn btn-success btn-sm me-1 px-3"
+                    data-id="{{ p.pk }}"
+                    data-acao="aprovar"
+                    onclick="atlasAcao('{{ p.pk }}', 'aprovar', this)"
+                    title="Aprovar e editar rascunho de e-mail"
+                  >
+                    <i class="bi bi-check-lg"></i> Aprovar
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-sm px-2"
+                    data-id="{{ p.pk }}"
+                    data-acao="rejeitar"
+                    onclick="atlasAcao('{{ p.pk }}', 'rejeitar', this)"
+                    title="Rejeitar e arquivar este lead"
+                  >
+                    <i class="bi bi-x-lg"></i> Recusar
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5" id="msg-outbound-vazia">
+          <div class="avatar-circle-lg mx-auto bg-light text-muted mb-3 fs-3">
+            <i class="bi bi-robot"></i>
+          </div>
+          <h5 class="text-dark">Fila de prospecção vazia</h5>
+          <p class="text-secondary small">Não há leads trazidos pelo Atlas pendentes de revisão.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   MODAL 1: Histórico de Conversa do Chat (Inbound)
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="modal fade" id="modalHistoricoChat" tabindex="-1" aria-labelledby="modalHistoricoChatLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      
+      {# Cabeçalho #}
+      <div class="modal-header bg-light border-bottom">
+        <h5 class="modal-title fw-bold text-dark" id="modalHistoricoChatLabel">
+          <i class="bi bi-chat-dots-fill me-2 text-success"></i>
+          Histórico da Conversa
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      {# Corpo #}
+      <div class="modal-body bg-light" style="max-height: 480px;">
+        
+        {# Informações do Lead qualificado pelo bot #}
+        <div class="card border-0 mb-3 shadow-sm">
+          <div class="card-body py-3 px-4">
+            <div class="row g-3 text-secondary small">
+              <div class="col-sm-6">
+                <strong><i class="bi bi-person me-1"></i> Nome:</strong> <span id="h-client-name">—</span><br>
+                <strong><i class="bi bi-telephone me-1"></i> Telefone:</strong> <span id="h-client-phone">—</span><br>
+                <strong><i class="bi bi-envelope me-1"></i> E-mail:</strong> <span id="h-client-email">—</span>
+              </div>
+              <div class="col-sm-6">
+                <strong><i class="bi bi-building me-1"></i> Empresa:</strong> <span id="h-client-company">—</span><br>
+                <strong><i class="bi bi-geo-alt me-1"></i> Cidade:</strong> <span id="h-client-city">—</span><br>
+                <strong><i class="bi bi-globe me-1"></i> Página Origem:</strong> <span id="h-source-page">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# Balões de Mensagem #}
+        <div id="h-chat-messages-container" class="d-flex flex-column gap-3 p-2">
+          {# Injetado por JS #}
+        </div>
+
+      </div>
+
+      {# Rodapé #}
+      <div class="modal-footer border-top">
+        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Fechar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   MODAL 2: Visualização e Edição do Rascunho de E-mail (Outbound - Atlas)
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="modal fade" id="modalRascunho" tabindex="-1" aria-labelledby="modalRascunhoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      {# Cabeçalho #}
+      <div class="modal-header border-bottom">
+        <h5 class="modal-title" id="modalRascunhoLabel">
+          <i class="bi bi-envelope-paper-fill me-2 text-primary"></i>
+          Rascunho de E-mail — Atlas
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      {# Corpo #}
+      <div class="modal-body">
+        <div id="modal-loading" class="text-center py-5">
+          <div class="spinner-border text-primary mb-3" role="status" style="width:2.5rem;height:2.5rem;">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="text-muted mb-0">Carregando rascunho do e-mail…</p>
+        </div>
+
+        <div id="modal-error" class="d-none">
+          <div class="alert alert-danger d-flex align-items-start gap-2 mb-0" role="alert">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
+            <div id="modal-error-msg">Erro ao carregar o rascunho.</div>
+          </div>
+        </div>
+
+        <div id="modal-form" class="d-none">
+          <input type="hidden" id="draft-prospect-id">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-muted small text-uppercase tracking-wide">Para</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="email" class="form-control" id="draft-to-email" readonly>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="draft-subject" class="form-label fw-semibold">Assunto <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="draft-subject" placeholder="Assunto do e-mail de prospecção…" maxlength="180">
+            <div class="invalid-feedback">O assunto é obrigatório.</div>
+          </div>
+
+          <div class="mb-1">
+            <label for="draft-body" class="form-label fw-semibold">Corpo do E-mail <span class="text-danger">*</span></label>
+            <textarea class="form-control font-monospace" id="draft-body" rows="12" style="resize:vertical; font-size:.85rem; line-height:1.6;"></textarea>
+            <div class="invalid-feedback">O corpo do e-mail é obrigatório.</div>
+          </div>
+          <div class="text-end">
+            <small class="text-muted" id="draft-char-count">0 caracteres</small>
+          </div>
+        </div>
+      </div>
+
+      {# Rodapé #}
+      <div class="modal-footer border-top">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-modal-fechar">
+          <i class="bi bi-x-lg me-1"></i> Fechar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-enviar-email" onclick="atlasEnviarEmail()" disabled>
+          <i class="bi bi-send-fill me-1"></i> Enviar E-mail
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   CSS ADICIONAL PREMIUM
+   ════════════════════════════════════════════════════════════════════════ #}
+<style>
+  /* Círculo do avatar */
+  .avatar-circle-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .avatar-circle-lg {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  
+  /* Balões de mensagens do chat */
+  .chat-bubble-h {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    word-wrap: break-word;
+  }
+  .chat-bubble-h-user {
+    background-color: #e2f0fd;
+    color: #0b2238;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+  }
+  .chat-bubble-h-assistant {
+    background-color: #ffffff;
+    color: #2b2b2b;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    border: 1px solid #e0e0e0;
+  }
+  .chat-bubble-h-system {
+    background-color: #fff3cd;
+    color: #856404;
+    align-self: center;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 10px;
+  }
+</style>
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   JAVASCRIPT
+   ════════════════════════════════════════════════════════════════════════ #}
+<script>
+// ── Utilitários: CSRF e Headers ──────────────────────────────────────────────
+function getCsrfToken() {
+  const match = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+  return match ? decodeURIComponent(match[1]) : '';
+}
+
+function ajaxHeaders() {
+  return {
+    'X-CSRFToken': getCsrfToken(),
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+  };
+}
+
+// ── Atualiza os badges de controle no DOM ─────────────────────────────────────
+function atualizarBadges() {
+  const inboundCount = document.querySelectorAll('#table-inbound tbody tr').length;
+  const outboundCount = document.querySelectorAll('#table-outbound tbody tr').length;
+
+  const inboundBadge = document.getElementById('badge-inbound-count');
+  if (inboundBadge) inboundBadge.textContent = inboundCount;
+
+  const outboundBadge = document.getElementById('badge-outbound-count');
+  if (outboundBadge) outboundBadge.textContent = outboundCount;
+
+  const totalBadge = document.getElementById('badge-total-geral');
+  if (totalBadge) totalBadge.textContent = inboundCount + outboundCount;
+}
+
+// ── Remoção suave de linha ───────────────────────────────────────────────────
+function removerLinha(prospectId, callback) {
+  const row = document.getElementById('row-' + prospectId);
+  if (!row) { if (callback) callback(); return; }
+  row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  row.style.opacity = '0';
+  row.style.transform = 'translateX(20px)';
+  setTimeout(() => {
+    row.remove();
+    atualizarBadges();
+    if (callback) callback();
+  }, 420);
+}
+
+function verificarTabelaVazia(tbodySelector, wrapperId, msgTitle, msgDesc, iconClass) {
+  const tbody = document.querySelector(tbodySelector);
+  if (tbody && tbody.querySelectorAll('tr').length === 0) {
+    const wrapper = document.getElementById(wrapperId);
+    if (wrapper) {
+      wrapper.innerHTML = `
+        <div class="text-center py-5">
+          <div class="avatar-circle-lg mx-auto bg-light text-muted mb-3 fs-3">
+            <i class="${iconClass}"></i>
+          </div>
+          <h5 class="text-dark">${msgTitle}</h5>
+          <p class="text-secondary small">${msgDesc}</p>
+        </div>`;
+    }
+  }
+}
+
+// ── Lógica 1: Histórico de Conversa (Inbound) ──────────────────────────────────
+async function abrirHistoricoChat(sessionId, botao) {
+  botao.disabled = true;
+  const originalHtml = botao.innerHTML;
+  botao.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Carregando…';
+
+  const modalEl = document.getElementById('modalHistoricoChat');
+  const messagesContainer = document.getElementById('h-chat-messages-container');
+  messagesContainer.innerHTML = ''; // Limpa anterior
+
+  try {
+    const resp = await fetch(`/app/operations/session/${sessionId}/messages/`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      // Preenche os dados informativos do cabeçalho do lead
+      document.getElementById('h-client-name').textContent = data.client_name;
+      document.getElementById('h-client-phone').textContent = data.client_phone;
+      document.getElementById('h-client-email').textContent = data.client_email;
+      document.getElementById('h-client-company').textContent = data.client_company;
+      document.getElementById('h-client-city').textContent = data.client_city;
+      document.getElementById('h-source-page').textContent = data.source_page;
+
+      // Injeta balões
+      if (data.messages && data.messages.length > 0) {
+        data.messages.forEach(msg => {
+          const msgEl = document.createElement('div');
+          let classType = 'assistant';
+          if (msg.role === 'user') classType = 'user';
+          if (msg.role === 'system') classType = 'system';
+
+          msgEl.className = `chat-bubble-h chat-bubble-h-${classType}`;
+          
+          if (msg.role === 'system') {
+            msgEl.innerHTML = `<span class="fw-semibold">Mudar de Estado:</span> ${msg.content}`;
+          } else {
+            // Pequeno parse de negrito na exibição
+            let parsedText = msg.content
+              .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              .replace(/\n/g, '<br>');
+            msgEl.innerHTML = `
+              <div class="message-text">${parsedText}</div>
+              <div class="text-end text-muted mt-1" style="font-size: 9px;">${msg.timestamp}</div>
+            `;
+          }
+          messagesContainer.appendChild(msgEl);
+        });
+      } else {
+        messagesContainer.innerHTML = '<div class="text-center text-muted py-3 small">Nenhuma mensagem registrada.</div>';
+      }
+
+      // Abre o modal
+      const modalInst = bootstrap.Modal.getOrCreateInstance(modalEl);
+      modalInst.show();
+    } else {
+      alert(data.error || 'Erro ao carregar mensagens.');
+    }
+  } catch (err) {
+    console.error('Erro na requisição:', err);
+    alert('Erro de comunicação com o servidor.');
+  } finally {
+    botao.disabled = false;
+    botao.innerHTML = originalHtml;
+  }
+}
+
+// ── Lógica 2: Ações de Prospecção (Outbound - Atlas) ──────────────────────────
+async function atlasAcao(prospectId, acao, botaoClicado) {
+  const row = document.getElementById('row-' + prospectId);
+  const botoes = row.querySelectorAll('button');
+  const htmlOriginal = Array.from(botoes).map(b => b.outerHTML);
+
+  botoes.forEach(b => {
+    b.disabled = true;
+    b.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+  });
+
+  try {
+    const resp = await fetch(`/app/atlas/${prospectId}/${acao}/`, {
+      method: 'POST',
+      headers: ajaxHeaders(),
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      if (acao === 'aprovar') {
+        // Altera a célula de ação para "Ver Rascunho" e abre o modal
+        document.getElementById('actions-' + prospectId).innerHTML = `
+          <button class="btn btn-primary btn-sm px-3"
+                  onclick="atlasAbrirModal('${prospectId}', this)"
+                  title="Visualizar e editar rascunho de e-mail">
+            <i class="bi bi-envelope-paper me-1"></i> Ver Rascunho
+          </button>`;
+        atualizarBadges();
+        await atlasAbrirModal(prospectId);
+      } else {
+        removerLinha(prospectId, () => {
+          verificarTabelaVazia(
+            '#table-outbound tbody',
+            'wrapper-outbound',
+            'Fila de prospecção vazia',
+            'Não há leads trazidos pelo Atlas pendentes de revisão.',
+            'bi bi-robot'
+          );
+        });
+      }
+    } else {
+      alert(`Atenção: ${data.error || 'Erro desconhecido.'}`);
+      document.getElementById('actions-' + prospectId).innerHTML = htmlOriginal.join('');
+    }
+  } catch (err) {
+    console.error('Erro na requisição:', err);
+    alert('Erro de comunicação com o servidor. Tente novamente.');
+    location.reload();
+  }
+}
+
+// ── Abre e popula o modal de edição de rascunhos ──────────────────────────────
+function modalMostrarLoading() {
+  document.getElementById('modal-loading').classList.remove('d-none');
+  document.getElementById('modal-form').classList.add('d-none');
+  document.getElementById('modal-error').classList.add('d-none');
+  document.getElementById('btn-enviar-email').disabled = true;
+}
+
+function modalMostrarErro(msg) {
+  document.getElementById('modal-loading').classList.add('d-none');
+  document.getElementById('modal-form').classList.add('d-none');
+  document.getElementById('modal-error-msg').textContent = msg;
+  document.getElementById('modal-error').classList.remove('d-none');
+  document.getElementById('btn-enviar-email').disabled = true;
+}
+
+function modalMostrarFormulario(data) {
+  document.getElementById('modal-loading').classList.add('d-none');
+  document.getElementById('modal-error').classList.add('d-none');
+  document.getElementById('modal-form').classList.remove('d-none');
+
+  document.getElementById('draft-prospect-id').value = data.prospect_id_ctx;
+  document.getElementById('draft-to-email').value = data.to_email;
+  document.getElementById('draft-subject').value = data.subject;
+  document.getElementById('draft-body').value = data.body;
+
+  atualizarContador();
+  const jaEnviado = data.status === 'sent';
+  document.getElementById('btn-enviar-email').disabled = jaEnviado;
+  if (jaEnviado) {
+    document.getElementById('btn-enviar-email').textContent = '✓ Já enviado';
+  }
+}
+
+function atualizarContador() {
+  const body = document.getElementById('draft-body');
+  const count = document.getElementById('draft-char-count');
+  if (body && count) {
+    count.textContent = `${body.value.length} caracteres`;
+  }
+}
+document.getElementById('draft-body')?.addEventListener('input', atualizarContador);
+
+async function atlasAbrirModal(prospectId) {
+  modalMostrarLoading();
+  const modalEl = document.getElementById('modalRascunho');
+  const modalInst = bootstrap.Modal.getOrCreateInstance(modalEl);
+  modalInst.show();
+
+  try {
+    const resp = await fetch(`/app/atlas/draft/${prospectId}/`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      data.prospect_id_ctx = prospectId;
+      modalMostrarFormulario(data);
+    } else {
+      modalMostrarErro(data.error || 'Não foi possível carregar o rascunho.');
+    }
+  } catch (err) {
+    console.error('Erro:', err);
+    modalMostrarErro('Erro de comunicação com o servidor.');
+  }
+}
+
+// ── Envia o e-mail após a revisão final humana ───────────────────────────────
+async function atlasEnviarEmail() {
+  const prospectId = document.getElementById('draft-prospect-id').value;
+  const subject = document.getElementById('draft-subject').value.trim();
+  const body = document.getElementById('draft-body').value.trim();
+
+  let valido = true;
+  const subjectEl = document.getElementById('draft-subject');
+  const bodyEl = document.getElementById('draft-body');
+
+  subjectEl.classList.remove('is-invalid');
+  bodyEl.classList.remove('is-invalid');
+
+  if (!subject) { subjectEl.classList.add('is-invalid'); valido = false; }
+  if (!body) { bodyEl.classList.add('is-invalid'); valido = false; }
+  if (!valido) return;
+
+  const btnEnviar = document.getElementById('btn-enviar-email');
+  const btnFechar = document.getElementById('btn-modal-fechar');
+  btnEnviar.disabled = true;
+  btnFechar.disabled = true;
+  btnEnviar.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Enviando…';
+
+  try {
+    const resp = await fetch(`/app/atlas/draft/${prospectId}/enviar/`, {
+      method: 'POST',
+      headers: ajaxHeaders(),
+      body: JSON.stringify({ subject, body }),
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      bootstrap.Modal.getInstance(document.getElementById('modalRascunho')).hide();
+
+      removerLinha(prospectId, () => {
+        verificarTabelaVazia(
+          '#table-outbound tbody',
+          'wrapper-outbound',
+          'Fila de prospecção vazia',
+          'Não há leads trazidos pelo Atlas pendentes de revisão.',
+          'bi bi-robot'
+        );
+      });
+
+      mostrarToast(data.sent 
+        ? `<i class="bi bi-check-circle-fill me-2 text-success"></i>${data.message}`
+        : `<i class="bi bi-info-circle-fill me-2 text-warning"></i>${data.message}`,
+        data.sent ? 'success' : 'warning'
+      );
+    } else {
+      alert(`Erro: ${data.error || 'Erro desconhecido.'}`);
+      btnEnviar.disabled = false;
+      btnFechar.disabled = false;
+      btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+    }
+  } catch (err) {
+    console.error('Erro:', err);
+    alert('Erro de comunicação com o servidor.');
+    btnEnviar.disabled = false;
+    btnFechar.disabled = false;
+    btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+  }
+}
+
+// ── Toast não-bloqueante ─────────────────────────────────────────────────────
+function mostrarToast(htmlMensagem, tipo = 'success') {
+  const bgClass = tipo === 'success' ? 'text-bg-success' : 'text-bg-warning';
+  const toastId = 'atlas-toast-' + Date.now();
+  const toastEl = document.createElement('div');
+  toastEl.id = toastId;
+  toastEl.className = `toast align-items-center ${bgClass} border-0 shadow`;
+  toastEl.setAttribute('role', 'alert');
+  toastEl.setAttribute('aria-live', 'assertive');
+  toastEl.innerHTML = `
+    <div class="d-flex">
+      <div class="toast-body fw-semibold">${htmlMensagem}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-toast="dismiss" onclick="this.closest('.toast').remove()" aria-label="Fechar"></button>
+    </div>`;
+
+  let container = document.getElementById('atlas-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'atlas-toast-container';
+    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+    container.style.zIndex = '1100';
+    document.body.appendChild(container);
+  }
+  container.appendChild(toastEl);
+  new bootstrap.Toast(toastEl, { delay: 6000 }).show();
+  toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+}
+
+// ── Limpa os modais ao fechar ────────────────────────────────────────────────
+document.getElementById('modalRascunho').addEventListener('hidden.bs.modal', () => {
+  document.getElementById('draft-prospect-id').value = '';
+  document.getElementById('draft-to-email').value = '';
+  document.getElementById('draft-subject').value = '';
+  document.getElementById('draft-subject').classList.remove('is-invalid');
+  document.getElementById('draft-body').value = '';
+  document.getElementById('draft-body').classList.remove('is-invalid');
+  document.getElementById('draft-char-count').textContent = '0 caracteres';
+
+  const btnEnviar = document.getElementById('btn-enviar-email');
+  btnEnviar.disabled = false;
+  btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+  document.getElementById('btn-modal-fechar').disabled = false;
+  modalMostrarLoading();
+});
+
+document.getElementById('modalHistoricoChat').addEventListener('hidden.bs.modal', () => {
+  document.getElementById('h-chat-messages-container').innerHTML = '';
+});
+</script>
+
+{% endblock %}

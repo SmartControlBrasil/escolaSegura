@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.core.infrastructure.models import ActivityLog, Attachment, Branch, Organization, SystemSetting
+from apps.core.infrastructure.models import ActivityLog, Attachment, Branch, CompanyProfile, Organization, SystemSetting
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
@@ -27,3 +27,8 @@ class ActivityLogAdmin(admin.ModelAdmin):
 @admin.register(Attachment)
 class AttachmentAdmin(admin.ModelAdmin):
     list_display = ['title','object_type','object_id','uploaded_by','created_at']
+
+@admin.register(CompanyProfile)
+class CompanyProfileAdmin(admin.ModelAdmin):
+    list_display = ['trade_name', 'organization', 'cnpj', 'is_active']
+    search_fields = ['trade_name', 'legal_name', 'cnpj']

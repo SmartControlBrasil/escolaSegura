@@ -10,3 +10,5 @@ django-cors-headers>=4.7,<5
 Pillow>=11.0,<13
 django-axes>=6.5,<6.6
 weasyprint==63.1
+
+google-generativeai>=0.8,<1

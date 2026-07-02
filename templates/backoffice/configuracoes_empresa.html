@@ -1,0 +1,273 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="mb-0 fw-bold">Configurações da Empresa</h3>
+      <a href="{% url 'backoffice:configuracoes' %}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+    </div>
+
+    {% if error_message %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+
+    {% if success_message %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ success_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row">
+  <!-- Formulário de Edição -->
+  <div class="col-12 col-lg-7 mb-4">
+    <div class="card shadow-sm border-0">
+      <div class="card-header py-3 bg-white border-bottom">
+        <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-pencil-square me-2"></i>Editar Perfil da Empresa</h6>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Nome Fantasia *</label>
+              <input type="text" name="trade_name" id="id_trade_name" class="form-control" value="{{ profile.trade_name }}" required {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Razão Social</label>
+              <input type="text" name="legal_name" id="id_legal_name" class="form-control" value="{{ profile.legal_name }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">CNPJ</label>
+              <input type="text" name="cnpj" id="id_cnpj" class="form-control" value="{{ profile.cnpj }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Site</label>
+              <input type="url" name="website" id="id_website" class="form-control" value="{{ profile.website }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Telefone</label>
+              <input type="text" name="phone" id="id_phone" class="form-control" value="{{ profile.phone }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">WhatsApp</label>
+              <input type="text" name="whatsapp" id="id_whatsapp" class="form-control" value="{{ profile.whatsapp }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">E-mail Comercial</label>
+            <input type="email" name="email" id="id_email" class="form-control" value="{{ profile.email }}" {% if not can_edit %}readonly{% endif %}>
+          </div>
+
+          <div class="row">
+            <div class="col-md-8 mb-3">
+              <label class="form-label fw-semibold">Endereço Completo</label>
+              <input type="text" name="address" id="id_address" class="form-control" value="{{ profile.address }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="row">
+                <div class="col-8">
+                  <label class="form-label fw-semibold">Cidade</label>
+                  <input type="text" name="city" id="id_city" class="form-control" value="{{ profile.city }}" {% if not can_edit %}readonly{% endif %}>
+                </div>
+                <div class="col-4">
+                  <label class="form-label fw-semibold">UF</label>
+                  <input type="text" name="state" id="id_state" class="form-control text-uppercase" maxlength="2" value="{{ profile.state }}" {% if not can_edit %}readonly{% endif %}>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Horário de Atendimento</label>
+              <input type="text" name="business_hours" id="id_business_hours" class="form-control" value="{{ profile.business_hours }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Slogan</label>
+              <input type="text" name="slogan" id="id_slogan" class="form-control" value="{{ profile.slogan }}" {% if not can_edit %}readonly{% endif %}>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Upload da Logomarca</label>
+            <input type="file" name="logo" id="id_logo" class="form-control" accept="image/*" {% if not can_edit %}disabled{% endif %}>
+            {% if profile.logo %}
+              <div class="mt-2 small text-muted">Logo atual: <a href="{{ profile.logo.url }}" target="_blank">{{ profile.logo.name }}</a></div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Texto Padrão de Rodapé dos PDFs</label>
+            <textarea name="footer_text" id="id_footer_text" class="form-control" rows="2" {% if not can_edit %}readonly{% endif %}>{{ profile.footer_text }}</textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Condições Comerciais Padrão dos Orçamentos</label>
+            <textarea name="default_terms" id="id_default_terms" class="form-control" rows="3" {% if not can_edit %}readonly{% endif %}>{{ profile.default_terms }}</textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Validade Padrão do Orçamento (dias)</label>
+              <input type="number" name="default_estimate_validity" id="id_validity" class="form-control" value="{{ profile.default_estimate_validity }}" min="1" {% if not can_edit %}readonly{% endif %}>
+            </div>
+            <div class="col-md-6 mb-3 d-flex align-items-end">
+              <div class="form-check mb-2">
+                <input type="checkbox" name="is_active" class="form-check-input" id="id_is_active" {% if profile.is_active %}checked{% endif %} {% if not can_edit %}disabled{% endif %}>
+                <label class="form-check-label fw-semibold" for="id_is_active">Cadastro Ativo</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Política de Privacidade (Texto LGPD)</label>
+            <textarea name="privacy_policy" class="form-control" rows="3" {% if not can_edit %}readonly{% endif %}>{{ profile.privacy_policy }}</textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Termos de Uso</label>
+            <textarea name="terms_of_use" class="form-control" rows="3" {% if not can_edit %}readonly{% endif %}>{{ profile.terms_of_use }}</textarea>
+          </div>
+
+          <div class="text-end mt-4">
+            <a href="{% url 'backoffice:configuracoes' %}" class="btn btn-secondary px-4 me-2">Voltar</a>
+            {% if can_edit %}
+              <button type="submit" class="btn btn-primary px-4 fw-bold">Salvar Configurações</button>
+            {% else %}
+              <button type="button" class="btn btn-primary px-4 fw-bold" disabled>Salvar (Sem Permissão)</button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview dos Dados Cadastrados -->
+  <div class="col-12 col-lg-5 mb-4">
+    <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 10;">
+      <div class="card-header py-3 bg-light border-bottom">
+        <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-eye me-2"></i>Visualização em Tempo Real (Documentos)</h6>
+      </div>
+      <div class="card-body">
+        <p class="text-secondary small">Abaixo está uma simulação em tempo real de como o cabeçalho e os termos do orçamento em PDF serão apresentados para o seu cliente.</p>
+        
+        <!-- Simulação do PDF/Orçamento -->
+        <div class="border rounded p-3 bg-white" style="font-family: Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #444; border-color: #dee2e6 !important;">
+          
+          <!-- Cabeçalho -->
+          <div class="row border-bottom pb-2 mb-3 align-items-center">
+            <div class="col-7">
+              <h5 class="fw-bold mb-1 text-dark text-uppercase" id="preview_trade_name" style="font-size: 16px; letter-spacing: 1px;">
+                {{ profile.trade_name|default:"Marmoraria Santander" }}
+              </h5>
+              <div id="preview_slogan" class="text-muted fst-italic mb-2" style="font-size: 10px;">
+                {{ profile.slogan|default:"Qualidade e sofisticação em mármores" }}
+              </div>
+              <div style="font-size: 9px;" class="text-muted">
+                <strong>CNPJ:</strong> <span id="preview_cnpj">{{ profile.cnpj|default:"00.000.000/0001-00" }}</span><br>
+                <strong>Razão:</strong> <span id="preview_legal_name">{{ profile.legal_name|default:"Marmoraria Santander LTDA" }}</span><br>
+                <strong>End:</strong> <span id="preview_address">{{ profile.address|default:"Av. Exemplo Comercial, 1000" }}</span> - <span id="preview_city_state">{{ profile.city|default:"São Paulo" }}/{{ profile.state|default:"SP" }}</span><br>
+                <strong>Contato:</strong> <span id="preview_contact">{{ profile.phone|default:"(11) 4142-1413" }}</span> | <span id="preview_email">{{ profile.email|default:"comercial@santandermarmoraria.com.br" }}</span>
+              </div>
+            </div>
+            <div class="col-5 text-end">
+              <div class="p-2 border border-dashed rounded text-center text-muted bg-light" style="font-size: 10px;">
+                {% if profile.logo %}
+                  <img src="{{ profile.logo.url }}" alt="Logo" class="img-fluid" style="max-height: 45px;">
+                {% else %}
+                  [ Espaço para Logomarca ]
+                {% endif %}
+              </div>
+              <div class="mt-2 fw-bold text-info" style="font-size: 11px;">PROPOSTA COMERCIAL</div>
+              <div style="font-size: 9px;" class="text-muted">Nº: ORC-2026-001</div>
+            </div>
+          </div>
+
+          <!-- Corpo Mock -->
+          <div class="mb-3">
+            <div class="p-2 bg-light rounded text-center text-muted" style="font-size: 9px; border: 1px dashed #ced4da;">
+              [ Conteúdo dos Itens do Orçamento ]
+            </div>
+          </div>
+
+          <!-- Termos e Condições -->
+          <div class="mb-3">
+            <h6 class="fw-bold mb-1" style="font-size: 10px; color: #555;">Condições Comerciais</h6>
+            <div class="p-2 bg-light border rounded text-muted" style="font-size: 9px; white-space: pre-wrap; max-height: 100px; overflow-y: auto;" id="preview_default_terms">{{ profile.default_terms|default:"Termos padrão de faturamento e instalação." }}</div>
+          </div>
+
+          <!-- Rodapé -->
+          <div class="text-center pt-2 border-top text-muted" style="font-size: 9px;" id="preview_footer_text">
+            {{ profile.footer_text|default:"Orçamento gerado por Sistema - Marmoraria 360." }}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tradeNameInput = document.getElementById('id_trade_name');
+    const sloganInput = document.getElementById('id_slogan');
+    const cnpjInput = document.getElementById('id_cnpj');
+    const legalNameInput = document.getElementById('id_legal_name');
+    const addressInput = document.getElementById('id_address');
+    const cityInput = document.getElementById('id_city');
+    const stateInput = document.getElementById('id_state');
+    const phoneInput = document.getElementById('id_phone');
+    const emailInput = document.getElementById('id_email');
+    const termsInput = document.getElementById('id_default_terms');
+    const footerInput = document.getElementById('id_footer_text');
+
+    const previewTradeName = document.getElementById('preview_trade_name');
+    const previewSlogan = document.getElementById('preview_slogan');
+    const previewCnpj = document.getElementById('preview_cnpj');
+    const previewLegalName = document.getElementById('preview_legal_name');
+    const previewAddress = document.getElementById('preview_address');
+    const previewCityState = document.getElementById('preview_city_state');
+    const previewContact = document.getElementById('preview_contact');
+    const previewEmail = document.getElementById('preview_email');
+    const previewTerms = document.getElementById('preview_default_terms');
+    const previewFooter = document.getElementById('preview_footer_text');
+
+    if (tradeNameInput) tradeNameInput.addEventListener('input', (e) => { previewTradeName.textContent = e.target.value.trim() || 'Marmoraria Santander'; });
+    if (sloganInput) sloganInput.addEventListener('input', (e) => { previewSlogan.textContent = e.target.value.trim() || 'Qualidade e sofisticação em mármores'; });
+    if (cnpjInput) cnpjInput.addEventListener('input', (e) => { previewCnpj.textContent = e.target.value.trim() || '00.000.000/0001-00'; });
+    if (legalNameInput) legalNameInput.addEventListener('input', (e) => { previewLegalName.textContent = e.target.value.trim() || 'Marmoraria Santander LTDA'; });
+    if (addressInput) addressInput.addEventListener('input', (e) => { updateAddress(); });
+    if (cityInput) cityInput.addEventListener('input', (e) => { updateAddress(); });
+    if (stateInput) stateInput.addEventListener('input', (e) => { updateAddress(); });
+    
+    if (phoneInput) phoneInput.addEventListener('input', (e) => { previewContact.textContent = e.target.value.trim() || '(11) 4142-1413'; });
+    if (emailInput) emailInput.addEventListener('input', (e) => { previewEmail.textContent = e.target.value.trim() || 'comercial@santandermarmoraria.com.br'; });
+    if (termsInput) termsInput.addEventListener('input', (e) => { previewTerms.textContent = e.target.value || 'Termos padrão de faturamento e instalação.'; });
+    if (footerInput) footerInput.addEventListener('input', (e) => { previewFooter.textContent = e.target.value || 'Orçamento gerado por Sistema - Marmoraria 360.'; });
+
+    function updateAddress() {
+      const addr = addressInput ? addressInput.value.trim() : '';
+      const city = cityInput ? cityInput.value.trim() : '';
+      const state = stateInput ? stateInput.value.trim() : '';
+      
+      if (previewAddress) previewAddress.textContent = addr || 'Av. Exemplo Comercial, 1000';
+      if (previewCityState) previewCityState.textContent = (city || 'São Paulo') + '/' + (state || 'SP').toUpperCase();
+    }
+  });
+</script>
+{% endblock %}

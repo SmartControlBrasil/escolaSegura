@@ -1,41 +1,147 @@
 {% extends 'backoffice/base.html' %}
 {% block content %}
-<div class="card">
-  <div class="card-header py-3">
-    <h6 class="mb-0">Painel de Prospecção Atlas (Robô de Outreach)</h6>
+
+{# ════════════════════════════════════════════════════════════════════════
+   SEÇÃO 1 — Prospects aguardando revisão humana
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="card mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">
+      <i class="bi bi-robot me-2 text-warning"></i>
+      Atlas — Leads Aguardando Revisão
+    </h6>
+    <span class="badge bg-warning text-dark" id="badge-revisao">
+      {{ prospects_revisao|length }} pendente{{ prospects_revisao|length|pluralize:"s" }}
+    </span>
   </div>
   <div class="card-body">
-    <p class="text-secondary mb-4">Empresas e construtoras identificadas na região. Aprove ou rejeite para iniciar contato automático.</p>
-    <div class="table-responsive">
-      <table class="table align-middle table-striped table-hover">
+    <p class="text-secondary mb-3">
+      O robô Atlas identificou estas empresas como potenciais parceiras.
+      <strong>Aprovar</strong> gera um rascunho de e-mail para revisão final.
+      <strong>Recusar</strong> arquiva o lead.
+    </p>
+
+    {% if prospects_revisao %}
+    <div class="table-responsive" id="wrapper-revisao">
+      <table class="table align-middle table-striped table-hover mb-0" id="table-revisao">
         <thead class="table-light">
           <tr>
             <th>Empresa</th>
             <th>Website</th>
             <th>Contato</th>
-            <th>Cidade</th>
+            <th>Cidade/UF</th>
             <th>Score</th>
             <th>Status</th>
-            <th>Ações</th>
+            <th class="text-end">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {% for prospect in prospects %}
-          <tr>
-            <td><strong>{{ prospect.company_name }}</strong></td>
-            <td><a href="{{ prospect.website }}" target="_blank">{{ prospect.website }}</a></td>
-            <td>{{ prospect.contact_name }} ({{ prospect.contact_email }})</td>
-            <td>{{ prospect.city }}/{{ prospect.state }}</td>
-            <td><span class="badge bg-info">{{ prospect.score }}%</span></td>
-            <td><span class="badge bg-warning text-dark">{{ prospect.get_status_display }}</span></td>
+          {% for p in prospects_revisao %}
+          <tr id="row-{{ p.pk }}">
+            <td><strong>{{ p.company_name }}</strong></td>
             <td>
-              <button class="btn btn-success btn-sm"><i class="bi bi-check-lg"></i> Aprovar</button>
-              <button class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i> Recusar</button>
+              {% if p.website %}
+                <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer"
+                   class="text-truncate d-inline-block" style="max-width:160px;">
+                  {{ p.website }}
+                </a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+            <td>
+              {{ p.contact_name|default:"—" }}
+              {% if p.contact_email %}
+                <br><small class="text-muted">{{ p.contact_email }}</small>
+              {% endif %}
+            </td>
+            <td>{{ p.city|default:"—" }}{% if p.state %}/{{ p.state }}{% endif %}</td>
+            <td>
+              <span class="badge bg-info text-dark">{{ p.score }}%</span>
+            </td>
+            <td>
+              <span class="badge bg-warning text-dark">{{ p.get_status_display }}</span>
+            </td>
+            <td class="text-end" id="actions-{{ p.pk }}">
+              <button
+                class="btn btn-success btn-sm me-1"
+                data-id="{{ p.pk }}"
+                data-acao="aprovar"
+                onclick="atlasAcao('{{ p.pk }}', 'aprovar', this)"
+                title="Aprovar e gerar rascunho de e-mail"
+              >
+                <i class="bi bi-check-lg"></i> Aprovar
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                data-id="{{ p.pk }}"
+                data-acao="rejeitar"
+                onclick="atlasAcao('{{ p.pk }}', 'rejeitar', this)"
+                title="Rejeitar e arquivar este lead"
+              >
+                <i class="bi bi-x-lg"></i> Recusar
+              </button>
             </td>
           </tr>
-          {% empty %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info mb-0" role="alert" id="msg-revisao-vazia">
+      <i class="bi bi-check-circle me-2"></i>
+      Nenhum lead pendente de revisão no momento. O Atlas trará novos prospects em breve.
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{# ════════════════════════════════════════════════════════════════════════
+   SEÇÃO 2 — Prospects aprovados com rascunho aguardando envio
+   ════════════════════════════════════════════════════════════════════════ #}
+{% if prospects_aprovados %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">
+      <i class="bi bi-envelope-paper me-2 text-success"></i>
+      Rascunhos Pendentes de Envio
+    </h6>
+    <span class="badge bg-success">{{ prospects_aprovados|length }} rascunho{{ prospects_aprovados|length|pluralize:"s" }}</span>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary mb-3">
+      Leads aprovados com rascunho de e-mail gerado. Clique em <strong>Ver Rascunho</strong>
+      para revisar, editar e disparar o envio.
+    </p>
+    <div class="table-responsive" id="wrapper-aprovados">
+      <table class="table align-middle table-hover mb-0" id="table-aprovados">
+        <thead class="table-light">
           <tr>
-            <td colspan="7" class="text-center">Nenhum prospect pendente de revisão.</td>
+            <th>Empresa</th>
+            <th>E-mail de Destino</th>
+            <th>Cidade/UF</th>
+            <th>Score</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in prospects_aprovados %}
+          <tr id="row-{{ p.pk }}">
+            <td><strong>{{ p.company_name }}</strong></td>
+            <td>
+              <span class="text-muted">{{ p.contact_email|default:"—" }}</span>
+            </td>
+            <td>{{ p.city|default:"—" }}{% if p.state %}/{{ p.state }}{% endif %}</td>
+            <td><span class="badge bg-info text-dark">{{ p.score }}%</span></td>
+            <td class="text-end" id="actions-{{ p.pk }}">
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="atlasVerRascunho('{{ p.pk }}', this)"
+                title="Visualizar e editar rascunho de e-mail"
+              >
+                <i class="bi bi-envelope-paper me-1"></i> Ver Rascunho
+              </button>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -43,4 +149,462 @@
     </div>
   </div>
 </div>
+{% endif %}
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   MODAL — Visualização e Edição do Rascunho de E-mail
+   ════════════════════════════════════════════════════════════════════════ #}
+<div class="modal fade" id="modalRascunho" tabindex="-1"
+     aria-labelledby="modalRascunhoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      {# Cabeçalho #}
+      <div class="modal-header border-bottom">
+        <h5 class="modal-title" id="modalRascunhoLabel">
+          <i class="bi bi-envelope-paper-fill me-2 text-primary"></i>
+          Rascunho de E-mail — Atlas
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      {# Corpo #}
+      <div class="modal-body">
+
+        {# Estado: Carregando #}
+        <div id="modal-loading" class="text-center py-5">
+          <div class="spinner-border text-primary mb-3" role="status" style="width:2.5rem;height:2.5rem;">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="text-muted mb-0">Carregando rascunho do e-mail…</p>
+        </div>
+
+        {# Estado: Erro #}
+        <div id="modal-error" class="d-none">
+          <div class="alert alert-danger d-flex align-items-start gap-2 mb-0" role="alert">
+            <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
+            <div id="modal-error-msg">Erro ao carregar o rascunho.</div>
+          </div>
+        </div>
+
+        {# Estado: Formulário de edição #}
+        <div id="modal-form" class="d-none">
+
+          {# Campo oculto para rastrear o prospect atual no JS #}
+          <input type="hidden" id="draft-prospect-id">
+
+          {# Banner informativo com dry-run #}
+          <div class="alert alert-info d-flex align-items-start gap-2 mb-4" role="alert" id="modal-dryrun-notice" style="display:none!important">
+            <i class="bi bi-info-circle-fill flex-shrink-0 mt-1"></i>
+            <div>
+              <strong>Modo Simulação (dry-run) ativo.</strong>
+              O e-mail <em>não</em> será enviado de verdade até que
+              <code>AGENTS_EMAIL_DRY_RUN=false</code> e um servidor SMTP real sejam configurados.
+            </div>
+          </div>
+
+          {# Destinatário (somente leitura) #}
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-muted small text-uppercase tracking-wide">
+              Para
+            </label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="email" class="form-control" id="draft-to-email" readonly
+                     placeholder="destinatario@empresa.com">
+            </div>
+          </div>
+
+          {# Assunto (editável) #}
+          <div class="mb-3">
+            <label for="draft-subject" class="form-label fw-semibold">
+              Assunto <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control" id="draft-subject"
+                   placeholder="Assunto do e-mail de prospecção…" maxlength="180">
+            <div class="invalid-feedback">O assunto é obrigatório.</div>
+          </div>
+
+          {# Corpo (editável) #}
+          <div class="mb-1">
+            <label for="draft-body" class="form-label fw-semibold">
+              Corpo do E-mail <span class="text-danger">*</span>
+            </label>
+            <textarea class="form-control font-monospace" id="draft-body"
+                      rows="12" placeholder="Escreva ou edite o e-mail…"
+                      style="resize:vertical; font-size:.85rem; line-height:1.6;"></textarea>
+            <div class="invalid-feedback">O corpo do e-mail é obrigatório.</div>
+          </div>
+          <div class="text-end">
+            <small class="text-muted" id="draft-char-count">0 caracteres</small>
+          </div>
+
+        </div>{# /modal-form #}
+      </div>{# /modal-body #}
+
+      {# Rodapé #}
+      <div class="modal-footer border-top">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-modal-fechar">
+          <i class="bi bi-x-lg me-1"></i> Fechar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-enviar-email"
+                onclick="atlasEnviarEmail()" disabled>
+          <i class="bi bi-send-fill me-1"></i> Enviar E-mail
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{# ════════════════════════════════════════════════════════════════════════
+   JAVASCRIPT
+   ════════════════════════════════════════════════════════════════════════ #}
+<script>
+// ── Utilitário: leitura do cookie CSRF do Django ──────────────────────────────
+function getCsrfToken() {
+  const match = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+  return match ? decodeURIComponent(match[1]) : '';
+}
+
+// ── Headers padrão para todas as requisições AJAX ────────────────────────────
+function ajaxHeaders() {
+  return {
+    'X-CSRFToken': getCsrfToken(),
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+  };
+}
+
+// ── Helpers de estado do Modal ───────────────────────────────────────────────
+function modalMostrarLoading() {
+  document.getElementById('modal-loading').classList.remove('d-none');
+  document.getElementById('modal-form').classList.add('d-none');
+  document.getElementById('modal-error').classList.add('d-none');
+  document.getElementById('btn-enviar-email').disabled = true;
+}
+
+function modalMostrarErro(msg) {
+  document.getElementById('modal-loading').classList.add('d-none');
+  document.getElementById('modal-form').classList.add('d-none');
+  document.getElementById('modal-error-msg').textContent = msg;
+  document.getElementById('modal-error').classList.remove('d-none');
+  document.getElementById('btn-enviar-email').disabled = true;
+}
+
+function modalMostrarFormulario(data) {
+  document.getElementById('modal-loading').classList.add('d-none');
+  document.getElementById('modal-error').classList.add('d-none');
+  document.getElementById('modal-form').classList.remove('d-none');
+
+  // Preenche os campos com os dados do rascunho
+  document.getElementById('draft-prospect-id').value = data.prospect_id_ctx;
+  document.getElementById('draft-to-email').value    = data.to_email;
+  document.getElementById('draft-subject').value     = data.subject;
+  document.getElementById('draft-body').value        = data.body;
+
+  // Atualiza contador de caracteres
+  atualizarContador();
+
+  // Habilita o botão de envio apenas se o draft não foi enviado
+  const jaEnviado = data.status === 'sent';
+  document.getElementById('btn-enviar-email').disabled = jaEnviado;
+  if (jaEnviado) {
+    document.getElementById('btn-enviar-email').textContent = '✓ Já enviado';
+  }
+}
+
+// ── Contador de caracteres do textarea ───────────────────────────────────────
+function atualizarContador() {
+  const body  = document.getElementById('draft-body');
+  const count = document.getElementById('draft-char-count');
+  if (body && count) {
+    count.textContent = `${body.value.length} caracteres`;
+  }
+}
+document.getElementById('draft-body')?.addEventListener('input', atualizarContador);
+
+// ── Remoção suave de linha da tabela ─────────────────────────────────────────
+function removerLinha(prospectId, callback) {
+  const row = document.getElementById('row-' + prospectId);
+  if (!row) { if (callback) callback(); return; }
+  row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  row.style.opacity = '0';
+  row.style.transform = 'translateX(20px)';
+  setTimeout(() => {
+    row.remove();
+    if (callback) callback();
+  }, 420);
+}
+
+// ── Verifica se uma tabela ficou vazia e exibe mensagem amigável ──────────────
+function verificarTabelaVazia(tbodySelector, wrapperSelector, mensagem) {
+  const tbody = document.querySelector(tbodySelector);
+  if (tbody && tbody.querySelectorAll('tr').length === 0) {
+    const wrapper = document.getElementById(wrapperSelector);
+    if (wrapper) {
+      wrapper.innerHTML = `
+        <div class="alert alert-info mb-0" role="alert">
+          <i class="bi bi-check-circle me-2"></i>${mensagem}
+        </div>`;
+    }
+  }
+}
+
+// ── Ação principal: Aprovar ou Rejeitar prospect ──────────────────────────────
+/**
+ * Disparado pelos botões da tabela de revisão.
+ *
+ * Fluxo para APROVAR:
+ *   1. Desabilita botões (evita duplo-clique) e mostra spinner.
+ *   2. POST /app/atlas/<id>/aprovar/ → backend cria draft e muda status.
+ *   3. Abre o modal com os dados do rascunho para revisão final.
+ *   4. Linha permanece mas botões são substituídos por "Ver Rascunho".
+ *
+ * Fluxo para REJEITAR:
+ *   1. Desabilita botões e mostra spinner.
+ *   2. POST /app/atlas/<id>/rejeitar/ → backend muda status para 'rejected'.
+ *   3. Remove a linha com fade-out.
+ */
+async function atlasAcao(prospectId, acao, botaoClicado) {
+  const row    = document.getElementById('row-' + prospectId);
+  const botoes = row.querySelectorAll('button');
+
+  // Salva o HTML original dos botões para possível reversão em caso de erro
+  const htmlOriginal = Array.from(botoes).map(b => b.outerHTML);
+
+  // 1. Bloqueia interação imediatamente
+  botoes.forEach(b => {
+    b.disabled = true;
+    b.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+  });
+
+  try {
+    const resp = await fetch(`/app/atlas/${prospectId}/${acao}/`, {
+      method: 'POST',
+      headers: ajaxHeaders(),
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+
+      if (acao === 'aprovar') {
+        // 3. Aprovação: substitui botões por "Ver Rascunho" e abre o modal
+        document.getElementById('actions-' + prospectId).innerHTML = `
+          <button class="btn btn-primary btn-sm"
+                  onclick="atlasVerRascunho('${prospectId}', this)"
+                  title="Visualizar e editar rascunho de e-mail">
+            <i class="bi bi-envelope-paper me-1"></i> Ver Rascunho
+          </button>`;
+        // Abre o modal automaticamente após a aprovação
+        await atlasAbrirModal(prospectId);
+
+      } else {
+        // 4. Rejeição: fade-out e remove a linha
+        removerLinha(prospectId, () => {
+          verificarTabelaVazia(
+            '#table-revisao tbody',
+            'wrapper-revisao',
+            'Nenhum lead pendente de revisão. O Atlas trará novos prospects em breve.'
+          );
+        });
+      }
+
+    } else {
+      // Erro de negócio: restaura os botões originais
+      mostrarAlertoModal(`Atenção: ${data.error || 'Erro desconhecido.'}`);
+      const actionsCell = document.getElementById('actions-' + prospectId);
+      actionsCell.innerHTML = htmlOriginal.join('');
+    }
+
+  } catch (err) {
+    console.error('[Atlas] Erro na requisição:', err);
+    mostrarAlertoModal('Erro de comunicação com o servidor. Tente novamente.');
+    location.reload();
+  }
+}
+
+// ── Abre o modal a partir de um prospect já aprovado (botão "Ver Rascunho") ──
+async function atlasVerRascunho(prospectId, botao) {
+  botao.disabled = true;
+  const labelOriginal = botao.innerHTML;
+  botao.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+
+  await atlasAbrirModal(prospectId);
+
+  botao.disabled = false;
+  botao.innerHTML = labelOriginal;
+}
+
+// ── Abre e popula o modal com os dados do rascunho ───────────────────────────
+/**
+ * 1. Exibe o modal no estado de "carregando".
+ * 2. Faz GET /app/atlas/draft/<id>/ para buscar os dados do rascunho.
+ * 3. Preenche os campos ou exibe mensagem de erro.
+ */
+async function atlasAbrirModal(prospectId) {
+  // Inicializa o modal no estado de carregamento
+  modalMostrarLoading();
+  const modalEl   = document.getElementById('modalRascunho');
+  const modalInst = bootstrap.Modal.getOrCreateInstance(modalEl);
+  modalInst.show();
+
+  try {
+    const resp = await fetch(`/app/atlas/draft/${prospectId}/`, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      // Injeta o prospectId no objeto para uso pelo formulário
+      data.prospect_id_ctx = prospectId;
+      modalMostrarFormulario(data);
+    } else {
+      modalMostrarErro(data.error || 'Não foi possível carregar o rascunho.');
+    }
+
+  } catch (err) {
+    console.error('[Atlas] Erro ao carregar rascunho:', err);
+    modalMostrarErro('Erro de comunicação com o servidor ao carregar o rascunho.');
+  }
+}
+
+// ── Envia o rascunho editado pelo usuário ────────────────────────────────────
+/**
+ * 1. Valida campos obrigatórios (assunto e corpo).
+ * 2. POST /app/atlas/draft/<id>/enviar/ com o conteúdo revisado.
+ * 3. Em sucesso: fecha o modal, remove a linha da tabela correspondente.
+ * 4. Em erro: mantém o modal aberto e exibe mensagem.
+ */
+async function atlasEnviarEmail() {
+  const prospectId = document.getElementById('draft-prospect-id').value;
+  const subject    = document.getElementById('draft-subject').value.trim();
+  const body       = document.getElementById('draft-body').value.trim();
+
+  // Validação client-side
+  let valido = true;
+  const subjectEl = document.getElementById('draft-subject');
+  const bodyEl    = document.getElementById('draft-body');
+
+  subjectEl.classList.remove('is-invalid');
+  bodyEl.classList.remove('is-invalid');
+
+  if (!subject) { subjectEl.classList.add('is-invalid'); valido = false; }
+  if (!body)    { bodyEl.classList.add('is-invalid');    valido = false; }
+  if (!valido)  return;
+
+  // Bloqueia o botão durante o envio
+  const btnEnviar = document.getElementById('btn-enviar-email');
+  const btnFechar = document.getElementById('btn-modal-fechar');
+  btnEnviar.disabled = true;
+  btnFechar.disabled = true;
+  btnEnviar.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Enviando…';
+
+  try {
+    const resp = await fetch(`/app/atlas/draft/${prospectId}/enviar/`, {
+      method: 'POST',
+      headers: ajaxHeaders(),
+      body: JSON.stringify({ subject, body }),
+    });
+    const data = await resp.json();
+
+    if (resp.ok && data.success) {
+      // Fecha o modal
+      bootstrap.Modal.getInstance(document.getElementById('modalRascunho')).hide();
+
+      // Remove a linha da tabela de revisão (se ainda presente) e da de aprovados
+      removerLinha(prospectId, () => {
+        verificarTabelaVazia(
+          '#table-revisao tbody',
+          'wrapper-revisao',
+          'Nenhum lead pendente de revisão. O Atlas trará novos prospects em breve.'
+        );
+        verificarTabelaVazia(
+          '#table-aprovados tbody',
+          'wrapper-aprovados',
+          'Todos os rascunhos foram processados.'
+        );
+      });
+
+      // Toast de sucesso não-bloqueante
+      mostrarToast(data.sent
+        ? `<i class="bi bi-check-circle-fill me-2 text-success"></i>${data.message}`
+        : `<i class="bi bi-info-circle-fill me-2 text-warning"></i>${data.message}`,
+        data.sent ? 'success' : 'warning'
+      );
+
+    } else {
+      mostrarAlertoModal(`Erro ao enviar: ${data.error || 'Erro desconhecido.'}`);
+      btnEnviar.disabled = false;
+      btnFechar.disabled = false;
+      btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+    }
+
+  } catch (err) {
+    console.error('[Atlas] Erro no envio:', err);
+    mostrarAlertoModal('Erro de comunicação com o servidor. Tente novamente.');
+    btnEnviar.disabled = false;
+    btnFechar.disabled = false;
+    btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+  }
+}
+
+// ── Toast não-bloqueante (Bootstrap 5) ───────────────────────────────────────
+function mostrarToast(htmlMensagem, tipo = 'success') {
+  const bgClass = tipo === 'success' ? 'text-bg-success' : 'text-bg-warning';
+  const toastId = 'atlas-toast-' + Date.now();
+  const toastEl = document.createElement('div');
+  toastEl.id = toastId;
+  toastEl.className = `toast align-items-center ${bgClass} border-0 shadow`;
+  toastEl.setAttribute('role', 'alert');
+  toastEl.setAttribute('aria-live', 'assertive');
+  toastEl.innerHTML = `
+    <div class="d-flex">
+      <div class="toast-body fw-semibold">${htmlMensagem}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast" aria-label="Fechar"></button>
+    </div>`;
+
+  // Container de toasts (cria se não existir)
+  let container = document.getElementById('atlas-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'atlas-toast-container';
+    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+    container.style.zIndex = '1100';
+    document.body.appendChild(container);
+  }
+  container.appendChild(toastEl);
+  new bootstrap.Toast(toastEl, { delay: 6000 }).show();
+  toastEl.addEventListener('hidden.bs.toast', () => toastEl.remove());
+}
+
+// ── Alerta inline simples (sem dependência de toast) ─────────────────────────
+function mostrarAlertoModal(msg) {
+  // Usa alert nativo como fallback quando o modal ainda não está aberto
+  alert(msg);
+}
+
+// ── Limpa o modal ao fechar para evitar dados residuais ──────────────────────
+document.getElementById('modalRascunho').addEventListener('hidden.bs.modal', () => {
+  document.getElementById('draft-prospect-id').value = '';
+  document.getElementById('draft-to-email').value    = '';
+  document.getElementById('draft-subject').value     = '';
+  document.getElementById('draft-subject').classList.remove('is-invalid');
+  document.getElementById('draft-body').value        = '';
+  document.getElementById('draft-body').classList.remove('is-invalid');
+  document.getElementById('draft-char-count').textContent = '0 caracteres';
+
+  const btnEnviar = document.getElementById('btn-enviar-email');
+  btnEnviar.disabled = false;
+  btnEnviar.innerHTML = '<i class="bi bi-send-fill me-1"></i> Enviar E-mail';
+  document.getElementById('btn-modal-fechar').disabled = false;
+
+  // Volta ao estado de loading para a próxima abertura
+  modalMostrarLoading();
+});
+</script>
+
 {% endblock %}

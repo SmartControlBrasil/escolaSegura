@@ -86,11 +86,18 @@
     <div class="invoice-container">
         <div class="row invoice-header align-items-center">
             <div class="col-sm-6">
-                <div class="logo-placeholder">MARMORARIA 360</div>
-                <div class="text-muted mt-2">
-                    CNPJ: 00.000.000/0001-00<br>
-                    {{ organization.name }}<br>
-                    Av. Exemplo Comercial, 1000 - Centro
+                <div class="logo-placeholder">
+                    {% if organization.company_profile.logo %}
+                        <img src="{{ organization.company_profile.logo.url }}" alt="{{ organization.company_profile.trade_name }}" style="max-height: 50px;">
+                    {% else %}
+                        {{ organization.company_profile.trade_name|upper }}
+                    {% endif %}
+                </div>
+                <div class="text-muted mt-2" style="font-size: 11px; line-height: 1.4;">
+                    <strong>CNPJ:</strong> {{ organization.company_profile.cnpj }}<br>
+                    <strong>Razão Social:</strong> {{ organization.company_profile.legal_name }}<br>
+                    {{ organization.company_profile.address }} - {{ organization.company_profile.city }}/{{ organization.company_profile.state }}<br>
+                    <strong>Contato:</strong> {{ organization.company_profile.phone }} | {{ organization.company_profile.email }}
                 </div>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
@@ -168,7 +175,7 @@
             <div class="col-sm-7">
                 <h6 class="text-uppercase text-muted fw-bold mb-2">Condições Comerciais</h6>
                 <div class="p-3 bg-light rounded text-muted small">
-                    {{ estimate.terms_and_conditions|default:"- Pagamento de 50% na aprovação (Sinal) e 50% na entrega.<br>- Medição exata será feita na obra antes do corte.<br>- Materiais naturais (mármore e granito) podem sofrer variações de tonalidade e veios."|safe|linebreaks }}
+                    {{ estimate.terms_and_conditions|default:organization.company_profile.default_terms|safe|linebreaks }}
                 </div>
             </div>
             <div class="col-sm-5">
@@ -199,7 +206,7 @@
         </div>
 
         <div class="text-center mt-5 pt-3 border-top text-muted small">
-            Orçamento gerado por <strong>{{ estimate.created_by.username|default:"Sistema" }}</strong> - Marmoraria 360 CRM.
+            {{ organization.company_profile.footer_text|default:"Orçamento gerado por Sistema - Marmoraria 360 CRM."|safe }}
         </div>
     </div>
 

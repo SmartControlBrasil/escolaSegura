@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -10,7 +11,7 @@ from decimal import Decimal
 from apps.customers.infrastructure.models import Customer
 from apps.catalog.infrastructure.models import Product
 from apps.estimates.infrastructure.models import Estimate, EstimateLine
-from apps.core.infrastructure.models import Organization, ActivityLog, Supplier, Vehicle
+from apps.core.infrastructure.models import Organization, ActivityLog, Supplier, Vehicle, CompanyProfile
 from apps.sales.infrastructure.models import Project
 from apps.service_reports.infrastructure.models import ServiceReport, ProjectDelivery
 from apps.finance.infrastructure.models import AccountReceivable, AccountPayable
@@ -468,12 +469,239 @@ def growth(request):
 
 @login_required
 def atlas(request):
-    # Get prospects that need human review (seeded from Atlas)
-    prospects = AtlasProspect.objects.filter(status='review').order_by('-score')
+    """
+    Painel principal do Atlas.
+    Exibe dois grupos de prospects:
+    - Em revisão: aguardam decisão humana (aprovar/rejeitar).
+    - Aprovados com rascunho pendente: aprovados mas cujo e-mail ainda não foi disparado.
+    """
+    # Grupo 1: aguardando revisão humana
+    prospects_revisao = AtlasProspect.objects.filter(
+        status=AtlasProspect.Status.REVIEW
+    ).order_by('-score')
+
+    # Grupo 2: aprovados mas com pelo menos um rascunho ainda no status 'draft'
+    # (o status muda para 'sent' ou 'dry_run' após o disparo)
+    prospects_aprovados = AtlasProspect.objects.filter(
+        status=AtlasProspect.Status.APPROVED,
+        email_drafts__status='draft',
+    ).distinct().order_by('-updated_at')
+
     context = {
-        'prospects': prospects
+        'prospects_revisao': prospects_revisao,
+        'prospects_aprovados': prospects_aprovados,
     }
     return render(request, 'backoffice/atlas.html', context)
+
+
+@login_required
+@require_POST
+def atlas_aprovar_prospect(request, prospect_id):
+    """
+    Aprova um prospect identificado pelo Atlas.
+
+    Regras de negócio:
+    1. O status do AtlasProspect é atualizado para 'approved'.
+    2. Um rascunho de e-mail de outreach é gerado automaticamente via
+       AtlasProspectorService.create_email_draft(). O rascunho NÃO é
+       enviado imediatamente — ele fica aguardando revisão final e
+       aprovação humana explícita antes do disparo (campo
+       AtlasEmailDraft.approved_by_human).
+    3. Apenas requisições POST são aceitas (@require_POST).
+    4. Usuário precisa estar autenticado (@login_required).
+    """
+    from apps.agents.application.services import AtlasProspectorService
+
+    prospect = get_object_or_404(AtlasProspect, pk=prospect_id)
+
+    # Guarda-chuva: só processa se ainda estiver em revisão
+    if prospect.status != AtlasProspect.Status.REVIEW:
+        return JsonResponse(
+            {'success': False, 'error': f'Prospect está com status "{prospect.get_status_display()}", não pode ser aprovado novamente.'},
+            status=400
+        )
+
+    # 1. Atualiza o status do prospect
+    prospect.status = AtlasProspect.Status.APPROVED
+    prospect.save(update_fields=['status', 'updated_at'])
+
+    # 2. Gera o rascunho de e-mail de outreach (sem enviar)
+    #    O assunto e corpo padrão servem como ponto de partida para edição humana.
+    subject = f'Parceria Marmoraria Santander × {prospect.company_name}'
+    body = (
+        f'Olá {prospect.contact_name or "prezado(a)"},\n\n'
+        f'Meu nome é Fabrizio e represento a Marmoraria Santander.\n'
+        f'Identificamos a {prospect.company_name} como uma empresa com alto potencial '
+        f'de parceria em projetos de mármore e granito.\n\n'
+        f'Gostaríamos de apresentar nosso portfólio e discutir possibilidades de colaboração.\n'
+        f'Podemos agendar uma conversa rápida?\n\n'
+        f'Atenciosamente,\nMarmoraria Santander'
+    )
+    draft = AtlasProspectorService.create_email_draft(prospect, subject=subject, body=body)
+
+    return JsonResponse({
+        'success': True,
+        'message': f'Prospect "{prospect.company_name}" aprovado. Rascunho de e-mail criado (ID: {str(draft.pk)}).',
+        'prospect_id': str(prospect.pk),
+        'draft_id': str(draft.pk),
+    })
+
+
+@login_required
+@require_POST
+def atlas_rejeitar_prospect(request, prospect_id):
+    """
+    Rejeita um prospect identificado pelo Atlas.
+
+    Regras de negócio:
+    1. O status do AtlasProspect é atualizado para 'rejected'.
+    2. Nenhum rascunho de e-mail é gerado.
+    3. A ação é reversível via Django Admin, mas não pela interface do painel.
+    4. Apenas requisições POST são aceitas (@require_POST).
+    5. Usuário precisa estar autenticado (@login_required).
+    """
+    prospect = get_object_or_404(AtlasProspect, pk=prospect_id)
+
+    # Guarda-chuva: só processa se ainda estiver em revisão
+    if prospect.status != AtlasProspect.Status.REVIEW:
+        return JsonResponse(
+            {'success': False, 'error': f'Prospect está com status "{prospect.get_status_display()}", não pode ser rejeitado novamente.'},
+            status=400
+        )
+
+    # Atualiza o status do prospect para rejeitado
+    prospect.status = AtlasProspect.Status.REJECTED
+    prospect.save(update_fields=['status', 'updated_at'])
+
+    return JsonResponse({
+        'success': True,
+        'message': f'Prospect "{prospect.company_name}" rejeitado.',
+        'prospect_id': str(prospect.pk),
+    })
+
+
+@login_required
+def atlas_draft_get(request, prospect_id):
+    """
+    Endpoint GET: retorna o rascunho de e-mail mais recente associado ao prospect.
+
+    Regras de negócio:
+    1. Busca o AtlasEmailDraft mais recente do prospect (um prospect pode ter
+       múltiplos rascunhos de sessões anteriores; sempre exibimos o mais novo).
+    2. Retorna JSON com assunto, corpo, destinatário e status atual do draft.
+    3. Requer autenticação; não requer POST (é apenas uma consulta).
+    """
+    prospect = get_object_or_404(AtlasProspect, pk=prospect_id)
+    draft = prospect.email_drafts.order_by('-created_at').first()
+
+    if not draft:
+        return JsonResponse(
+            {'success': False, 'error': 'Nenhum rascunho encontrado para este prospect.'},
+            status=404
+        )
+
+    return JsonResponse({
+        'success': True,
+        'draft_id': str(draft.pk),
+        'subject': draft.subject,
+        'body': draft.body,
+        'to_email': draft.to_email,
+        'from_email': draft.from_email,
+        'status': draft.status,
+        'approved_by_human': draft.approved_by_human,
+    })
+
+
+@login_required
+@require_POST
+def atlas_draft_enviar(request, prospect_id):
+    """
+    Endpoint POST: atualiza o rascunho com o conteúdo editado pelo usuário,
+    marca como aprovado por humano e dispara o envio via AtlasProspectorService.
+
+    Regras de negócio:
+    1. O payload JSON deve conter 'subject' (str) e 'body' (str).
+    2. O conteúdo do rascunho é sobrescrito com a versão revisada pelo usuário.
+    3. O campo 'approved_by_human' é marcado como True antes do envio —
+       requisito obrigatório do AtlasProspectorService.send_approved_draft().
+    4. Se AGENTS_EMAIL_DRY_RUN=true (padrão em dev), o e-mail NÃO é enviado
+       de verdade; o status do draft muda para 'dry_run'.
+    5. Após envio real bem-sucedido, o AtlasProspect avança para 'contacted'.
+    6. Apenas requisições POST são aceitas (@require_POST).
+    7. Usuário precisa estar autenticado (@login_required).
+    """
+    import json as _json
+    from apps.agents.application.services import AtlasProspectorService
+
+    prospect = get_object_or_404(AtlasProspect, pk=prospect_id)
+
+    # Busca o rascunho mais recente (mesmo critério do endpoint GET)
+    draft = prospect.email_drafts.order_by('-created_at').first()
+    if not draft:
+        return JsonResponse(
+            {'success': False, 'error': 'Nenhum rascunho encontrado para envio.'},
+            status=404
+        )
+
+    # Guarda-chuva: não permite reenvio de draft já disparado
+    if draft.status in ('sent',):
+        return JsonResponse(
+            {'success': False, 'error': 'Este rascunho já foi enviado anteriormente.'},
+            status=400
+        )
+
+    # Desserializa o payload JSON enviado pelo frontend
+    try:
+        payload = _json.loads(request.body)
+    except (ValueError, KeyError):
+        return JsonResponse(
+            {'success': False, 'error': 'Payload inválido. Envie JSON com "subject" e "body".'},
+            status=400
+        )
+
+    subject = payload.get('subject', '').strip()
+    body = payload.get('body', '').strip()
+
+    if not subject or not body:
+        return JsonResponse(
+            {'success': False, 'error': 'Assunto e corpo do e-mail são obrigatórios.'},
+            status=400
+        )
+
+    # Persiste o conteúdo editado pelo operador humano
+    draft.subject = subject
+    draft.body = body
+    # Aprovação humana explícita: libera o envio no serviço
+    draft.approved_by_human = True
+    draft.save(update_fields=['subject', 'body', 'approved_by_human', 'updated_at'])
+
+    # Dispara o envio (ou dry-run) via serviço de domínio
+    try:
+        sent = AtlasProspectorService.send_approved_draft(draft)
+    except ValueError as exc:
+        return JsonResponse({'success': False, 'error': str(exc)}, status=400)
+
+    # Avança o prospect para 'contatado' somente se o e-mail foi de fato enviado
+    if sent:
+        prospect.status = AtlasProspect.Status.CONTACTED
+        prospect.save(update_fields=['status', 'updated_at'])
+        mensagem = f'E-mail enviado com sucesso para {draft.to_email}.'
+    else:
+        # Modo dry-run: e-mail simulado, prospect permanece 'approved'
+        mensagem = (
+            f'Simulação (dry-run) registrada com sucesso. '
+            f'O e-mail NÃO foi enviado de verdade. '
+            f'Configure AGENTS_EMAIL_DRY_RUN=false e um SMTP real para produção.'
+        )
+
+    return JsonResponse({
+        'success': True,
+        'sent': sent,
+        'message': mensagem,
+        'draft_id': str(draft.pk),
+        'prospect_id': str(prospect.pk),
+    })
+
 
 @login_required
 def assistente(request):
@@ -484,6 +712,68 @@ def assistente(request):
     }
     return render(request, 'backoffice/assistente.html', context)
 
+
+@login_required
+def operations_review(request):
+    """
+    Fila de Revisão Unificada (Operations Review Queue).
+    Unifica leads inbound (SantanderChatSession) e outbound (AtlasProspect).
+    """
+    from apps.santander_assistant.models import SantanderChatSession
+    from django.db.models import Q
+
+    # Inbound: Sessões que atingiram o estado 'qualified' OU que possuem nome e algum contato
+    inbound_leads = SantanderChatSession.objects.filter(
+        Q(current_state='qualified') | 
+        (Q(client_name__isnull=False) & ~Q(client_name='')) & 
+        (~Q(client_phone='') | ~Q(client_email=''))
+    ).order_by('-created_at')
+
+    # Outbound: Leads capturados pelo Atlas que aguardam aprovação ('review')
+    outbound_leads = AtlasProspect.objects.filter(
+        status=AtlasProspect.Status.REVIEW
+    ).order_by('-score')
+
+    context = {
+        'inbound_leads': inbound_leads,
+        'outbound_leads': outbound_leads,
+    }
+    return render(request, 'backoffice/operations_review.html', context)
+
+
+@login_required
+def session_messages_json(request, session_id):
+    """
+    API interna para carregar a transcrição/mensagens de uma sessão de chat.
+    Utilizado no modal da Fila de Revisão.
+    """
+    from apps.santander_assistant.models import SantanderChatMessage, SantanderChatSession
+
+    session = get_object_or_404(SantanderChatSession, pk=session_id)
+    messages = SantanderChatMessage.objects.filter(session=session).order_by('created_at')
+
+    messages_data = []
+    for msg in messages:
+        messages_data.append({
+            'role': msg.role,
+            'role_display': msg.get_role_display(),
+            'content': msg.content,
+            'timestamp': msg.created_at.strftime('%d/%m/%Y %H:%M:%S'),
+        })
+
+    return JsonResponse({
+        'success': True,
+        'session_key': session.session_key,
+        'client_name': session.client_name or 'Visitante anônimo',
+        'client_email': session.client_email or 'Não informado',
+        'client_phone': session.client_phone or 'Não informado',
+        'client_company': session.client_company or 'Não informada',
+        'client_city': session.client_city or 'Não informada',
+        'current_state': session.get_current_state_display(),
+        'source_page': session.source_page or 'Não informada',
+        'messages': messages_data,
+    })
+
 @login_required
 def configuracoes(request):
     org = Organization.objects.first()
@@ -491,6 +781,102 @@ def configuracoes(request):
         'organization': org
     }
     return render(request, 'backoffice/configuracoes.html', context)
+
+
+def can_edit_company_profile(user):
+    if user.is_superuser:
+        return True
+    if hasattr(user, 'role') and user.role in ['owner', 'admin']:
+        return True
+    if user.groups.filter(name__in=['Proprietário', 'Admin Técnico']).exists():
+        return True
+    return False
+
+
+@login_required
+def configuracoes_empresa(request):
+    org = None
+    if hasattr(request.user, 'organization') and request.user.organization:
+        org = request.user.organization
+    else:
+        org = Organization.objects.first()
+        
+    if not org:
+        org = Organization.objects.create(name="Marmoraria Santander", legal_name="Santander Mármores e Granitos LTDA")
+        
+    profile, created = CompanyProfile.objects.get_or_create(
+        organization=org,
+        defaults={
+            'trade_name': org.name or "Marmoraria Santander",
+            'legal_name': org.legal_name or "Santander Mármores e Granitos LTDA",
+            'cnpj': org.document or "12.345.678/0001-99",
+            'phone': org.phone or "(11) 4142-1413",
+            'whatsapp': "(11) 99999-8888",
+            'email': org.email or "comercial@santandermarmoraria.com.br",
+            'website': "www.santandermarmoraria.com.br",
+            'address': "Av. Exemplo Comercial, 1000 - Centro",
+            'city': "São Paulo",
+            'state': "SP",
+            'business_hours': "Segunda a Sexta: 08:00 às 18:00",
+            'slogan': "Qualidade e sofisticação em mármores e granitos",
+            'footer_text': "Orçamento gerado por Marmoraria Santander - Todos os direitos reservados.",
+            'default_terms': "Pagamento: 50% de sinal e 50% na entrega. Prazo de entrega: 15 dias úteis após medição final.",
+            'default_estimate_validity': 15,
+            'privacy_policy': "Esta é a política de privacidade da Marmoraria Santander.",
+            'terms_of_use': "Estes são os termos de uso do sistema da Marmoraria Santander.",
+            'is_active': True
+        }
+    )
+    
+    can_edit = can_edit_company_profile(request.user)
+    error_message = None
+    success_message = None
+    
+    if request.method == 'POST':
+        if not can_edit:
+            error_message = "Apenas usuários dos grupos Proprietário ou Admin Técnico podem salvar alterações."
+        else:
+            profile.trade_name = request.POST.get('trade_name', '').strip()
+            profile.legal_name = request.POST.get('legal_name', '').strip()
+            profile.cnpj = request.POST.get('cnpj', '').strip()
+            profile.phone = request.POST.get('phone', '').strip()
+            profile.whatsapp = request.POST.get('whatsapp', '').strip()
+            profile.email = request.POST.get('email', '').strip()
+            profile.website = request.POST.get('website', '').strip()
+            profile.address = request.POST.get('address', '').strip()
+            profile.city = request.POST.get('city', '').strip()
+            profile.state = request.POST.get('state', '').strip()
+            profile.business_hours = request.POST.get('business_hours', '').strip()
+            profile.slogan = request.POST.get('slogan', '').strip()
+            profile.footer_text = request.POST.get('footer_text', '').strip()
+            profile.default_terms = request.POST.get('default_terms', '').strip()
+            
+            validity = request.POST.get('default_estimate_validity')
+            if validity:
+                try:
+                    profile.default_estimate_validity = int(validity)
+                except ValueError:
+                    pass
+            
+            profile.privacy_policy = request.POST.get('privacy_policy', '').strip()
+            profile.terms_of_use = request.POST.get('terms_of_use', '').strip()
+            profile.is_active = request.POST.get('is_active') == 'on'
+            
+            if 'logo' in request.FILES:
+                profile.logo = request.FILES['logo']
+                
+            profile.save()
+            log_activity(request, request.user, 'company_profile_updated', obj=profile)
+            success_message = "Configurações da empresa salvas com sucesso!"
+            
+    context = {
+        'organization': org,
+        'profile': profile,
+        'can_edit': can_edit,
+        'error_message': error_message,
+        'success_message': success_message
+    }
+    return render(request, 'backoffice/configuracoes_empresa.html', context)
 
 
 def log_activity(request, user, action, obj=None, metadata=None):

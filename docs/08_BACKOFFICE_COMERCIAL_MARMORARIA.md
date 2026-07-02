@@ -27,7 +27,7 @@ O painel é acessado através do prefixo `/app/` e possui as seguintes telas:
 7.  **Relatórios (`/app/relatorios/`)**: Métricas e relatórios financeiros consolidados por status de orçamentos.
 8.  **Redes Sociais (`/app/redes-sociais/`)**: Sugestões automáticas de posts com legendas, hashtags e sugestão de canal de publicação (marketing de prospecção).
 9.  **Growth Engine (`/app/growth/`)**: Funil comercial exibindo as oportunidades em qualificação, proposta, negociação e fechamento.
-10. **Robô Atlas (`/app/atlas/`)**: Painel de leads corporativos capturados automaticamente na região e mantidos em status de revisão humana.
+10. **Robô Atlas (`/app/atlas/`)**: Painel onde o Atlas identifica prospects, sugere oportunidades e prepara dados/minutas para revisão humana.
 11. **Assistente Virtual Lívia (`/app/assistente/`)**: Conversas do chat público capturadas no site, com resumos gerados de intenção de compra.
 12. **Configurações (`/app/configuracoes/`)**: Dados de cadastro oficiais da empresa (Marmoraria Santander).
 

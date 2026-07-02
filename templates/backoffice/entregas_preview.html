@@ -34,10 +34,18 @@
     <div class="invoice-container">
         <div class="row invoice-header align-items-center">
             <div class="col-sm-6">
-                <div class="logo-placeholder">MARMORARIA 360</div>
-                <div class="text-muted mt-2">
-                    {{ organization.name }}<br>
-                    Av. Exemplo Comercial, 1000 - Centro
+                <div class="logo-placeholder">
+                    {% if organization.company_profile.logo %}
+                        <img src="{{ organization.company_profile.logo.url }}" alt="{{ organization.company_profile.trade_name }}" style="max-height: 50px;">
+                    {% else %}
+                        {{ organization.company_profile.trade_name|upper }}
+                    {% endif %}
+                </div>
+                <div class="text-muted mt-2" style="font-size: 11px; line-height: 1.4;">
+                    <strong>CNPJ:</strong> {{ organization.company_profile.cnpj }}<br>
+                    <strong>Razão Social:</strong> {{ organization.company_profile.legal_name }}<br>
+                    {{ organization.company_profile.address }} - {{ organization.company_profile.city }}/{{ organization.company_profile.state }}<br>
+                    <strong>Contato:</strong> {{ organization.company_profile.phone }} | {{ organization.company_profile.email }}
                 </div>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
@@ -111,7 +119,7 @@
 
         <div>
             <div class="signature-area">
-                <span class="d-block fw-bold">{{ organization.name }}</span>
+                <span class="d-block fw-bold">{{ organization.company_profile.trade_name }}</span>
                 <span class="d-block text-muted small">Responsável Técnico / Instalador</span>
             </div>
             

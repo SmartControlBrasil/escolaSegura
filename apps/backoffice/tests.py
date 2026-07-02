@@ -188,3 +188,70 @@ class BackofficeTests(TestCase):
         response = self.client.get(f'/app/entregas/{deliv.id}/pdf/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/pdf')
+
+    def test_configuracoes_empresa_requires_login(self):
+        response = self.client.get('/app/configuracoes/empresa/')
+        self.assertRedirects(response, '/app/login/?next=/app/configuracoes/empresa/')
+
+    def test_configuracoes_empresa_status_200_if_logged_in(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get('/app/configuracoes/empresa/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_seed_creates_company_profile(self):
+        from apps.core.infrastructure.models import CompanyProfile
+        CompanyProfile.objects.all().delete()
+        call_command('seed_marmoraria_demo')
+        self.assertTrue(CompanyProfile.objects.filter(trade_name='Santander Mármores e Granitos').exists())
+
+    def test_configuracoes_empresa_post_success(self):
+        from apps.core.infrastructure.models import CompanyProfile
+        call_command('seed_marmoraria_demo')
+        self.user.role = 'owner'
+        self.user.save()
+        self.client.login(username='testuser', password='testpassword')
+        
+        response = self.client.post('/app/configuracoes/empresa/', {
+            'trade_name': 'New Trade Name',
+            'legal_name': 'New Legal Name LTDA',
+            'cnpj': '99.999.999/9999-99',
+            'phone': '1122223333',
+            'whatsapp': '11988887777',
+            'email': 'new@company.com',
+            'website': 'http://newcompany.com',
+            'address': 'New Address 123',
+            'city': 'New City',
+            'state': 'PR',
+            'business_hours': '09:00 - 17:00',
+            'slogan': 'The best company',
+            'footer_text': 'Footer test',
+            'default_terms': 'Terms test',
+            'default_estimate_validity': '10',
+            'is_active': 'on',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Configurações da empresa salvas com sucesso!", response.context['success_message'])
+        
+        profile = CompanyProfile.objects.first()
+        self.assertEqual(profile.trade_name, 'New Trade Name')
+        self.assertEqual(profile.cnpj, '99.999.999/9999-99')
+
+    def test_configuracoes_empresa_post_permission_denied(self):
+        from apps.core.infrastructure.models import CompanyProfile
+        call_command('seed_marmoraria_demo')
+        self.user.role = 'viewer'
+        self.user.save()
+        self.client.login(username='testuser', password='testpassword')
+        
+        initial_name = CompanyProfile.objects.first().trade_name
+        
+        response = self.client.post('/app/configuracoes/empresa/', {
+            'trade_name': 'Hacker Name',
+            'legal_name': 'Hacker Legal Name',
+            'default_estimate_validity': '10',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Apenas usuários dos grupos Proprietário ou Admin Técnico podem salvar alterações.", response.context['error_message'])
+        
+        profile = CompanyProfile.objects.first()
+        self.assertEqual(profile.trade_name, initial_name)

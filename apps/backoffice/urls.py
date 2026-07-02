@@ -67,6 +67,14 @@ urlpatterns = [
     path('redes-sociais/', views.redes_sociais, name='redes_sociais'),
     path('growth/', views.growth, name='growth'),
     path('atlas/', views.atlas, name='atlas'),
+    # Rotas de rascunho (literais 'draft' devem vir antes de <uuid> para não colidir)
+    path('atlas/draft/<uuid:prospect_id>/', views.atlas_draft_get, name='atlas_draft_get'),
+    path('atlas/draft/<uuid:prospect_id>/enviar/', views.atlas_draft_enviar, name='atlas_draft_enviar'),
+    path('atlas/<uuid:prospect_id>/aprovar/', views.atlas_aprovar_prospect, name='atlas_aprovar_prospect'),
+    path('atlas/<uuid:prospect_id>/rejeitar/', views.atlas_rejeitar_prospect, name='atlas_rejeitar_prospect'),
     path('assistente/', views.assistente, name='assistente'),
+    path('operations/review/', views.operations_review, name='operations_review'),
+    path('operations/session/<uuid:session_id>/messages/', views.session_messages_json, name='session_messages_json'),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
+    path('configuracoes/empresa/', views.configuracoes_empresa, name='configuracoes_empresa'),
 ]

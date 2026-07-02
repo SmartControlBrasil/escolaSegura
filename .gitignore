@@ -31,3 +31,11 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Local environment
+.env
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
