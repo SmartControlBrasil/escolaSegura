@@ -255,3 +255,93 @@ class BackofficeTests(TestCase):
         
         profile = CompanyProfile.objects.first()
         self.assertEqual(profile.trade_name, initial_name)
+
+
+class SaasBackofficeTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='saasadmin', password='testpassword')
+        from django.utils import timezone
+        from apps.saas.models import Tenant, SubscriptionPlan, PlanFeature, TenantSubscription, TenantUsage
+
+        self.tenant = Tenant.objects.create(
+            name='Escola SaaS',
+            slug='escola-saas',
+            status=Tenant.Status.ACTIVE,
+            email='contato@escolasaas.test',
+            city='São Paulo',
+            state='SP',
+        )
+        self.plan = SubscriptionPlan.objects.create(
+            name='Gestão',
+            slug='gestao-test',
+            description='Plano de teste',
+            monthly_price='597.00',
+            annual_price='5970.00',
+            max_students=700,
+            max_users=120,
+            has_academics=True,
+            has_finance=True,
+            has_documents=True,
+            has_whatsapp=True,
+            display_order=1,
+        )
+        PlanFeature.objects.create(plan=self.plan, code='students', name='Alunos')
+        PlanFeature.objects.create(plan=self.plan, code='billing', name='Cobranças')
+        self.subscription = TenantSubscription.objects.create(
+            tenant=self.tenant,
+            plan=self.plan,
+            status=TenantSubscription.Status.ACTIVE,
+            billing_cycle=TenantSubscription.BillingCycle.MONTHLY,
+            current_period_start=timezone.now(),
+            current_period_end=timezone.now() + timezone.timedelta(days=30),
+            gateway='manual',
+        )
+        TenantUsage.objects.create(
+            tenant=self.tenant,
+            students_count=42,
+            users_count=8,
+            storage_mb=256,
+        )
+
+    def test_saas_dashboard_loads_with_login(self):
+        self.client.login(username='saasadmin', password='testpassword')
+        response = self.client.get('/app/saas/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Admin Master SaaS')
+
+    def test_saas_tenants_list_loads_with_login(self):
+        self.client.login(username='saasadmin', password='testpassword')
+        response = self.client.get('/app/saas/tenants/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Escola SaaS')
+
+    def test_saas_tenant_detail_loads_with_login(self):
+        self.client.login(username='saasadmin', password='testpassword')
+        response = self.client.get(f'/app/saas/tenants/{self.tenant.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Features liberadas')
+        self.assertContains(response, 'students')
+
+    def test_saas_plans_list_loads_with_login(self):
+        self.client.login(username='saasadmin', password='testpassword')
+        response = self.client.get('/app/saas/plans/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Gestão')
+
+    def test_saas_subscriptions_list_loads_with_login(self):
+        self.client.login(username='saasadmin', password='testpassword')
+        response = self.client.get('/app/saas/subscriptions/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'manual')
+
+    def test_saas_routes_redirect_anonymous_user_to_login(self):
+        routes = [
+            '/app/saas/',
+            '/app/saas/tenants/',
+            f'/app/saas/tenants/{self.tenant.id}/',
+            '/app/saas/plans/',
+            '/app/saas/subscriptions/',
+        ]
+        for route in routes:
+            response = self.client.get(route)
+            self.assertRedirects(response, f'/app/login/?next={route}')

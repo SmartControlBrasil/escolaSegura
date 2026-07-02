@@ -17,6 +17,7 @@ from apps.service_reports.infrastructure.models import ServiceReport, ProjectDel
 from apps.finance.infrastructure.models import AccountReceivable, AccountPayable
 from apps.accounts.infrastructure.models import User
 from apps.agents.infrastructure.models import AtlasProspect, VirtualAssistantSession
+from apps.saas.models import Tenant, SubscriptionPlan, TenantSubscription
 
 from django.template.loader import render_to_string
 import weasyprint
@@ -1280,3 +1281,57 @@ def usuarios_detalhe(request, id):
         'groups': Group.objects.all(),
         'roles': User.Role.choices
     })
+
+@login_required
+def saas_dashboard(request):
+    context = {
+        'total_tenants': Tenant.objects.count(),
+        'active_tenants': Tenant.objects.filter(status=Tenant.Status.ACTIVE).count(),
+        'trial_tenants': Tenant.objects.filter(status=Tenant.Status.TRIAL).count(),
+        'suspended_tenants': Tenant.objects.filter(status=Tenant.Status.SUSPENDED).count(),
+        'active_subscriptions': TenantSubscription.objects.filter(status=TenantSubscription.Status.ACTIVE).count(),
+        'past_due_subscriptions': TenantSubscription.objects.filter(status=TenantSubscription.Status.PAST_DUE).count(),
+        'active_plans': SubscriptionPlan.objects.filter(is_active=True).count(),
+    }
+    return render(request, 'backoffice/saas_dashboard.html', context)
+
+
+@login_required
+def saas_tenants(request):
+    tenants = Tenant.objects.select_related('usage').prefetch_related('subscriptions__plan').order_by('name')
+    for tenant in tenants:
+        tenant.current_subscription = sorted(
+            tenant.subscriptions.all(),
+            key=lambda subscription: subscription.started_at,
+            reverse=True,
+        )[0] if tenant.subscriptions.all() else None
+    return render(request, 'backoffice/saas_tenants.html', {'tenants': tenants})
+
+
+@login_required
+def saas_tenant_detail(request, id):
+    tenant = get_object_or_404(
+        Tenant.objects.select_related('usage').prefetch_related('subscriptions__plan__features'),
+        id=id,
+    )
+    subscription = tenant.subscriptions.order_by('-started_at').select_related('plan').first()
+    features = subscription.plan.features.filter(is_enabled=True).order_by('code') if subscription else []
+    context = {
+        'tenant': tenant,
+        'subscription': subscription,
+        'features': features,
+    }
+    return render(request, 'backoffice/saas_tenant_detail.html', context)
+
+
+@login_required
+def saas_plans(request):
+    plans = SubscriptionPlan.objects.prefetch_related('features').order_by('display_order', 'monthly_price', 'name')
+    return render(request, 'backoffice/saas_plans.html', {'plans': plans})
+
+
+@login_required
+def saas_subscriptions(request):
+    subscriptions = TenantSubscription.objects.select_related('tenant', 'plan').order_by('-started_at')
+    return render(request, 'backoffice/saas_subscriptions.html', {'subscriptions': subscriptions})
+

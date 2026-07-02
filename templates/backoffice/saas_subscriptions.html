@@ -1,0 +1,41 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Assinaturas SaaS</h6>
+    <a href="{% url 'backoffice:saas_dashboard' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Visão Geral</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Tenant</th>
+            <th>Plano</th>
+            <th>Status</th>
+            <th>Ciclo</th>
+            <th>Período atual</th>
+            <th>Gateway</th>
+            <th>Criada em</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subscription in subscriptions %}
+          <tr>
+            <td><a href="{% url 'backoffice:saas_tenant_detail' subscription.tenant.id %}"><strong>{{ subscription.tenant.name }}</strong></a></td>
+            <td>{{ subscription.plan.name }}</td>
+            <td><span class="badge rounded-pill bg-secondary">{{ subscription.get_status_display }}</span></td>
+            <td>{{ subscription.get_billing_cycle_display }}</td>
+            <td>{{ subscription.current_period_start|date:'d/m/Y'|default:'-' }} até {{ subscription.current_period_end|date:'d/m/Y'|default:'-' }}</td>
+            <td>{{ subscription.gateway|default:'-' }}</td>
+            <td>{{ subscription.created_at|date:'d/m/Y H:i' }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7" class="text-center">Nenhuma assinatura cadastrada.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

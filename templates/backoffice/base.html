@@ -508,6 +508,9 @@
               <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="EscolaSegura">
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-escola" type="button"><i class="bi bi-tools"></i></button>
               </li>
+              <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="SaaS">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-saas" type="button"><i class="bi bi-grid-1x2-fill"></i></button>
+              </li>
               <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="IA & Growth">
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-growth" type="button"><i class="bi bi-cpu"></i></button>
               </li>
@@ -553,6 +556,20 @@
                   <a href="{% url 'backoffice:veiculos' %}" class="list-group-item"><i class="bi bi-car-front"></i>Veículos</a>
                   <a href="{% url 'backoffice:usuarios' %}" class="list-group-item"><i class="bi bi-person-badge"></i>Usuários</a>
                   <a href="{% url 'backoffice:relatorios' %}" class="list-group-item"><i class="bi bi-graph-up"></i>Relatórios</a>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-saas">
+                <div class="list-group list-group-flush">
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-0">SaaS</h5>
+                    </div>
+                    <small class="mb-0">Admin Master</small>
+                  </div>
+                  <a href="{% url 'backoffice:saas_dashboard' %}" class="list-group-item"><i class="bi bi-speedometer2"></i>Visão Geral</a>
+                  <a href="{% url 'backoffice:saas_tenants' %}" class="list-group-item"><i class="bi bi-buildings"></i>Escolas / Tenants</a>
+                  <a href="{% url 'backoffice:saas_plans' %}" class="list-group-item"><i class="bi bi-tags"></i>Planos</a>
+                  <a href="{% url 'backoffice:saas_subscriptions' %}" class="list-group-item"><i class="bi bi-credit-card"></i>Assinaturas</a>
                 </div>
               </div>
               <div class="tab-pane fade" id="pills-growth">

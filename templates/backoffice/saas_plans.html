@@ -1,0 +1,54 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Planos SaaS</h6>
+    <a href="{% url 'backoffice:saas_dashboard' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Visão Geral</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Nome</th>
+            <th>Slug</th>
+            <th>Mensal</th>
+            <th>Anual</th>
+            <th>Alunos</th>
+            <th>Usuários</th>
+            <th>Flags</th>
+            <th>Features</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for plan in plans %}
+          <tr>
+            <td><strong>{{ plan.name }}</strong></td>
+            <td>{{ plan.slug }}</td>
+            <td>R$ {{ plan.monthly_price }}</td>
+            <td>R$ {{ plan.annual_price }}</td>
+            <td>{{ plan.max_students }}</td>
+            <td>{{ plan.max_users }}</td>
+            <td>
+              {% if plan.has_academics %}<span class="badge bg-primary mb-1">academics</span>{% endif %}
+              {% if plan.has_finance %}<span class="badge bg-success mb-1">finance</span>{% endif %}
+              {% if plan.has_documents %}<span class="badge bg-info mb-1">documents</span>{% endif %}
+              {% if plan.has_ai %}<span class="badge bg-warning text-dark mb-1">ai</span>{% endif %}
+              {% if plan.has_whatsapp %}<span class="badge bg-success mb-1">whatsapp</span>{% endif %}
+              {% if plan.has_api %}<span class="badge bg-dark mb-1">api</span>{% endif %}
+            </td>
+            <td>
+              {% for feature in plan.features.all %}
+                {% if feature.is_enabled %}<span class="badge bg-light text-dark border mb-1">{{ feature.code }}</span>{% endif %}
+              {% empty %}-{% endfor %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8" class="text-center">Nenhum plano cadastrado.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

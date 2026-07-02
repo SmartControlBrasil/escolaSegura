@@ -1,0 +1,21 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mb-4">
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Total de escolas</p><h3 class="mb-0">{{ total_tenants }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Tenants ativos</p><h3 class="mb-0">{{ active_tenants }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Tenants em teste</p><h3 class="mb-0">{{ trial_tenants }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Tenants suspensos</p><h3 class="mb-0">{{ suspended_tenants }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Assinaturas ativas</p><h3 class="mb-0">{{ active_subscriptions }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Assinaturas pendentes</p><h3 class="mb-0">{{ past_due_subscriptions }}</h3></div></div></div>
+  <div class="col"><div class="card"><div class="card-body"><p class="text-secondary mb-1">Planos ativos</p><h3 class="mb-0">{{ active_plans }}</h3></div></div></div>
+</div>
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Admin Master SaaS</h6>
+    <a href="{% url 'backoffice:saas_tenants' %}" class="btn btn-primary btn-sm"><i class="bi bi-buildings"></i> Ver escolas</a>
+  </div>
+  <div class="card-body">
+    <p class="mb-0 text-secondary">Acompanhe escolas, planos e assinaturas do EscolaSegura.</p>
+  </div>
+</div>
+{% endblock %}

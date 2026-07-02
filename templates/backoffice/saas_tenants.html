@@ -1,0 +1,45 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Escolas / Tenants</h6>
+    <a href="{% url 'backoffice:saas_dashboard' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Visão Geral</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Nome</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>E-mail</th>
+            <th>Cidade/UF</th>
+            <th>Plano atual</th>
+            <th>Alunos</th>
+            <th>Criado em</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tenant in tenants %}
+          <tr>
+            <td><strong>{{ tenant.name }}</strong></td>
+            <td>{{ tenant.slug }}</td>
+            <td><span class="badge rounded-pill bg-secondary">{{ tenant.get_status_display }}</span></td>
+            <td>{{ tenant.email|default:'-' }}</td>
+            <td>{{ tenant.city|default:'-' }}{% if tenant.state %}/{{ tenant.state }}{% endif %}</td>
+            <td>{% if tenant.current_subscription %}{{ tenant.current_subscription.plan.name }}{% else %}-{% endif %}</td>
+            <td>{% if tenant.usage %}{{ tenant.usage.students_count }}{% else %}-{% endif %}</td>
+            <td>{{ tenant.created_at|date:'d/m/Y' }}</td>
+            <td><a href="{% url 'backoffice:saas_tenant_detail' tenant.id %}" class="btn btn-outline-primary btn-sm">Detalhe</a></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="9" class="text-center">Nenhuma escola cadastrada.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

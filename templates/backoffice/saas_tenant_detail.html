@@ -1,0 +1,68 @@
+{% extends 'backoffice/base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-12 col-xl-8">
+    <div class="card">
+      <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Tenant: {{ tenant.name }}</h6>
+        <a href="{% url 'backoffice:saas_tenants' %}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar</a>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6"><small class="text-secondary">Nome fantasia</small><div class="fw-bold">{{ tenant.name }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Razão social</small><div>{{ tenant.legal_name|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Documento</small><div>{{ tenant.document_number|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">E-mail</small><div>{{ tenant.email|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Telefone</small><div>{{ tenant.phone|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Cidade/UF</small><div>{{ tenant.city|default:'-' }}{% if tenant.state %}/{{ tenant.state }}{% endif %}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Status SaaS</small><div><span class="badge rounded-pill bg-secondary">{{ tenant.get_status_display }}</span></div></div>
+          <div class="col-md-6"><small class="text-secondary">Fim do trial</small><div>{{ tenant.trial_ends_at|date:'d/m/Y H:i'|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Domínio</small><div>{{ tenant.custom_domain|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Subdomínio</small><div>{{ tenant.subdomain|default:'-' }}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Assinatura mais recente</h6></div>
+      <div class="card-body">
+        {% if subscription %}
+        <div class="row g-3">
+          <div class="col-md-6"><small class="text-secondary">Plano</small><div class="fw-bold">{{ subscription.plan.name }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Status</small><div>{{ subscription.get_status_display }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Ciclo</small><div>{{ subscription.get_billing_cycle_display }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Gateway</small><div>{{ subscription.gateway|default:'-' }}</div></div>
+          <div class="col-md-6"><small class="text-secondary">Período atual</small><div>{{ subscription.current_period_start|date:'d/m/Y'|default:'-' }} até {{ subscription.current_period_end|date:'d/m/Y'|default:'-' }}</div></div>
+        </div>
+        {% else %}
+        <p class="mb-0 text-secondary">Nenhuma assinatura encontrada.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4">
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Uso</h6></div>
+      <div class="card-body">
+        {% if tenant.usage %}
+        <p class="mb-2"><strong>Alunos:</strong> {{ tenant.usage.students_count }}</p>
+        <p class="mb-2"><strong>Usuários:</strong> {{ tenant.usage.users_count }}</p>
+        <p class="mb-0"><strong>Storage:</strong> {{ tenant.usage.storage_mb }} MB</p>
+        {% else %}
+        <p class="mb-0 text-secondary">Nenhum uso registrado.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Features liberadas</h6></div>
+      <div class="card-body">
+        {% for feature in features %}
+          <span class="badge bg-light text-dark border mb-1">{{ feature.code }}</span>
+        {% empty %}
+          <p class="mb-0 text-secondary">Nenhuma feature liberada.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

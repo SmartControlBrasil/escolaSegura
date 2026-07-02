@@ -7,6 +7,11 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('saas/', views.saas_dashboard, name='saas_dashboard'),
+    path('saas/tenants/', views.saas_tenants, name='saas_tenants'),
+    path('saas/tenants/<int:id>/', views.saas_tenant_detail, name='saas_tenant_detail'),
+    path('saas/plans/', views.saas_plans, name='saas_plans'),
+    path('saas/subscriptions/', views.saas_subscriptions, name='saas_subscriptions'),
     
     # Clientes
     path('clientes/', views.clientes, name='clientes'),
