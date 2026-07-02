@@ -1,0 +1,7 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% load static %}
+{% block title %}{{ solution.title }} | PortalK12{% endblock %}
+{% block content %}
+<div class="breadcrumbs section-padding bg-[url('../images/all-img/bred.png')] bg-cover bg-center bg-no-repeat"><div class="container text-center"><h2>{{ solution.title }}</h2><p class="mt-4">{{ solution.summary }}</p></div></div>
+<div class="section-padding"><div class="container"><div class="lg:grid grid-cols-12 gap-[30px]"><div class="xl:col-span-7 lg:col-span-6 col-span-12"><img src="{% static 'institutional/portalk12/images/all-img/about2.png' %}" alt="" class="mx-auto block w-full"></div><div class="xl:col-span-5 lg:col-span-6 col-span-12"><div class="mini-title">Aplicação prática</div><h4 class="column-title">Implementação por <span class="shape-bg">etapas</span></h4><div>Ative este módulo com onboarding assistido, treinamento da equipe e trilha de operação validada pela direção.</div><div class="pt-8"><a href="/demonstracao/" class="btn btn-primary">Agendar demonstração</a></div></div></div></div></div>
+{% endblock %}

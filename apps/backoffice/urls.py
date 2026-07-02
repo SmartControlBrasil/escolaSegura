@@ -1,85 +1,103 @@
 from django.urls import path
+
 from . import views
 
 app_name = 'backoffice'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
+    path('dashboard/dark/', views.dashboard_dark, name='dashboard_dark'),
+    path('dashboard/finance/', views.dashboard_finance, name='dashboard_finance'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('esqueci-senha/', views.forgot_password, name='forgot_password'),
+
+    # PortalK12 semantic routes
+    path('alunos/', views.panel_page, {'page': 'alunos'}, name='alunos'),
+    path('alunos/detalhe/', views.panel_page, {'page': 'alunos-detalhe'}, name='alunos_detalhe'),
+    path('alunos/novo/', views.panel_page, {'page': 'alunos-novo'}, name='alunos_novo'),
+    path('responsaveis/', views.panel_page, {'page': 'responsaveis'}, name='responsaveis'),
+    path('turmas/', views.panel_page, {'page': 'turmas'}, name='turmas'),
+    path('escolas/', views.panel_page, {'page': 'escolas'}, name='escolas'),
+    path('colaboradores/', views.panel_page, {'page': 'colaboradores'}, name='colaboradores'),
+    path('colaboradores/detalhe/', views.panel_page, {'page': 'colaboradores-detalhe'}, name='colaboradores_detalhe'),
+    path('colaboradores/novo/', views.panel_page, {'page': 'colaboradores-novo'}, name='colaboradores_novo'),
+    path('visitantes/', views.panel_page, {'page': 'visitantes'}, name='visitantes'),
+    path('autorizacoes/', views.panel_page, {'page': 'autorizacoes'}, name='autorizacoes'),
+    path('controle-acesso/', views.panel_page, {'page': 'controle-acesso'}, name='controle_acesso'),
+    path('catracas/', views.panel_page, {'page': 'catracas'}, name='catracas'),
+    path('cameras/', views.panel_page, {'page': 'cameras'}, name='cameras'),
+    path('ocorrencias/', views.panel_page, {'page': 'ocorrencias'}, name='ocorrencias'),
+    path('comunicados/', views.panel_page, {'page': 'comunicados'}, name='comunicados'),
+    path('comunicados/redigir/', views.panel_page, {'page': 'comunicados-redigir'}, name='comunicados_redigir'),
+    path('cantina/', views.panel_page, {'page': 'cantina'}, name='cantina'),
+    path('pedidos-lanche/', views.panel_page, {'page': 'pedidos-lanche'}, name='pedidos_lanche'),
+    path('pagamentos/', views.panel_page, {'page': 'pagamentos'}, name='pagamentos'),
+    path('relatorios/', views.panel_page, {'page': 'relatorios'}, name='relatorios'),
+    path('configuracoes/', views.panel_page, {'page': 'configuracoes'}, name='configuracoes'),
+    path('perfil/', views.panel_page, {'page': 'perfil'}, name='perfil'),
+
+    path('ui/tabelas/', views.panel_page, {'page': 'tabelas'}, name='ui_tabelas'),
+    path('ui/formularios/', views.panel_page, {'page': 'formularios'}, name='ui_formularios'),
+    path('ui/cards/', views.panel_page, {'page': 'cards'}, name='ui_cards'),
+    path('ui/graficos/', views.panel_page, {'page': 'graficos'}, name='ui_graficos'),
+    path('erro/404/', views.panel_page, {'page': 'erro-404'}, name='erro_404'),
+    path('erro/500/', views.panel_page, {'page': 'erro-500'}, name='erro_500'),
+
+    # Admin Master SaaS preserved as equivalent routes
     path('saas/', views.saas_dashboard, name='saas_dashboard'),
     path('saas/tenants/', views.saas_tenants, name='saas_tenants'),
     path('saas/tenants/<int:id>/', views.saas_tenant_detail, name='saas_tenant_detail'),
     path('saas/plans/', views.saas_plans, name='saas_plans'),
     path('saas/subscriptions/', views.saas_subscriptions, name='saas_subscriptions'),
-    
-    # Clientes
-    path('clientes/', views.clientes, name='clientes'),
-    path('clientes/novo/', views.clientes_novo, name='clientes_novo'),
-    path('clientes/<uuid:id>/', views.clientes_detalhe, name='clientes_detalhe'),
-    
-    # Catálogo
-    path('catalogo/', views.catalogo, name='catalogo'),
-    path('catalogo/novo/', views.catalogo_novo, name='catalogo_novo'),
-    path('catalogo/<uuid:id>/', views.catalogo_detalhe, name='catalogo_detalhe'),
-    
-    # Orçamentos
-    path('orcamentos/', views.orcamentos, name='orcamentos'),
-    path('orcamentos/novo/', views.orcamentos_novo, name='orcamentos_novo'),
-    path('orcamentos/<uuid:id>/', views.orcamentos_detalhe, name='orcamentos_detalhe'),
-    path('orcamentos/<uuid:id>/preview/', views.orcamentos_preview, name='orcamentos_preview'),
-    path('orcamentos/<uuid:id>/pdf/', views.orcamentos_pdf, name='orcamentos_pdf'),
-    
-    # Vistorias
-    path('vistorias/', views.vistorias, name='vistorias'),
-    path('vistorias/novo/', views.vistorias_novo, name='vistorias_novo'),
-    path('vistorias/<uuid:id>/', views.vistorias_detalhe, name='vistorias_detalhe'),
-    
-    # Entregas de Obra
-    path('entregas/', views.entregas, name='entregas'),
-    path('entregas/nova/', views.entregas_novo, name='entregas_novo'),
-    path('entregas/<uuid:id>/', views.entregas_detalhe, name='entregas_detalhe'),
-    path('entregas/<uuid:id>/preview/', views.entregas_preview, name='entregas_preview'),
-    path('entregas/<uuid:id>/pdf/', views.entregas_pdf, name='entregas_pdf'),
 
-    # Obras / Projetos
-    path('obras/', views.obras, name='obras'),
-    path('obras/nova/', views.obras_novo, name='obras_novo'),
-    path('obras/<uuid:id>/', views.obras_detalhe, name='obras_detalhe'),
+    # Dynamic access to all converted Akademi pages
+    path('template/<slug:page>/', views.template_page, name='template_page'),
 
-    # Veículos
-    path('veiculos/', views.veiculos, name='veiculos'),
-    path('veiculos/novo/', views.veiculos_novo, name='veiculos_novo'),
-    path('veiculos/<uuid:id>/', views.veiculos_detalhe, name='veiculos_detalhe'),
-
-    # Fornecedores
-    path('fornecedores/', views.fornecedores, name='fornecedores'),
-    path('fornecedores/novo/', views.fornecedores_novo, name='fornecedores_novo'),
-    path('fornecedores/<uuid:id>/', views.fornecedores_detalhe, name='fornecedores_detalhe'),
-
-    # Financeiro
-    path('financeiro/', views.financeiro, name='financeiro'),
-    path('financeiro/novo/', views.financeiro_novo, name='financeiro_novo'),
-    path('financeiro/<uuid:id>/', views.financeiro_detalhe, name='financeiro_detalhe'),
-
-    # Usuários
-    path('usuarios/', views.usuarios, name='usuarios'),
-    path('usuarios/novo/', views.usuarios_novo, name='usuarios_novo'),
-    path('usuarios/<uuid:id>/', views.usuarios_detalhe, name='usuarios_detalhe'),
-
-    # Outros
-    path('relatorios/', views.relatorios, name='relatorios'),
-    path('redes-sociais/', views.redes_sociais, name='redes_sociais'),
-    path('growth/', views.growth, name='growth'),
-    path('atlas/', views.atlas, name='atlas'),
-    # Rotas de rascunho (literais 'draft' devem vir antes de <uuid> para não colidir)
-    path('atlas/draft/<uuid:prospect_id>/', views.atlas_draft_get, name='atlas_draft_get'),
-    path('atlas/draft/<uuid:prospect_id>/enviar/', views.atlas_draft_enviar, name='atlas_draft_enviar'),
-    path('atlas/<uuid:prospect_id>/aprovar/', views.atlas_aprovar_prospect, name='atlas_aprovar_prospect'),
-    path('atlas/<uuid:prospect_id>/rejeitar/', views.atlas_rejeitar_prospect, name='atlas_rejeitar_prospect'),
-    path('assistente/', views.assistente, name='assistente'),
-    path('operations/review/', views.operations_review, name='operations_review'),
-    path('operations/session/<uuid:session_id>/messages/', views.session_messages_json, name='session_messages_json'),
-    path('configuracoes/', views.configuracoes, name='configuracoes'),
-    path('configuracoes/empresa/', views.configuracoes_empresa, name='configuracoes_empresa'),
+    # Legacy routes isolated by redirect
+    path('clientes/', views.legacy_redirect, name='clientes'),
+    path('clientes/novo/', views.legacy_redirect, name='clientes_novo'),
+    path('clientes/<uuid:id>/', views.legacy_redirect, name='clientes_detalhe'),
+    path('catalogo/', views.legacy_redirect, name='catalogo'),
+    path('catalogo/novo/', views.legacy_redirect, name='catalogo_novo'),
+    path('catalogo/<uuid:id>/', views.legacy_redirect, name='catalogo_detalhe'),
+    path('orcamentos/', views.legacy_redirect, name='orcamentos'),
+    path('orcamentos/novo/', views.legacy_redirect, name='orcamentos_novo'),
+    path('orcamentos/<uuid:id>/', views.legacy_redirect, name='orcamentos_detalhe'),
+    path('orcamentos/<uuid:id>/preview/', views.legacy_redirect, name='orcamentos_preview'),
+    path('orcamentos/<uuid:id>/pdf/', views.legacy_redirect, name='orcamentos_pdf'),
+    path('vistorias/', views.legacy_redirect, name='vistorias'),
+    path('vistorias/novo/', views.legacy_redirect, name='vistorias_novo'),
+    path('vistorias/<uuid:id>/', views.legacy_redirect, name='vistorias_detalhe'),
+    path('entregas/', views.legacy_redirect, name='entregas'),
+    path('entregas/nova/', views.legacy_redirect, name='entregas_novo'),
+    path('entregas/<uuid:id>/', views.legacy_redirect, name='entregas_detalhe'),
+    path('entregas/<uuid:id>/preview/', views.legacy_redirect, name='entregas_preview'),
+    path('entregas/<uuid:id>/pdf/', views.legacy_redirect, name='entregas_pdf'),
+    path('obras/', views.legacy_redirect, name='obras'),
+    path('obras/nova/', views.legacy_redirect, name='obras_novo'),
+    path('obras/<uuid:id>/', views.legacy_redirect, name='obras_detalhe'),
+    path('veiculos/', views.legacy_redirect, name='veiculos'),
+    path('veiculos/novo/', views.legacy_redirect, name='veiculos_novo'),
+    path('veiculos/<uuid:id>/', views.legacy_redirect, name='veiculos_detalhe'),
+    path('fornecedores/', views.legacy_redirect, name='fornecedores'),
+    path('fornecedores/novo/', views.legacy_redirect, name='fornecedores_novo'),
+    path('fornecedores/<uuid:id>/', views.legacy_redirect, name='fornecedores_detalhe'),
+    path('financeiro/', views.legacy_redirect, name='financeiro'),
+    path('financeiro/novo/', views.legacy_redirect, name='financeiro_novo'),
+    path('financeiro/<uuid:id>/', views.legacy_redirect, name='financeiro_detalhe'),
+    path('usuarios/', views.legacy_redirect, name='usuarios'),
+    path('usuarios/novo/', views.legacy_redirect, name='usuarios_novo'),
+    path('usuarios/<uuid:id>/', views.legacy_redirect, name='usuarios_detalhe'),
+    path('redes-sociais/', views.legacy_redirect, name='redes_sociais'),
+    path('growth/', views.legacy_redirect, name='growth'),
+    path('atlas/', views.legacy_redirect, name='atlas'),
+    path('atlas/draft/<uuid:prospect_id>/', views.legacy_redirect, name='atlas_draft_get'),
+    path('atlas/draft/<uuid:prospect_id>/enviar/', views.legacy_redirect, name='atlas_draft_enviar'),
+    path('atlas/<uuid:prospect_id>/aprovar/', views.legacy_redirect, name='atlas_aprovar_prospect'),
+    path('atlas/<uuid:prospect_id>/rejeitar/', views.legacy_redirect, name='atlas_rejeitar_prospect'),
+    path('assistente/', views.legacy_redirect, name='assistente'),
+    path('operations/review/', views.legacy_redirect, name='operations_review'),
+    path('operations/session/<uuid:session_id>/messages/', views.legacy_redirect, name='session_messages_json'),
+    path('configuracoes/empresa/', views.legacy_redirect, name='configuracoes_empresa'),
 ]

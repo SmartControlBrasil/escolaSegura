@@ -1,0 +1,98 @@
+{% load static %}
+  <footer class="bg-black bg-[url('../images/all-img/footer-bg-1.png')] bg-cover bg-center bg-no-repeat">
+    <div class="section-padding container">
+      <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div class="single-footer">
+          <div class="lg:max-w-[270px]">
+            <a href="/" class="mb-10 block">
+              <img src="{% static 'public_site/edumim/images/logo/footer-logo.svg' %}" alt="PortalK12">
+            </a>
+            <p>Plataforma de gestão escolar para integrar comunicação, operação acadêmica e acompanhamento das famílias em uma jornada moderna e segura.</p>
+            <ul class="flex space-x-4 pt-8">
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:facebook"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:twitter"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:linkedin"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:instagram"></iconify-icon></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="single-footer">
+          <div class="flex space-x-[80px]">
+            <div class="flex-1 lg:flex-none">
+              <h4 class="mb-8 text-2xl font-bold text-white">Links</h4>
+              <ul class="list-item space-y-5">
+                <li><a href="/">Início</a></li>
+                <li><a href="/about/">Sobre</a></li>
+                <li><a href="/courses/">Courses</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/contato/">Contato</a></li>
+              </ul>
+            </div>
+            <div class="flex-1 lg:flex-none">
+              <h4 class="mb-8 text-2xl font-bold text-white">Legal</h4>
+              <ul class="list-item space-y-5">
+                <li><a href="/termos/">Termos De Uso</a></li>
+                <li><a href="/privacidade/">Política De Privacidade</a></li>
+                <li><a href="/app/login/">Acessar Plataforma</a></li>
+                <li><a href="/familia/">Portal Da Família</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="single-footer">
+          <h4 class="mb-8 text-2xl font-bold text-white">Newsletter</h4>
+          <div class="mb-8">Receba novidades, materiais e atualizações do PortalK12 para sua escola diretamente no seu e-mail.</div>
+          <form action="/contato/" method="get">
+            <div class="mb-4 flex items-center rounded-md bg-white py-[10px] pr-[10px] pl-6 shadow-e1">
+              <div class="flex-none">
+                <img src="{% static 'public_site/edumim/images/icon/mail.svg' %}" alt="E-mail">
+              </div>
+              <div class="flex-1">
+                <input type="email" name="email" placeholder="Digite seu e-mail" class="border-none focus:ring-0 w-full">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary block w-full text-center">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container border-t border-white border-opacity-[0.1] py-8 text-center text-base">
+      &copy; Copyright {% now "Y" %} | PortalK12 | Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    (function () {
+      var headerEl = document.getElementById('rt-sticky-header');
+      if (headerEl) {
+        window.addEventListener('scroll', function () {
+          var scrolled = window.scrollY > 100;
+          headerEl.classList.toggle('rt-sticky-active', scrolled);
+          headerEl.classList.toggle('sticky', scrolled);
+        });
+      }
+      var mobileMenu = document.getElementById('rt-mobile-menu');
+      var overlay = document.getElementById('rt-mobile-menu-overlay');
+      var openButton = document.getElementById('rt-mobile-menu-open');
+      var closeButton = document.getElementById('rt-mobile-menu-close');
+      function openMenu() {
+        if (!mobileMenu || !overlay) return;
+        mobileMenu.classList.add('active-mobile-menu');
+        overlay.classList.add('active');
+      }
+      function closeMenu() {
+        if (!mobileMenu || !overlay) return;
+        mobileMenu.classList.remove('active-mobile-menu');
+        overlay.classList.remove('active');
+      }
+      if (openButton) openButton.addEventListener('click', openMenu);
+      if (closeButton) closeButton.addEventListener('click', closeMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+      if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', closeMenu);
+        });
+      }
+    })();
+  </script>

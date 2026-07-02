@@ -1,0 +1,900 @@
+{% extends "admin_shell/portalk12/base.html" %}
+{% load static %}
+{% block title %}PortalK12 | {{ page_heading|default:"SaaS Dashboard" }}{% endblock %}
+{% block dashboard_bar %}{{ page_heading|default:"SaaS Dashboard" }}{% endblock %}
+{% block extra_js %}
+<script src="{% static 'admin_shell/portalk12/vendor/chartist/js/chartist.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/flot/jquery.flot.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/flot/jquery.flot.pie.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/flot/jquery.flot.resize.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/flot-spline/jquery.flot.spline.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/js/plugins-init/sparkline-init.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/js/plugins-init/piety-init.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/js/plugins-init/widgets-script-init.js' %}"></script>
+{% endblock %}
+{% block main_wrapper_class %}{% endblock %}
+{% block wallet_sidebar %}{% endblock %}
+{% block dashboard_js %}{% endblock %}
+{% block footer %}
+<div class="footer out-footer style-2">
+	<div class="copyright">
+		<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+	</div>
+</div>
+{% endblock %}
+{% block content %}
+            <div class="container-fluid">
+				<div class="row ">
+					<div class="col-xl-12">
+						<div class="page-titles">
+							<div class="d-flex align-items-center flex-wrap ">
+								<h3 class="heading">Widget</h3>
+							</div>
+						</div>
+					</div>
+                </div>
+                <!-- row -->
+                <div class="row">
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4 class="card-title">Timeline</h4>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-badge primary"></div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>10 minutes ago</span>
+                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge info">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
+												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge danger">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>30 minutes ago</span>
+                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge success">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>15 minutes ago</span>
+                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge warning">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge dark">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4 class="card-title">Timeline 2</h4>
+                            </div>
+                            <div class="card-body p-0">
+                                <div id="DZ_W_TimeLine11" class="widget-timeline dlab-scroll style-1 height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-badge primary"></div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>10 minutes ago</span>
+                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge info">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
+												<p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge danger">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>30 minutes ago</span>
+                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge success">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>15 minutes ago</span>
+                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge warning">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge dark">
+                                            </div>
+                                            <a class="timeline-panel text-muted" href="#">
+                                                <span>20 minutes ago</span>
+                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header  border-0 pb-0">
+                                <h4 class="card-title">Notifications</h4>
+                            </div>
+                            <div class="card-body p-0"> 
+                                <div id="DZ_W_Todo1" class="widget-media dlab-scroll height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-info">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-success">
+													<i class="fa fa-home"></i>
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time!</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										 <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-danger">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-danger light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-primary">
+													<i class="fa fa-home"></i>
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time!</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card border-0 pb-0">
+                            <div class="card-header border-0 pb-0">
+                                <h4 class="card-title">Notifications 2</h4>
+                            </div>
+                            <div class="card-body p-0"> 
+                                <div id="DZ_W_Todo2" class="widget-media dlab-scroll height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-info">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully <span class="badge badge-warning">Warning</span></h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-success">
+													<i class="fa fa-home"></i>
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time!</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										 <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo <span class="badge light badge-danger">Danger</span></h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-danger">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully <span class="badge light badge-success">Success</span></h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-danger light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-primary">
+													<i class="fa fa-home"></i>
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time! <span class="badge light badge-success">Success</span></h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card border-0 pb-0">
+                            <div class="card-header border-0 pb-0">
+                                <h4 class="card-title">Message</h4>
+                            </div>
+                            <div class="card-body p-0"> 
+                                <div id="DZ_W_Todo3" class="widget-media dlab-scroll height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Alfie Mason <small class="text-muted">29 July 2020</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-info">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Jacob Tucker <small class="text-muted">29 July 2020</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-success">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/2.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Jack Ronan <small class="text-muted">29 July 2020</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										 <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-1">Noah Baldon <small class="text-muted">29 July 2020</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="media me-3 media-danger">
+													PU
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Thomas Grady  <small class="text-muted">02:26 PM</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-danger light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-3 media-primary">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/3.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Oscar Weston  <small class="text-muted">29 July 2020</small></h5>
+													<p class="mb-1">I shared this on my fb wall a few months back..</p>
+													<a href="#" class="btn btn-primary btn-xxs shadow">Reply</a>
+													<a href="#" class="btn btn-outline-danger btn-xxs">Delete</a>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-xxl-6 col-lg-6">
+                        <div class="card border-0 pb-0">
+                            <div class="card-header border-0 pb-0">
+                                <h4 class="card-title">To Do List</h4>
+                            </div>
+                            <div class="card-body p-0"> 
+                                <div id="DZ_W_Todo4" class="widget-media dlab-scroll height370 my-4 px-4">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-success check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox1" required="">
+													<label class="form-check-label" for="customCheckBox1"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Get up</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										<li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-warning check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox2" required="">
+													<label class="form-check-label" for="customCheckBox2"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Stand up</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-warning light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										<li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-primary check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox3" required="">
+													<label class="form-check-label" for="customCheckBox3"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Don't give up the fight.</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										<li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-info check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox4" required="">
+													<label class="form-check-label" for="customCheckBox4"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Do something else</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										<li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-success check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox5" required="">
+													<label class="form-check-label" for="customCheckBox5"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Get up</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+										<li>
+                                            <div class="timeline-panel">
+												<div class="form-check custom-checkbox checkbox-warning check-lg me-3">
+													<input type="checkbox" class="form-check-input" id="customCheckBox6" required="">
+													<label class="form-check-label" for="customCheckBox6"></label>
+												</div>
+                                                <div class="media-body">
+													<h5 class="mb-0">Stand up</h5>
+													<small class="text-muted">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-warning light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<div class="col-xl-4 col-lg-6 col-xxl-4 col-sm-6">
+						<div class="card text-white bg-primary">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Student Name :</span><strong>Harry</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Allergies :</span><strong>Penicilin, peanuts </strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Performance :</span><strong>Good</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Class :</span><strong>10th</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Rank :</span><strong>1st</strong></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-6 col-xxl-4 col-sm-6">
+						<div class="card text-white bg-warning text-black">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Sports Performance</span></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Baseball. :</span><strong>Good</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Softball. :</span><strong>Bad</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Soccer. :</span><strong>Good</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Cricket. :</span><strong>Bad</strong></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-6 col-xxl-4 col-sm-6">
+						<div class="card text-white bg-success text-black">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Teacher</span><strong>Strength</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Mr. Harry :</span><strong>Good</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Mr. john :</span><strong>Bad</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Mrs. ulia :</span><strong>Good</strong></li>
+								<li class="list-group-item d-flex justify-content-between"><span class="mb-0">Mrs.Candey :</span><strong>Bad</strong></li>
+							</ul>
+						</div>
+					</div>
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<h4 class="card-title">Top Products</h4>
+							</div>
+                            <div class="card-body pb-0">
+                                <div class="widget-media">
+									<ul class="timeline">
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/1.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3 media-info">
+													KG
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3 media-success">
+													<i class="fa fa-home"></i>
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time!</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>	
+								</div>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chart_widget_9"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card overflow-hidden">
+							<div class="card-header border-0 pb-0">
+								<h4 class="card-title">Top Products</h4>
+							</div>
+                            <div class="card-body pb-0">
+                                <div class="widget-media">
+									<ul class="timeline">
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/4.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Dr sultads Send you Photo</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-primary light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3 media-info">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/2.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Resport created successfully</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-info light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="timeline-panel">
+												<div class="media me-3 media-success">
+													<img alt="image" width="50" src="{% static 'admin_shell/portalk12/images/avatar/3.jpg' %}">
+												</div>
+												<div class="media-body">
+													<h5 class="mb-1">Reminder : Treatment Time!</h5>
+													<small class="d-block">29 July 2020 - 02:26 PM</small>
+												</div>
+												<div class="dropdown">
+													<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+														<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+													</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="#">Edit</a>
+														<a class="dropdown-item" href="#">Delete</a>
+													</div>
+												</div>
+											</div>
+										</li>
+									</ul>	
+								</div>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chart_widget_10"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% block title %}{{ title }} | PortalK12{% endblock %}
+{% block content %}
+<div class="breadcrumbs section-padding bg-[url('../images/all-img/bred.png')] bg-cover bg-center bg-no-repeat">
+  <div class="container text-center">
+    <h2>{{ title }}</h2>
+    <p class="mt-4">{{ subtitle }}</p>
+    <div class="mt-8"><a href="{{ cta_href|default:'/demonstracao/' }}" class="btn btn-primary">{{ cta_label|default:'Solicitar apresentação' }}</a></div>
+  </div>
+</div>
+{% endblock %}

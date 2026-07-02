@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="author" content="PortalK12">
+	<meta name="robots" content="">
+	<meta name="keywords" content="school, school admin, education, academy, admin dashboard, college, college management, education management, institute, school management, school management system, student management, teacher management, university, university management">
+	<meta name="description" content="Discover PortalK12 admin shell baseado no template Akademi.">
+	<meta property="og:title" content="PortalK12 | Painel Escolar">
+	<meta property="og:description" content="PortalK12 admin shell baseado no template Akademi.">
+	<meta property="og:image" content="https://akademi.dexignlab.com/xhtml/social-image.png">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}PortalK12 | Painel Escolar{% endblock %}</title>
+	<link rel="shortcut icon" type="image/png" href="{% static 'admin_shell/portalk12/images/favicon.png' %}">
+	<link href="{% static 'admin_shell/portalk12/vendor/wow-master/css/libs/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'admin_shell/portalk12/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'admin_shell/portalk12/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_shell/portalk12/vendor/jquery-nice-select/css/nice-select.css' %}">
+	<link href="{% static 'admin_shell/portalk12/vendor/datepicker/css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+	<link href="{% static 'admin_shell/portalk12/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'admin_shell/portalk12/vendor/swiper/css/swiper-bundle.min.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'admin_shell/portalk12/css/style.css' %}" rel="stylesheet">
+	{% block extra_css %}{% endblock %}
+</head>
+<body>
+	<div id="preloader">
+	  <div class="loader">
+		<div class="dots">
+			  <div class="dot mainDot"></div>
+			  <div class="dot"></div>
+			  <div class="dot"></div>
+			  <div class="dot"></div>
+			  <div class="dot"></div>
+		</div>
+		</div>
+	</div>
+    <div id="main-wrapper" class="{% block main_wrapper_class %}wallet-open active{% endblock %}">
+        {% include 'admin_shell/portalk12/includes/nav_header.html' %}
+		{% include 'admin_shell/portalk12/includes/chatbox.html' %}
+		{% include 'admin_shell/portalk12/includes/header_top.html' %}
+        {% include 'admin_shell/portalk12/includes/sidebar_portalk12.html' %}
+		{% block wallet_sidebar %}{% include 'admin_shell/portalk12/includes/wallet_sidebar.html' %}{% endblock %}
+		{% block content_wrapper %}
+		<div class="content-body">
+			{% block content %}{% endblock %}
+		</div>
+		{% endblock %}
+		{% block footer %}
+		<div class="footer footer-outer">
+			<div class="copyright">
+				<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+			</div>
+		</div>
+		{% endblock %}
+	</div>
+	{% block modals %}{% endblock %}
+    {% include 'admin_shell/portalk12/includes/footer_scripts.html' %}
+	{% block dashboard_js %}
+	<script src="{% static 'admin_shell/portalk12/js/dashboard/dashboard-1.js' %}"></script>
+	{% endblock %}
+	{% block extra_js %}{% endblock %}
+</body>
+</html>

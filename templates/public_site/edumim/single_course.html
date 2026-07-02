@@ -1,0 +1,222 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Details | PortalK12</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  {% include 'public_site/edumim/includes/edumim_header.html' %}
+  {% include 'public_site/edumim/includes/page_banner.html' %}
+
+  <div class="nav-tab-wrapper tabs section-padding">
+    <div class="container">
+      <div class="grid grid-cols-12 gap-[30px]">
+        <div class="lg:col-span-8 col-span-12">
+          <div class="single-course-details">
+            <div class="xl:h-[470px] h-[350px] mb-10 course-main-thumb">
+              <img src="{% static course.hero_image %}" alt="{{ course.title }}" class="rounded-md object-cover w-full h-full block">
+            </div>
+            <div class="mb-6"><span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white">{{ course.tag }}</span></div>
+            <h2>{{ course.title }}</h2>
+            <div class="author-meta mt-6 sm:flex lg:space-x-16 sm:space-x-5 space-y-5 sm:space-y-0 items-center">
+              <div class="flex space-x-4 items-center group">
+                <div class="flex-none"><div class="h-12 w-12 rounded"><img src="{% static course.trainer_image %}" alt="" class="object-cover w-full h-full rounded"></div></div>
+                <div class="flex-1"><span class="text-secondary">Trainer<a href="#" class="text-black">: {{ course.trainer }}</a></span></div>
+              </div>
+              <div><span class="text-secondary">Last Update:<a href="#" class="text-black"> {{ course.last_update }}</a></span></div>
+            </div>
+
+            <div class="nav-tab-wrapper mt-12">
+              <ul id="single-course-tabs" class="course-tab mb-8">
+                <li class="active"><button type="button" data-course-tab="overview">OverView</button></li>
+                <li><button type="button" data-course-tab="curriculum">Carriculum</button></li>
+                <li><button type="button" data-course-tab="instructor">Instructor</button></li>
+                <li><button type="button" data-course-tab="reviews">Reviews</button></li>
+              </ul>
+
+              <div id="single-course-panels">
+                <div class="single-course-panel" data-course-panel="overview">
+                  <h3 class="text-2xl">Course Description</h3>
+                  <p class="mt-4">This tutorial will help you learn quickly and thoroughly. Lorem ipsum, or lipsum as it sometimes known, is dummy text used in laying out print, graphic or web designs. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.<br><br>You’ll be exposed to principles and strategies, but, more importantly, you’ll learn how actually apply these abstract concepts by coding three different websites for three very different the audiences. Lorem ipsum is dummy text used in laying out print, graphic or web designs Lorem ipsum blinding shot chinwag knees.</p>
+                  <div class="bg-[#F8F8F8] space-y-6 p-8 rounded-md my-8">
+                    <h4 class="text-2xl">What You will Learn?</h4>
+                    <ul class="grid sm:grid-cols-2 grid-cols-1 gap-6">
+                      {% for _ in "1234" %}
+                      <li class="flex space-x-3"><div class="flex-none relative top-1"><img src="{% static 'public_site/edumim/images/icon/ck.svg' %}" alt=""></div><div class="flex-1">Learn how perspective works and how to incorporate your art</div></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-2xl">What You will Learn?</h4>
+                    <div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
+                      <div class="bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center"><span class="flex-none"><img src="{% static 'public_site/edumim/images/icon/laptop.svg' %}" alt=""></span><span class="flex-1 text-black">Computer/Mobile</span></div>
+                      <div class="bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center"><span class="flex-none"><img src="{% static 'public_site/edumim/images/icon/pencil.svg' %}" alt=""></span><span class="flex-1 text-black">Paper &amp; Pencil</span></div>
+                      <div class="bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center"><span class="flex-none"><img src="{% static 'public_site/edumim/images/icon/wifi.svg' %}" alt=""></span><span class="flex-1 text-black">Internet Connect</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="single-course-panel hidden" data-course-panel="curriculum">
+                  <h3 class="text-2xl">Course Description</h3>
+                  <div class="md:flex md:space-x-10 space-x-3 flex-wrap mt-4 mb-6">
+                    <span>Level Beginner</span><span>12 Lectures</span><span>Total: 5 Hours 56 Minutes 24 Seconds</span>
+                  </div>
+                  <ul class="list course-accrodain space-y-6" id="single-course-curriculum">
+                    {% for _ in "1234" %}{% include 'public_site/edumim/includes/single_course_curriculum_item.html' %}{% endfor %}
+                  </ul>
+                </div>
+
+                <div class="single-course-panel hidden" data-course-panel="instructor">
+                  <div class="bg-[#F8F8F8] rounded-md p-8">
+                    <div class="md:flex space-x-5 mb-8">
+                      <div class="h-[310px] w-[270px] flex-none rounded mb-5 md:mb-0"><img src="{% static course.instructor_image %}" alt="" class="w-full h-full object-cover rounded"></div>
+                      <div class="flex-1">
+                        <div class="max-w-[300px]">
+                          <h4 class="text-[34px] font-bold leading-[51px]">{{ course.instructor_name }}</h4>
+                          <div class="text-primary mb-6">{{ course.instructor_role }}</div>
+                          <ul class="list space-y-4">
+                            <li class="flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/file2.svg' %}" alt=""><div>65+ Courses</div></li>
+                            <li class="flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/user2.svg' %}" alt=""><div>2k+ Student Learned</div></li>
+                            <li class="flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/star.svg' %}" alt=""><div>547+ Reviews</div></li>
+                            <li class="flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/like.svg' %}" alt=""><div>4.9 Average Rating</div></li>
+                          </ul>
+                          <ul class="flex space-x-3 mt-8">
+                            <li><a href="#"><img src="{% static 'public_site/edumim/images/social/fb.svg' %}" alt=""></a></li>
+                            <li><a href="#"><img src="{% static 'public_site/edumim/images/social/ln.svg' %}" alt=""></a></li>
+                            <li><a href="#"><img src="{% static 'public_site/edumim/images/social/youtube.svg' %}" alt=""></a></li>
+                            <li><a href="#"><img src="{% static 'public_site/edumim/images/social/instra.svg' %}" alt=""></a></li>
+                            <li><a href="#"><img src="{% static 'public_site/edumim/images/social/twiiter.svg' %}" alt=""></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend.</p>
+                  </div>
+                </div>
+
+                <div class="single-course-panel hidden" data-course-panel="reviews">
+                  <div class="grid grid-cols-12 gap-5">
+                    <div class="md:col-span-8 col-span-12">
+                      <div class="flex items-center space-x-4 mb-5">
+                        <div class="flex-none"><div class="flex space-x-1 text-xl">{% for _ in "12345" %}<iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon>{% endfor %}</div></div>
+                        <div class="flex-1"><div class="progressbar-group flex items-center space-x-4"><div class="rounded-[2px] overflow-hidden bg-opacity-10 bg-black h-[6px] relative flex-1"><div class="ani h-[6px] bg-secondary block absolute left-0 top-1/2 -translate-y-1/2" style="width: 40%"></div></div><div class="flex-none"><span class="block mb-2 font-semibold">40%</span></div></div></div>
+                      </div>
+                      <div class="flex items-center space-x-4 mb-5">
+                        <div class="flex-none"><div class="flex space-x-1 text-xl"><iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon><iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon><iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon><iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon><iconify-icon icon="heroicons:star-20-solid" class="text-[#E6E6E6]"></iconify-icon></div></div>
+                        <div class="flex-1"><div class="progressbar-group flex items-center space-x-4"><div class="rounded-[2px] overflow-hidden bg-opacity-10 bg-black h-[6px] relative flex-1"><div class="ani h-[6px] bg-secondary block absolute left-0 top-1/2 -translate-y-1/2"></div></div><div class="flex-none"><span class="block mb-2 font-semibold">10%</span></div></div></div>
+                      </div>
+                    </div>
+                    <div class="md:col-span-4 col-span-12">
+                      <div class="bg-white min-h-[219px] p-6 flex flex-col justify-center items-center shadow-box7 rounded space-y-3">
+                        <h2>4.9</h2>
+                        <div class="flex space-x-3">{% for _ in "12345" %}<iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon>{% endfor %}</div>
+                        <span class="block">(2 Review)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-8">
+                    <h4 class="text-xl font-bold text-black">Reviews</h4>
+                    <ul class="list space-y-6 mt-6">
+                      <li class="flex space-x-6">
+                        <div class="flex-none"><div class="h-[72px] w-[72px] rounded-full"><img src="{% static 'public_site/edumim/images/all-img/cmnt-1.png' %}" alt="" class="object-cover w-full h-full"></div></div>
+                        <div class="flex-1"><div class="flex space-x-3 mb-4">{% for _ in "12345" %}<iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon>{% endfor %}</div><p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p><div class="author mt-4"><span class="block text-xl font-bold text-black">Daniel Smith</span><span class="block">Jan 24, 2022</span></div></div>
+                      </li>
+                      <li class="flex space-x-6">
+                        <div class="flex-none"><div class="h-[72px] w-[72px] rounded-full"><img src="{% static 'public_site/edumim/images/all-img/cmnt-2.png' %}" alt="" class="object-cover w-full h-full"></div></div>
+                        <div class="flex-1"><div class="flex space-x-3 mb-4">{% for _ in "12345" %}<iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon>{% endfor %}</div><p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p><div class="author mt-4"><span class="block text-xl font-bold text-black">Daniel Smith</span><span class="block">Jan 24, 2022</span></div></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 col-span-12">
+          <div class="sidebarWrapper space-y-[30px]">
+            <div class="wdiget custom-text space-y-5">
+              <a class="h-[220px] rounded relative block" href="#">
+                <img src="{% static 'public_site/edumim/images/all-img/thumb.png' %}" alt="" class="block w-full h-full object-cover rounded">
+                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><img src="{% static 'public_site/edumim/images/svg/play.svg' %}" alt=""></div>
+              </a>
+              <h3>Free</h3>
+              <button type="button" class="btn btn-primary w-full text-center">Enroll Now</button>
+              <ul class="list">
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/user.svg' %}" alt=""><div class="text-black font-semibold">Instructor</div></div><div class="flex-none">{{ course.instructor_name }}</div></li>
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/file2.svg' %}" alt=""><div class="text-black font-semibold">Lectures</div></div><div class="flex-none">23</div></li>
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/clock.svg' %}" alt=""><div class="text-black font-semibold">Duration</div></div><div class="flex-none">2Hr 36Minutes</div></li>
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/star.svg' %}" alt=""><div class="text-black font-semibold">Enrolled</div></div><div class="flex-none">2k Students</div></li>
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/target.svg' %}" alt=""><div class="text-black font-semibold">Course level</div></div><div class="flex-none">Intermediate</div></li>
+                <li class="flex space-x-3 border-b border-[#ECECEC] mb-4 pb-4 last:pb-0 last:mb-0 last:border-0"><div class="flex-1 space-x-3 flex"><img src="{% static 'public_site/edumim/images/icon/web.svg' %}" alt=""><div class="text-black font-semibold">Language</div></div><div class="flex-none">English</div></li>
+              </ul>
+              <ul class="flex space-x-4 items-center pt-3">
+                <li class="text-black font-semibold">Share On:</li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/social/fb.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/tw.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/pn.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/ins.svg' %}" alt=""></a></li>
+              </ul>
+            </div>
+            <div class="wdiget">
+              <h4 class="widget-title">Related Courses</h4>
+              <ul class="list">
+                {% for related in related_courses %}
+                <li class="flex space-x-4 border-[#ECECEC] pb-6 mb-6 last:pb-0 last:mb-0 last:border-0 border-b">
+                  <div class="flex-none"><div class="h-20 w-20 rounded"><img src="{% static related.image %}" alt="" class="w-full h-full object-cover rounded"></div></div>
+                  <div class="flex-1">
+                    <div class="flex space-x-3 mb-2">{% for _ in "12345" %}<iconify-icon icon="heroicons:star-20-solid" class="text-tertiary"></iconify-icon>{% endfor %}</div>
+                    <div class="mb-1 font-semibold text-black">{{ related.title }}</div>
+                    <span class="text-secondary font-semibold">{{ related.price }}</span>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'public_site/edumim/includes/edumim_footer.html' %}
+  <script>
+    (function () {
+      var tabItems = document.querySelectorAll('#single-course-tabs li');
+      var panels = document.querySelectorAll('.single-course-panel');
+      tabItems.forEach(function (item) {
+        var button = item.querySelector('button');
+        if (!button) return;
+        button.addEventListener('click', function () {
+          var target = button.getAttribute('data-course-tab');
+          tabItems.forEach(function (tab) { tab.classList.remove('active'); });
+          item.classList.add('active');
+          panels.forEach(function (panel) {
+            panel.classList.toggle('hidden', panel.getAttribute('data-course-panel') !== target);
+          });
+        });
+      });
+
+      var curriculumItems = document.querySelectorAll('#single-course-curriculum li');
+      curriculumItems.forEach(function (item) {
+        var button = item.querySelector('.accrodain-button');
+        var content = item.querySelector('.content');
+        if (!button || !content) return;
+        button.addEventListener('click', function () {
+          var isOpen = item.classList.contains('open');
+          curriculumItems.forEach(function (otherItem) {
+            otherItem.classList.remove('open');
+            var otherContent = otherItem.querySelector('.content');
+            if (otherContent) otherContent.hidden = true;
+          });
+          item.classList.toggle('open', !isOpen);
+          content.hidden = isOpen;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

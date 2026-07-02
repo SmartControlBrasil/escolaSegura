@@ -1,0 +1,153 @@
+{% extends "admin_shell/portalk12/base.html" %}
+{% load static %}
+{% block title %}PortalK12 | {{ page_heading|default:"Edit Profile" }}{% endblock %}
+{% block dashboard_bar %}{{ page_heading|default:"Edit Profile" }}{% endblock %}
+{% block extra_css %}
+	<link href="{% static 'admin_shell/portalk12/vendor/lightgallery/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'admin_shell/portalk12/vendor/lightgallery/js/lightgallery-all.min.js' %}"></script>
+<script>
+		$(function () {
+			  $("#datepicker").datepicker({ 
+					autoclose: true, 
+					todayHighlight: true
+			  }).datepicker('update', new Date());
+		
+		});
+
+	</script>
+{% endblock %}
+{% block main_wrapper_class %}{% endblock %}
+{% block wallet_sidebar %}{% endblock %}
+{% block dashboard_js %}{% endblock %}
+{% block footer %}
+<div class="footer out-footer style-2">
+				<div class="copyright">
+					<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+				</div>
+			</div>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+                <!-- row -->
+				<div class="row">
+					<div class="col-xl-3 col-lg-4">
+						<div class="clearfix">
+							<div class="card card-bx profile-card author-profile m-b30">
+								<div class="card-body">
+									<div class="p-5">
+										<div class="author-profile">
+											<div class="author-media">
+												<img src="{% static 'admin_shell/portalk12/images/user.jpg' %}" alt="">
+												<div class="upload-link" title="" data-toggle="tooltip" data-placement="right" data-original-title="update">
+													<input type="file" class="update-flie">
+													<i class="fa fa-camera"></i>
+												</div>
+											</div>
+											<div class="author-info">
+												<h6 class="title">Nella Vita</h6>
+												<span>Developer</span>
+											</div>
+										</div>
+									</div>
+									<div class="info-list">
+										<ul>
+											<li><a href="{% url 'backoffice:template_page' 'app-profile' %}">Models</a><span>36</span></li>
+											<li><a href="{% url 'backoffice:template_page' 'uc-lightgallery' %}">Gallery</a><span>3</span></li>
+											<li><a href="{% url 'backoffice:template_page' 'app-profile' %}">Lessons</a><span>1</span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="card-footer">
+									<div class="input-group mb-3">
+										<div class="form-control rounded text-center bg-white">Portfolio</div>
+									</div>
+									<div class="input-group">
+										<a href="https://www.dexignlab.com/" target="_blank" class="form-control text-primary rounded text-center bg-white">www.dexignlab.com</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-9 col-lg-8">
+						<div class="card profile-card card-bx">
+							<div class="card-header">
+								<h6 class="title">Account setup</h6>
+							</div>
+							<form class="profile-form">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Name</label>
+											<input type="text" class="form-control" value="John">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Surname</label>
+											<input type="text" class="form-control">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Specialty</label>
+											<input type="text" class="form-control" value="Developer">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Skills</label>
+											<input type="text" class="form-control" value="HTML,  JavaScript,  PHP">
+										</div>	
+										<div class="col-sm-6 m-b30">
+											<label class="form-label d-block">Gender</label>
+											<select class="selectpicke w-100">
+												<option>Male</option>
+												<option>Female</option>
+												<option>Other</option>
+											</select>
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Birth</label>
+											<input type="text" class="form-control" id="datepicker">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Phone</label>
+											<input type="number" class="form-control" value="+123456789">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label">Email address</label>
+											<input type="text" class="form-control" value="demo@gmail.com">
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label d-block">Country</label>
+											<select class="selectpicker w-100">
+												<option>Russia</option>
+												<option>Canada</option>
+												<option>China</option>
+												<option>India</option>
+											</select>
+										</div>
+										<div class="col-sm-6 m-b30">
+											<label class="form-label d-block">City</label>
+											<select class="selectpicker w-100">
+												<option>Krasnodar</option>
+												<option>Tyumen</option>
+												<option>Chelyabinsk</option>
+												<option>Moscow</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="card-footer">
+									<button class="btn btn-primary">UPDATE</button>
+									<a href="{% url 'backoffice:template_page' 'page-register' %}" class="btn-link float-end">Forgot your password?</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>	
+				<!--**********************************
+					Footer start
+				***********************************-->
+				
+				<!--**********************************
+					Footer end
+				***********************************-->
+            </div>
+{% endblock %}

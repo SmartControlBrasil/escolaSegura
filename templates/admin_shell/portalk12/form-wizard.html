@@ -1,0 +1,403 @@
+{% extends "admin_shell/portalk12/base.html" %}
+{% load static %}
+{% block title %}PortalK12 | Autorizações{% endblock %}
+{% block dashboard_bar %}Autorizações{% endblock %}
+{% block extra_css %}
+<link href="{% static 'admin_shell/portalk12/vendor/jquery-smartwizard/dist/css/smart_wizard.min.css' %}" rel="stylesheet">
+<link href="{% static 'admin_shell/portalk12/vendor/dropzone/dist/dropzone.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'admin_shell/portalk12/vendor/jquery-steps/build/jquery.steps.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/js/plugins-init/jquery.validate-init.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js' %}"></script>
+<script src="{% static 'admin_shell/portalk12/vendor/dropzone/dist/dropzone.js' %}"></script>
+<script>
+	$(document).ready(function(){
+		$('#smartwizard').smartWizard();
+	});
+</script>
+{% endblock %}
+{% block main_wrapper_class %}{% endblock %}
+{% block wallet_sidebar %}{% endblock %}
+{% block dashboard_js %}{% endblock %}
+{% block footer %}
+<div class="footer out-footer style-2">
+	<div class="copyright">
+		<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+	</div>
+</div>
+{% endblock %}
+{% block content %}
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Form step</h4>
+                            </div>
+                            <div class="card-body">
+								<div id="smartwizard" class="form-wizard order-create">
+									<ul class="nav nav-wizard">
+										<li><a class="nav-link" href="#wizard_Service"> 
+											<span></span> 
+											<p class="mt-2 mb-0">Step 1</p>
+										</a></li>
+										<li><a class="nav-link" href="#wizard_Time">
+											<span></span>
+											<p class="mt-2 mb-0">Step 2</p>
+										</a></li>
+										<li><a class="nav-link" href="#wizard_Details">
+											<span></span>
+											<p class="mt-2 mb-0">Step 3 </p>
+										</a></li>
+										<li><a class="nav-link" href="#wizard_Payment">
+											<span></span>
+											<p class="mt-2 mb-0">Step 4</p>
+										</a></li>
+									</ul>
+									<div class="tab-content">
+										<div id="wizard_Service" class="tab-pane" role="tabpanel">
+											<div class="row">
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">First Name<span class="required">*</span></label>
+														<input type="text" name="firstName" class="form-control" placeholder="Parsley" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Last Name<span class="required">*</span></label>
+														<input type="text" name="lastName" class="form-control" placeholder="Montana" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Email Address<span class="required">*</span></label>
+														<input type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" placeholder="example@example.com.com" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Phone Number<span class="required">*</span></label>
+														<input type="number" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Passward<span class="required">*</span></label>
+														<input type="passward" class="form-control" id="inputGroupPrepend45" aria-describedby="inputGroupPrepend45" placeholder="Enter your Passward" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<label class="text-label form-label">Select Options<span class="required">*</span></label>
+													<select class=" default-select form-control wide" aria-label="Default select example">
+													  <option selected>Company Name </option>
+													  <option value="1">Account Number</option>
+													  <option value="2">State</option>
+													  <option value="3">City</option>
+													</select>
+												</div>
+												<div class="col-lg-12 mb-3">
+													<div class="mb-3">
+													  <label for="exampleFormControlTextarea1" class="form-label">Where are you from<span class="required">*</span></label>
+													  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="wizard_Time" class="tab-pane" role="tabpanel">
+											<div class="row">
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Company Name<span class="required">*</span></label>
+														<input type="text" name="firstName" class="form-control" placeholder="Cellophane Square" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Company Email Address<span class="required">*</span></label>
+														<input type="email" class="form-control" id="emial1" placeholder="example@example.com.com" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Company Phone Number<span class="required">*</span></label>
+														<input type="number" name="phoneNumber" class="form-control" placeholder="(+1)408-657-9007" required>
+													</div>
+												</div>
+												<div class="col-lg-6 mb-2">
+													<div class="mb-3">
+														<label class="text-label form-label">Your position in Company<span class="required">*</span></label>
+														<input type="text" name="place" class="form-control" required>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="wizard_Details" class="tab-pane" role="tabpanel">
+											<div class="row align-items-center">
+												<div class="col-sm-4 mb-2">
+													<span>Monday <span class="required">*</span></span>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="9.00" type="number" name="input1" id="input1">
+													</div>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="6.00" type="number" name="input2" id="input2">
+													</div>
+												</div>
+											</div>
+											<div class="row align-items-center">
+												<div class="col-sm-4 mb-2">
+													<span>Tuesday <span class="required">*</span></span>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="9.00" type="number" name="input3" id="input3">
+													</div>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="6.00" type="number" name="input4" id="input4">
+													</div>
+												</div>
+											</div>
+											<div class="row align-items-center">
+												<div class="col-sm-4 mb-2">
+													<span>Wednesday<span class="required">*</span></span>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="9.00" type="number" name="input5" id="input5">
+													</div>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="6.00" type="number" name="input6" id="input6">
+													</div>
+												</div>
+											</div>
+											<div class="row align-items-center">
+												<div class="col-sm-4 mb-2">
+													<span>Thrusday<span class="required">*</span></span>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="9.00" type="number" name="input7" id="input7">
+													</div>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="6.00" type="number" name="input8" id="input8">
+													</div>
+												</div>
+											</div>
+											<div class="row align-items-center">
+												<div class="col-sm-4 mb-2">
+													<span>Friday<span class="required">*</span></span>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="9.00" type="number" name="input9" id="input9">
+													</div>
+												</div>
+												<div class="col-6 col-sm-4 mb-2">
+													<div class="mb-3">
+														<input class="form-control" value="6.00" type="number" name="input10" id="input10">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="wizard_Payment" class="tab-pane" role="tabpanel">
+											<div class="row emial-setup">
+												<div class="col-lg-3 col-sm-6 col-6">
+													<div class="mb-3">
+														<label for="mailclient11" class="mailclinet mailclinet-gmail">
+															<input type="radio" name="emailclient" id="mailclient11">
+															<span class="mail-icon">
+																<i class="mdi mdi-google-plus" aria-hidden="true"></i>
+															</span>
+															<span class="mail-text">I'm using Gmail</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-lg-3 col-sm-6 col-6">
+													<div class="mb-3">
+														<label for="mailclient12" class="mailclinet mailclinet-office">
+															<input type="radio" name="emailclient" id="mailclient12">
+															<span class="mail-icon">
+																<i class="mdi mdi-office" aria-hidden="true"></i>
+															</span>
+															<span class="mail-text">I'm using Office</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-lg-3 col-sm-6 col-6">
+													<div class="mb-3">
+														<label for="mailclient13" class="mailclinet mailclinet-drive">
+															<input type="radio" name="emailclient" id="mailclient13">
+															<span class="mail-icon">
+																<i class="mdi mdi-google-drive" aria-hidden="true"></i>
+															</span>
+															<span class="mail-text">I'm using Drive</span>
+														</label>
+													</div>
+												</div>
+												<div class="col-lg-3 col-sm-6 col-6">
+													<div class="mb-3">
+														<label for="mailclient14" class="mailclinet mailclinet-another">
+															<input type="radio" name="emailclient" id="mailclient14">
+															<span class="mail-icon">
+																<i class="far fa-question-circle"></i>
+															</span>
+															<span class="mail-text">Another Service</span>
+														</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-12">
+													<div class="skip-email text-center">
+														<p>Or if want skip this step entirely and setup it later</p>
+														<a href="javascript:void(0)">Skip step</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="col-xl-4">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="heading mb-0">Order Book</h4>
+							</div>
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table orderbookTable">
+										<thead>
+											<tr>
+												<th>Student ID</th>
+												<th>First Name</th>
+												<th>Last Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													125
+												</td>
+												<td>Ahmeed</td>
+												<td>Al Mamari</td>
+											</tr>
+											<tr>
+												<td>
+													210
+												</td>
+												<td>Shiam</td>
+												<td>Al Harthi</td>
+											</tr>
+											<tr>
+												<td>
+													164
+												</td>
+												<td>Salman</td>
+												<td>Pathan</td>
+											</tr>
+											<tr>
+												<td>
+													205
+												</td>
+												<td>Munnera</td>
+												<td>Al Malik</td>
+											</tr>
+											<tr>
+												<td>
+													203
+												</td>
+												<td>Zaira</td>
+												<td>Al Zadijali</td>
+											</tr>
+											<tr>
+												<td>
+													204
+												</td>
+												<td>Rawan</td>
+												<td>Mohammed</td>
+											</tr>
+											<tr>
+												<td>
+													304
+												</td>
+												<td>Oliver</td>
+												<td>Jake</td>
+											</tr>
+											<tr>
+												<td>
+													308
+												</td>
+												<td>Jack</td>
+												<td>Connor</td>
+											</tr>
+											<tr>
+												<td>
+													302
+												</td>
+												<td>Harry</td>
+												<td>Callum</td>
+											</tr>
+											<tr>
+												<td>
+													382
+												</td>
+												<td>Thomas</td>
+												<td>Wick</td>
+											</tr>
+											<tr>
+												<td>
+													302
+												</td>
+												<td>Harry</td>
+												<td>Lal</td>
+											</tr>
+											<tr>
+												<td>
+													350
+												</td>
+												<td>	William</td>
+												<td>	Thomas</td>
+											</tr>
+											<tr>
+												<td>
+													125
+												</td>
+												<td>Ahmeed</td>
+												<td>Al Mamari</td>
+											</tr>
+											<tr>
+												<td>
+													210
+												</td>
+												<td>Shiam</td>
+												<td>Al Harthi</td>
+											</tr>
+											
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

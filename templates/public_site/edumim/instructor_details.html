@@ -1,0 +1,101 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Instructor | PortalK12</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  {% include 'public_site/edumim/includes/edumim_header.html' %}
+  {% include 'public_site/edumim/includes/page_banner.html' %}
+
+  <div class="section-padding bg-[url('../images/all-img/insbg.png')] bg-contain bg-no-repeat">
+    <div class="container">
+      <div class="grid grid-cols-12 xl:gap-0 gap-[30px]">
+        <div class="lg:col-span-4 col-span-12">
+          <div class="bg-white shadow-box7 rounded-md max-w-[350px] lg:sticky lg:top-10">
+            <div class="h-[400px] mb-8">
+              <img src="{% static instructor.image %}" alt="{{ instructor.name }}" class="w-full h-full block object-cover rounded-t-md">
+            </div>
+            <div class="px-8 pb-8">
+              <h5 class="text-2xl font-bold text-black mb-4">{{ instructor.name }}</h5>
+              <div class="mb-8">{{ instructor.bio_short }}</div>
+              <ul class="space-y-[19px]">
+                <li class="flex items-center space-x-3">
+                  <div class="flex-none"><span class="w-8 h-8 rounded bg-secondary text-white flex flex-col items-center justify-center text-lg"><iconify-icon icon="heroicons:envelope"></iconify-icon></span></div>
+                  <span class="flex-1">{{ instructor.email }}</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                  <div class="flex-none"><span class="w-8 h-8 rounded bg-secondary text-white flex flex-col items-center justify-center text-lg"><iconify-icon icon="heroicons:phone"></iconify-icon></span></div>
+                  <span class="flex-1">{{ instructor.phone }}</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                  <div class="flex-none"><span class="w-8 h-8 rounded bg-secondary text-white flex flex-col items-center justify-center text-lg"><iconify-icon icon="heroicons:map-pin"></iconify-icon></span></div>
+                  <span class="flex-1">{{ instructor.location }}</span>
+                </li>
+              </ul>
+              <div class="text-xl text-black mt-8 mb-4">Follow Me On:</div>
+              <ul class="flex space-x-4">
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/fb.svg' %}" alt="Facebook"></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/pn.svg' %}" alt="Pinterest"></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/tw.svg' %}" alt="Twitter"></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/ins.svg' %}" alt="Instagram"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-8 col-span-12">
+          <div class="mb-10">
+            <h2>{{ instructor.name }}</h2>
+            <span class="inline-block text-primary">{{ instructor.role }}</span>
+          </div>
+          <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate pellentesque commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            <br><br>
+            Donec faucibus imperdiet libero, at lacinia metus. Quisque finibus ante non arcu aliquet, nec vestibulum dolor condimentum. Nulla facilisi. Vestibulum porttitor vestibulum est eu dignissim. Quisque blandit elementum convallis. Ut et mi hendrerit, posuere purus ac, facilisis nibh.
+          </div>
+          <div class="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[30px] mt-24">
+            {% for stat in instructor_stats %}
+            <div class="bg-white shadow-box7 text-center pt-[64px] pb-8 px-[50px] rounded-[8px] relative my-4">
+              <img src="{% static stat.icon %}" alt="" class="absolute left-1/2 -translate-x-1/2 -top-10">
+              <h4 class="text-[44px] leading-[66px] text-black font-bold mb-1"><span class="counter">{{ stat.num }}</span>{{ stat.suffix }}</h4>
+              <p>{{ stat.label }}</p>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="mt-20 mb-14">
+            <div class="mini-title">Courses By {{ instructor.short_name }}</div>
+            <div class="column-title">Courses By <span class="shape-bg">{{ instructor.short_name }}</span></div>
+          </div>
+          <div class="grid xl:grid-cols-2 lg:grid-cols-1 md:grid-cols-2 grid-cols-1 gap-[30px]">
+            {% for course in courses %}
+            <a class="bg-white shadow-box2 rounded-[8px] transition duration-100 hover:shadow-sm" href="/single-course/">
+              <div class="course-thumb h-[248px] rounded-t-[8px] relative">
+                <img src="{% static course.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+                <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white absolute left-6 top-6">{{ course.tag }}</span>
+              </div>
+              <div class="course-content p-8">
+                <div class="text-secondary font-bold text-2xl mb-3">{{ course.price }}</div>
+                <h4 class="text-xl mb-3 font-bold">{{ course.title }}</h4>
+                <div class="flex justify-between space-x-3">
+                  <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/svg/file.svg' %}" alt=""><span>{{ course.lessons }}</span></span>
+                  <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/svg/clock.svg' %}" alt=""><span>{{ course.duration }}</span></span>
+                  <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/svg/star.svg' %}" alt=""><span>{{ course.rating }}</span></span>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="text-center lg:pt-14 pt-8">
+            <a href="/courses/" class="btn btn-primary">View All Courses</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'public_site/edumim/includes/edumim_footer.html' %}
+</body>
+</html>

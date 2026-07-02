@@ -1,0 +1,31 @@
+{% load static %}
+<li{% if forloop.first %} class="open"{% endif %}>
+  <button type="button" class="accrodain-button">
+    <span class="icon-pm flex-none"></span>
+    <span class="flex-1">Introduction</span>
+    <div class="flex-none extra-text hidden sm:block">3 Lectures, 34:51 min</div>
+  </button>
+  <div class="content"{% if not forloop.first %} hidden{% endif %}>
+    <div class="text-xl font-semibold text-black mb-2">Intermediate Level</div>
+    <p>This tutorial will help you learn quickly and thoroughly. Lorem ipsum is dummy text used in laying out print, graphic or web designs</p>
+    <div class="text-xl font-semibold text-black mb-2 mt-6">2 Videos, 1 Audio, 1 Notebook</div>
+    <div class="mt-8">
+      <a href="#" class="flex items-start pb-4 mb-4 border-b border-[#ECECEC]">
+        <div class="flex-1 flex"><span class="flex-none mr-2"><img src="{% static 'public_site/edumim/images/icon/camera.svg' %}" alt=""></span><span class="flex-1">Video: Getting Started and Introductions</span></div>
+        <div class="flex-none flex space-x-3"><span class="bg-primary text-white px-3 rounded">Preview</span><img src="{% static 'public_site/edumim/images/icon/lock.svg' %}" alt=""></div>
+      </a>
+      <a href="#" class="flex items-start pb-4 mb-4 border-b border-[#ECECEC]">
+        <div class="flex-1 flex"><span class="flex-none mr-2"><img src="{% static 'public_site/edumim/images/icon/camera.svg' %}" alt=""></span><span class="flex-1">Video: Getting Started and Introductions</span></div>
+        <div class="flex-none flex space-x-3"><span class="bg-primary text-white px-3 rounded">Preview</span><img src="{% static 'public_site/edumim/images/icon/lock.svg' %}" alt=""></div>
+      </a>
+      <a href="#" class="flex items-start pb-4 mb-4 border-b border-[#ECECEC]">
+        <div class="flex-1 flex"><span class="flex-none mr-2"><img src="{% static 'public_site/edumim/images/icon/headphone.svg' %}" alt=""></span><span class="flex-1">Video: Getting Started and Introductions</span></div>
+        <div class="flex-none flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/lock.svg' %}" alt=""></div>
+      </a>
+      <a href="#" class="flex items-start pb-4 mb-4 last:mb-0 last:pb-0 last:border-0">
+        <div class="flex-1 flex"><span class="flex-none mr-2"><img src="{% static 'public_site/edumim/images/icon/file.svg' %}" alt=""></span><span class="flex-1">Video: Getting Started and Introductions</span></div>
+        <div class="flex-none flex space-x-3"><img src="{% static 'public_site/edumim/images/icon/lock.svg' %}" alt=""></div>
+      </a>
+    </div>
+  </div>
+</li>

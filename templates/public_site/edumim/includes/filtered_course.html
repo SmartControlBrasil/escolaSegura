@@ -1,0 +1,93 @@
+{% load static %}
+<div class="filtered-course-wrapper">
+  <div class="flex flex-wrap gap-5 justify-center items-center mb-14">
+    <div class="flex-1 flex flex-wrap gap-5 space-x-6 items-center">
+      <ul class="flex space-x-4 cata-Tbas filtered-course-tabs" id="filtered-course-tabs">
+        <li class="active">
+          <button type="button" data-filter-tab="grid" class="h-[60px] w-[60px] flex flex-col justify-center items-center" aria-label="Grid view">
+            <iconify-icon icon="clarity:grid-view-line"></iconify-icon>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-filter-tab="list" class="h-[60px] w-[60px] flex flex-col justify-center items-center" aria-label="List view">
+            <iconify-icon icon="ant-design:unordered-list-outlined"></iconify-icon>
+          </button>
+        </li>
+      </ul>
+      <span>Showing 12 courses of 52</span>
+    </div>
+    <div class="flex-0">
+      <div class="min-w-[272px]">
+        <select>
+          <option data-display="Sort By: Popularity">Sort By: Popularity</option>
+          <option value="1">Popularity</option>
+          <option value="2">Another option</option>
+          <option value="4">Potato</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="filtered-course-panel" data-filter-panel="grid">
+    <div class="grid {{ grid_cols|default:'lg:grid-cols-3 md:grid-cols-2 grid-cols-1' }} gap-[30px]">
+      {% for item in course_grid %}
+      <a class="bg-white shadow-box2 rounded-[8px] transition duration-100 hover:shadow-sm" href="/single-course/">
+        <div class="course-thumb h-[248px] rounded-t-[8px] relative">
+          <img src="{% static item.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+          <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white absolute left-6 top-6">{{ item.tag }}</span>
+        </div>
+        <div class="course-content p-8">
+          <div class="text-secondary font-bold text-2xl mb-3">{{ item.price }}</div>
+          <h4 class="text-xl mb-3 font-bold">{{ item.title }}</h4>
+          <div class="flex justify-between flex-wrap space-y-1 xl:space-y-0">
+            <span class="flex items-center space-x-2 mr-3"><img src="{% static 'public_site/edumim/images/svg/file.svg' %}" alt=""><span>{{ item.lessons }}</span></span>
+            <span class="flex items-center space-x-2 mr-3"><img src="{% static 'public_site/edumim/images/svg/clock.svg' %}" alt=""><span>{{ item.duration }}</span></span>
+            <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/svg/star.svg' %}" alt=""><span>{{ item.rating }}</span></span>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="text-center pt-14">
+      <a href="#" class="btn btn-primary inline-flex items-center space-x-[10px]">
+        <span>Load More</span>
+        <span class="relative top-1"><iconify-icon icon="ion:reload-outline"></iconify-icon></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="filtered-course-panel hidden" data-filter-panel="list">
+    <div class="grid {{ list_cols|default:'lg:grid-cols-2 md:grid-cols-1 grid-cols-1' }} gap-[30px]">
+      {% for item in course_list %}
+      <a class="bg-white rounded-[8px] transition shadow-box7 duration-150 border-b-4 hover:border-primary border-transparent hover:shadow-box6 flex p-8 space-x-6" href="/single-course/">
+        <div class="flex-none">
+          <div class="w-[159px] h-[159px] rounded relative">
+            <img src="{% static item.image %}" alt="" class="w-full h-full object-cover rounded">
+          </div>
+        </div>
+        <div class="course-content flex-1">
+          <div class="text-primary font-bold text-2xl mb-2 flex justify-between">
+            <span class="inline-block">{{ item.price }}</span>
+            <span class="flex space-x-1">
+              {% for _ in "1234" %}
+              <span class="w-4 h-4 inline-block"><img src="{% static 'public_site/edumim/images/svg/review.svg' %}" alt="" class="w-full h-full block object-cover"></span>
+              {% endfor %}
+            </span>
+          </div>
+          <h4 class="text-2xl leading-[36px] mb-4 font-bold">{{ item.title }}</h4>
+          <div class="flex space-x-6">
+            <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/icon/file2.svg' %}" alt=""><span>{{ item.lessons }}</span></span>
+            <span class="flex items-center space-x-2"><img src="{% static 'public_site/edumim/images/icon/user2.svg' %}" alt=""><span>4k Lesson</span></span>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="text-center pt-14">
+      <a href="#" class="btn btn-primary inline-flex items-center space-x-[10px]">
+        <span>Load More</span>
+        <span class="relative top-1"><iconify-icon icon="ion:reload-outline"></iconify-icon></span>
+      </a>
+    </div>
+  </div>
+</div>

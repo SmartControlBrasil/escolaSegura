@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events | PortalK12</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  {% include 'public_site/edumim/includes/edumim_header.html' %}
+  {% include 'public_site/edumim/includes/page_banner.html' %}
+
+  <div class="nav-tab-wrapper tabs section-padding">
+    <div class="container">
+      <div class="flex items-center mb-14">
+        <div class="flex-1 flex space-x-6 items-center">
+          <span>Showing 12 courses of 52</span>
+        </div>
+        <div class="flex-0">
+          <div class="min-w-[272px]">
+            <select>
+              <option data-display="Sort By: Popularity">Sort By: Popularity</option>
+              <option value="1">Popularity</option>
+              <option value="2">Another option</option>
+              <option value="4">Potato</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
+        {% for item in events %}
+        <div class="bg-white shadow-box5 rounded-[8px] transition duration-100 hover:shadow-box3">
+          <div class="course-thumb h-[297px] rounded-t-[8px] relative">
+            <img src="{% static item.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+          </div>
+          <div class="course-content p-8">
+            <h4 class="text-xl mb-5 font-bold">
+              <a href="/event-single/" class="hover:text-primary transition duration-150">{{ item.title }}</a>
+            </h4>
+            <ul class="list space-y-3 mb-6">
+              <li class="flex space-x-2">
+                <span class="text-lg text-secondary"><iconify-icon icon="heroicons:calendar-days"></iconify-icon></span>
+                <span>{{ item.date }}</span>
+              </li>
+              <li class="flex space-x-2">
+                <span class="text-lg text-secondary"><iconify-icon icon="heroicons:map-pin"></iconify-icon></span>
+                <span>{{ item.location }}</span>
+              </li>
+            </ul>
+            <a href="/event-single/" class="btn px-8 py-[11px] bg-black text-white hover:bg-primary">Book A Seat</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="pagination mt-14">
+        <ul class="flex justify-center space-x-3">
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">
+              <iconify-icon icon="heroicons:chevron-double-left-20-solid" class="text-2xl"></iconify-icon>
+            </a>
+          </li>
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-primary text-white rounded font-semibold">1</a>
+          </li>
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">2</a>
+          </li>
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">3</a>
+          </li>
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">4</a>
+          </li>
+          <li class="inline-flex">
+            <a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">
+              <iconify-icon icon="heroicons:chevron-double-right-20-solid" class="text-2xl"></iconify-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% include 'public_site/edumim/includes/edumim_footer.html' %}
+</body>
+</html>

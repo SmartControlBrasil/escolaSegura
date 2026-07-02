@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Courses Sidebar | PortalK12</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  {% include 'public_site/edumim/includes/edumim_header.html' %}
+  {% include 'public_site/edumim/includes/page_banner.html' %}
+
+  <div class="nav-tab-wrapper tabs pt-10 section-padding-bottom">
+    <div class="container">
+      <div class="grid grid-cols-12 gap-[30px]">
+        <div class="lg:col-span-8 col-span-12">
+          {% include 'public_site/edumim/includes/filtered_course.html' %}
+        </div>
+        <div class="lg:col-span-4 col-span-12">
+          {% include 'public_site/edumim/includes/courses_filter_sidebar.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'public_site/edumim/includes/edumim_footer.html' %}
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('#filtered-course-tabs li');
+      var panels = document.querySelectorAll('.filtered-course-panel');
+      tabs.forEach(function (tab) {
+        var button = tab.querySelector('button');
+        if (!button) return;
+        button.addEventListener('click', function () {
+          var target = button.getAttribute('data-filter-tab');
+          tabs.forEach(function (item) { item.classList.remove('active'); });
+          tab.classList.add('active');
+          panels.forEach(function (panel) {
+            panel.classList.toggle('hidden', panel.getAttribute('data-filter-panel') !== target);
+          });
+        });
+      });
+      var priceRange = document.getElementById('courses-price-range');
+      var priceValue = document.getElementById('courses-price-value');
+      if (priceRange && priceValue) {
+        priceRange.addEventListener('input', function () {
+          priceValue.value = priceRange.value;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

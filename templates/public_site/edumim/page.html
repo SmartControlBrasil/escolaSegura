@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} | Edumim</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  <header class="site-header  home-one-header top-0 w-full z-[999] rt-sticky" id="rt-sticky-header">
+    <div class="main-header py-6"><div class="container"><div class="flex items-center justify-between">
+      <a href="/" class="brand-logo flex-none lg:mr-10 md:w-auto max-w-[160px]"><img src="{% static 'public_site/edumim/images/logo/logo.svg' %}" alt="logo"></a>
+      <div class="flex items-center flex-1"><div class="flex-1 main-menu relative mr-[74px]"><ul class="menu-active-classNamees">
+        <li class="menu-item-has-children"><a href="#">Home</a><ul class="sub-menu"><li><a href="/">Home One</a></li><li><a href="/home-two/">Home Two</a></li><li><a href="/home-three/">Home Three</a></li></ul></li>
+        <li class="menu-item-has-children"><a href="#">Pages</a><ul class="sub-menu"><li><a href="/about/">About 1</a></li><li><a href="/about-two/">About 2</a></li><li><a href="/instructor/">Instructor</a></li><li><a href="/instructor-two/">Instructor 2</a></li><li><a href="/instructor-details/">Instructor Single</a></li><li><a href="/event/">Event</a></li><li><a href="/event-single/">Event Single</a></li><li><a href="/error/">404</a></li></ul></li>
+        <li class="menu-item-has-children"><a href="#">Courses</a><ul class="sub-menu"><li><a href="/courses/">Courses</a></li><li><a href="/courses-sidebar/">Courses Sidebar</a></li><li><a href="/single-course/">Single Course</a></li></ul></li>
+        <li class="menu-item-has-children"><a href="#">Blog</a><ul class="sub-menu"><li><a href="/blog-standard/">Blog Standard</a></li><li><a href="/single-blog/">Single Blog</a></li></ul></li>
+        <li><a href="/contacts/">Contacts</a></li>
+      </ul></div><div class="flex-none flex space-x-[18px]"><div class="hidden lg:block"><a href="/app/login/" class="btn btn-primary py-[15px] px-8">Start Free Trial</a></div></div></div>
+    </div></div></div>
+  </header>
+
+  <div class="breadcrumbs section-padding bg-[url('../images/all-img/bred.png')] bg-cover bg-center bg-no-repeat"><div class="container text-center"><h2>{{ title }}</h2><p>{{ subtitle }}</p></div></div>
+  <div class="section-padding"><div class="container"><div class="max-w-[920px] mx-auto text-center"><img src="{% static 'public_site/edumim/images/all-img/about2.png' %}" alt="" class="mx-auto mb-8"><div class="plain-text">This page is available in the Edumim structure and ready for content decisions.</div></div></div></div>
+
+  <footer class="bg-black bg-[url('../images/all-img/footer-bg-1.png')] bg-cover bg-center bg-no-repeat"><div class="container border-t border-white border-opacity-[0.1] py-8 text-center text-base">&copy; Copyright {% now "Y" %} | Edumim Template | All Rights Reserved</div></footer>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% load static %}
+{% block title %}{{ post.title }} | PortalK12{% endblock %}
+{% block content %}
+<div class="breadcrumbs section-padding bg-[url('../images/all-img/bred.png')] bg-cover bg-center bg-no-repeat"><div class="container text-center"><h2>{{ post.title }}</h2><p class="mt-4">{{ post.excerpt }}</p></div></div>
+<div class="section-padding"><div class="container"><div class="max-w-[860px] mx-auto"><img src="{% static post.image %}" alt="" class="w-full rounded-[8px] mb-8"><p>Conteúdo inicial de referência para o time escolar. Esta página já está preparada para receber conteúdo editorial completo.</p><div class="pt-8"><a href="/blog/" class="btn btn-primary">Voltar ao blog</a></div></div></div></div>
+{% endblock %}

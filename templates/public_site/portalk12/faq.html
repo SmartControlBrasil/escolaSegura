@@ -1,0 +1,5 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% block title %}FAQ | PortalK12{% endblock %}
+{% block content %}
+<div class="section-padding"><div class="container"><div class="text-center"><div class="mini-title">FAQ</div><div class="column-title">Perguntas <span class="shape-bg">frequentes</span></div></div><div class="max-w-[900px] mx-auto pt-10 space-y-6">{% for item in faqs %}<div class="bg-white shadow-box rounded-[8px] p-8"><h4 class="text-2xl mb-2 font-bold">{{ item.q }}</h4><p>{{ item.a }}</p></div>{% endfor %}</div></div></div>
+{% endblock %}

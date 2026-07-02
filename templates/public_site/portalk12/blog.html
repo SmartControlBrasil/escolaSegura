@@ -1,0 +1,6 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% load static %}
+{% block title %}Blog | PortalK12{% endblock %}
+{% block content %}
+<div class="section-padding bg-[url('../images/all-img/section-bg-5.png')] bg-cover bg-no-repeat bg-center"><div class="container"><div class="text-center"><div class="mini-title">Blog</div><div class="column-title">Conteúdo para <span class="shape-bg">escolas conectadas</span></div></div><div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-7">{% for post in posts %}<div class="bg-white shadow-box5 rounded-[8px] transition duration-100 hover:shadow-box3"><div class="course-thumb h-[260px] rounded-t-[8px] relative"><img src="{% static post.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]" /></div><div class="course-content p-8"><h4 class="text-xl mb-5 font-bold"><a href="/blog/{{ post.slug }}/" class="hover:text-primary transition duration-150">{{ post.title }}</a></h4><p>{{ post.excerpt }}</p></div></div>{% endfor %}</div></div></div>
+{% endblock %}

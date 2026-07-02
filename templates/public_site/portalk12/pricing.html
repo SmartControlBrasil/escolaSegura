@@ -1,0 +1,5 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% block title %}Planos | PortalK12{% endblock %}
+{% block content %}
+<div class="section-padding"><div class="container"><div class="text-center"><div class="mini-title">Planos</div><div class="column-title">Escolha o plano ideal para sua <span class="shape-bg">escola</span></div></div><div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">{% for plan in plans %}<div class="bg-white shadow-box rounded-[8px] p-10"><h4 class="text-2xl mb-2 font-bold">{{ plan.name }}</h4><div class="text-secondary font-bold text-2xl mb-4">{{ plan.price }}{{ plan.period }}</div><ul class="space-y-2">{% for feature in plan.features %}<li>{{ feature }}</li>{% endfor %}</ul><div class="pt-8"><a href="/demonstracao/" class="btn btn-primary">Falar com especialista</a></div></div>{% endfor %}</div></div></div>
+{% endblock %}

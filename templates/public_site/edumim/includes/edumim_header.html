@@ -1,0 +1,97 @@
+{% load static %}
+  <header class="site-header home-one-header top-0 w-full z-[999] rt-sticky" id="rt-sticky-header">
+    <div class="main-header py-6">
+      <div class="container">
+        <div class="flex items-center justify-between">
+          <a href="/" class="brand-logo flex-none lg:mr-10 md:w-auto max-w-[120px]">
+            <img src="{% static 'public_site/edumim/images/logo/logo.svg' %}" alt="PortalK12">
+          </a>
+          <div class="flex items-center flex-1">
+            <div class="flex-1 main-menu relative mr-[74px]">
+              <ul class="menu-active-classNamees">
+                <li class="menu-item-has-children">
+                  <a href="#">Home</a>
+                  <ul class="sub-menu">
+                    <li><a href="/">Home One</a></li>
+                    <li><a href="/home-two/">Home Two</a></li>
+                    <li><a href="/home-three/">Home Three</a></li>
+                  </ul>
+                </li>
+                <li class="menu-item-has-children">
+                  <a href="#">Pages</a>
+                  <ul class="sub-menu">
+                    <li><a href="/about/">About 1</a></li>
+                    <li><a href="/about-two/">About 2</a></li>
+                    <li><a href="/instructor/">Instructor</a></li>
+                    <li><a href="/instructor-two/">Instructor 2</a></li>
+                    <li><a href="/instructor-details/">Instructor Single</a></li>
+                    <li><a href="/event/">Event</a></li>
+                    <li><a href="/event-single/">Event Single</a></li>
+                    <li><a href="/error/">404</a></li>
+                  </ul>
+                </li>
+                <li class="menu-item-has-children">
+                  <a href="#">Courses</a>
+                  <ul class="sub-menu">
+                    <li><a href="/courses/">Courses</a></li>
+                    <li><a href="/courses-sidebar/">Courses Sidebar</a></li>
+                    <li><a href="/single-course/">Single Course</a></li>
+                  </ul>
+                </li>
+                <li class="menu-item-has-children">
+                  <a href="#">Blog</a>
+                  <ul class="sub-menu">
+                    <li><a href="/blog-standard/">Blog Standard</a></li>
+                    <li><a href="/single-blog/">Single Blog</a></li>
+                  </ul>
+                </li>
+                <li><a href="/contacts/">Contacts</a></li>
+              </ul>
+            </div>
+            <div class="flex-none flex space-x-[18px]">
+              <div class="hidden lg:block">
+                <a href="/app/login/" class="btn btn-primary py-[15px] px-8">Start Free Trial</a>
+              </div>
+              <div class="block lg:hidden">
+                <button type="button" id="rt-mobile-menu-open" class="text-3xl md:w-[56px] h-10 w-10 md:h-[56px] rounded bg-[#F8F8F8] flex flex-col items-center justify-center menu-click">
+                  <iconify-icon icon="cil:hamburger-menu" rotate="180deg"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="openmobile-menu fixed top-0 h-screen pt-10 pb-6 bg-white shadow-box2 w-[320px] overflow-y-auto flex flex-col z-[999]" id="rt-mobile-menu">
+    <div class="flex justify-between px-6 flex-none">
+      <a href="/" class="brand-logo flex-none mr-10 max-w-[120px]">
+        <img src="{% static 'public_site/edumim/images/logo/logo.svg' %}" alt="PortalK12">
+      </a>
+      <span class="text-3xl text-black cursor-pointer" id="rt-mobile-menu-close">
+        <iconify-icon icon="fe:close"></iconify-icon>
+      </span>
+    </div>
+    <div class="mobile-menu mt-6 flex-1">
+      <ul class="menu-active-classNamees">
+        <li><a href="/">Home One</a></li>
+        <li><a href="/home-two/">Home Two</a></li>
+        <li><a href="/home-three/">Home Three</a></li>
+        <li><a href="/about/">About 1</a></li>
+        <li><a href="/about-two/">About 2</a></li>
+        <li><a href="/instructor/">Instructor</a></li>
+        <li><a href="/instructor-two/">Instructor 2</a></li>
+        <li><a href="/instructor-details/">Instructor Single</a></li>
+        <li><a href="/event/">Event</a></li>
+        <li><a href="/event-single/">Event Single</a></li>
+        <li><a href="/courses/">Courses</a></li>
+        <li><a href="/courses-sidebar/">Courses Sidebar</a></li>
+        <li><a href="/single-course/">Single Course</a></li>
+        <li><a href="/blog-standard/">Blog Standard</a></li>
+        <li><a href="/single-blog/">Single Blog</a></li>
+        <li><a href="/contacts/">Contacts</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="rt-mobile-menu-overlay" id="rt-mobile-menu-overlay"></div>

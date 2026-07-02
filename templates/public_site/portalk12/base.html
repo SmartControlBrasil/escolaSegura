@@ -1,0 +1,76 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PortalK12{% endblock %}</title>
+  <meta name="description" content="Plataforma SaaS escolar para segurança, portaria, comunicação e gestão.">
+  <link rel="stylesheet" href="{% static 'institutional/portalk12/css/rt-plugins.css' %}">
+  <link rel="stylesheet" href="{% static 'institutional/portalk12/css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'institutional/portalk12/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+<header class="site-header home-one-header top-0 w-full z-[999] rt-sticky" id="rt-sticky-header">
+  <div class="main-header py-6">
+    <div class="container">
+      <div class="flex items-center justify-between">
+        <a href="/" class="brand-logo flex-none lg:mr-10 md:w-auto max-w-[220px] text-2xl font-bold text-[#0C1327]">PortalK12</a>
+        <div class="flex items-center flex-1">
+          <div class="flex-1 main-menu relative mr-[74px]">
+            <ul class="menu-active-classNamees">
+              <li><a href="/">Início</a></li>
+              <li><a href="/sobre/">Sobre</a></li>
+              <li><a href="/solucoes/">Soluções</a></li>
+              <li><a href="/recursos/">Recursos</a></li>
+              <li><a href="/modulos/">Módulos</a></li>
+              <li><a href="/planos/">Planos</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/contato/">Contato</a></li>
+            </ul>
+          </div>
+          <div class="flex-none flex space-x-[18px]">
+            <div class="hidden lg:block"><a href="/app/login/" class="btn btn-black py-[15px] px-8">Acessar painel</a></div>
+            <div class="hidden lg:block"><a href="/demonstracao/" class="btn btn-primary py-[15px] px-8">Solicitar apresentação</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer class="bg-black bg-[url('../images/all-img/footer-bg-1.png')] bg-cover bg-center bg-no-repeat">
+  <div class="section-padding container">
+    <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+      <div><a href="/" class="mb-10 block text-2xl font-bold text-white">PortalK12</a><p>Plataforma SaaS escolar com foco em segurança, comunicação e gestão conectada.</p></div>
+      <div>
+        <h4 class="mb-8 text-2xl font-bold text-white">Soluções</h4>
+        <ul class="list-item space-y-5">
+          <li><a href="/solucoes/controle-de-acesso-escolar/">Controle de acesso escolar</a></li>
+          <li><a href="/solucoes/catraca-eletronica/">Catraca eletrônica</a></li>
+          <li><a href="/solucoes/cameras-de-monitoramento/">Câmeras de monitoramento</a></li>
+          <li><a href="/solucoes/ocorrencias-escolares/">Ocorrências escolares</a></li>
+          <li><a href="/solucoes/pagamentos-e-cantina-escolar/">Cantina e pagamentos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mb-8 text-2xl font-bold text-white">Legal</h4>
+        <ul class="list-item space-y-5">
+          <li><a href="/privacidade/">Política de privacidade</a></li>
+          <li><a href="/termos/">Termos de uso</a></li>
+          <li><a href="/login/">Login</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container border-t border-white border-opacity-[0.1] py-8 text-center text-base">© {% now "Y" %} PortalK12 / EscolaSegura.</div>
+</footer>
+
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="{% static 'institutional/portalk12/js/custom.min.js' %}"></script>
+<script src="{% static 'institutional/portalk12/js/dlabnav-init.js' %}"></script>
+</body>
+</html>

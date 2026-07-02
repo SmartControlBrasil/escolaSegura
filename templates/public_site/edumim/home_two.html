@@ -1,0 +1,581 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Two | PortalK12</title>
+  <meta name="description" content="PortalK12 — gestão escolar completa para direção, secretaria, professores, responsáveis e alunos.">
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+
+  <section class="xl:min-h-screen bg-[url('../images/banner/2.png')] bg-cover bg-no-repeat bg-center overflow-hidden xl:pb-[130px]">
+    <header class="site-header">
+      <div class="bg-primary text-white py-3 md:block hidden">
+        <div class="container">
+          <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+            <ul class="flex divide-x divide-white divide-opacity-25 text-base lg:justify-start justify-center">
+              <li class="mr-4">Rua das Escolas, 1200, São Paulo, SP</li>
+              <li class="pl-4"><a href="mailto:contato@portalk12.com.br">contato@portalk12.com.br</a></li>
+            </ul>
+            <ul class="text-base flex lg:justify-end justify-center divide-x divide-white divide-opacity-25 items-center">
+              <li class="px-2">Siga-nos:</li>
+              <li class="px-2"><a href="#"><img src="{% static 'public_site/edumim/images/social/wfb.svg' %}" alt="Facebook"></a></li>
+              <li class="px-2"><a href="#"><img src="{% static 'public_site/edumim/images/social/wt.svg' %}" alt="Twitter"></a></li>
+              <li class="px-2"><a href="#"><img src="{% static 'public_site/edumim/images/social/w-i.svg' %}" alt="LinkedIn"></a></li>
+              <li class="px-2"><a href="#"><img src="{% static 'public_site/edumim/images/social/w-ins.svg' %}" alt="Instagram"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="main-header py-8 header-normal2 rt-sticky top-0 w-full z-[999]" id="rt-sticky-header-two">
+        <div class="container">
+          <div class="flex items-center justify-between">
+            <a href="/home-two/" class="brand-logo flex-none lg:mr-10 md:w-auto max-w-[120px]">
+              <img src="{% static 'public_site/edumim/images/logo/logo.svg' %}" alt="logo">
+            </a>
+            <div class="flex items-center flex-1">
+              <div class="flex-1 main-menu relative mr-[74px]">
+                <ul class="menu-active-classNamees">
+                  <li class="menu-item-has-children">
+                    <a href="#">Home</a>
+                    <ul class="sub-menu">
+                      <li><a href="/">Home One</a></li>
+                      <li><a href="/home-two/">Home Two</a></li>
+                      <li><a href="/home-three/">Home Three</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <a href="#">Pages</a>
+                    <ul class="sub-menu">
+                      <li><a href="/about/">About 1</a></li>
+                      <li><a href="/about-two/">About 2</a></li>
+                      <li><a href="/instructor/">Instructor</a></li>
+                      <li><a href="/instructor-two/">Instructor 2</a></li>
+                      <li><a href="/instructor-details/">Instructor Single</a></li>
+                      <li><a href="/event/">Event</a></li>
+                      <li><a href="/event-single/">Event Single</a></li>
+                      <li><a href="/error/">404</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <a href="#">Courses</a>
+                    <ul class="sub-menu">
+                      <li><a href="/courses/">Courses</a></li>
+                      <li><a href="/courses-sidebar/">Courses Sidebar</a></li>
+                      <li><a href="/single-course/">Single Course</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu-item-has-children">
+                    <a href="#">Blog</a>
+                    <ul class="sub-menu">
+                      <li><a href="/blog-standard/">Blog Standard</a></li>
+                      <li><a href="/single-blog/">Blog Single</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="/contacts/">Contacts</a></li>
+                </ul>
+                <div class="lg:block hidden">
+                  <div class="border border-gray rounded-md h-[46px] modal-search">
+                    <input type="text" class="block w-full rounded-md h-full border-none ring-0 focus:outline-none focus:ring-0" placeholder="Buscar..">
+                  </div>
+                </div>
+              </div>
+              <div class="flex-none flex space-x-[18px]">
+                <div>
+                  <button type="button" id="rt-search-toggle" class="md:w-[56px] md:h-[56px] h-10 w-10 rounded bg-white flex flex-col items-center justify-center modal-trigger">
+                    <img src="{% static 'public_site/edumim/images/svg/search.svg' %}" alt="">
+                  </button>
+                </div>
+                <div class="block lg:hidden">
+                  <button type="button" id="rt-mobile-menu-open-two" class="text-3xl md:w-[56px] h-10 w-10 md:h-[56px] rounded bg-white flex flex-col items-center justify-center menu-click">
+                    <iconify-icon icon="cil:hamburger-menu" rotate="180deg"></iconify-icon>
+                  </button>
+                </div>
+                <div class="hidden lg:block">
+                  <a href="/app/login/" class="btn bg-black text-white py-[15px] px-8">Start Free Trial</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="lg:hidden block">
+        <div class="border border-gray rounded-md h-[46px] modal-search">
+          <input type="text" class="block w-full rounded-md h-full border-none ring-0 focus:outline-none focus:ring-0" placeholder="Buscar..">
+        </div>
+      </div>
+    </div>
+
+    <div class="openmobile-menu fixed top-0 h-screen pt-10 pb-6 bg-white shadow-box2 w-[320px] overflow-y-auto flex flex-col z-[999]" id="rt-mobile-menu-two">
+      <div class="flex justify-between px-6 flex-none">
+        <a href="/home-two/" class="brand-logo flex-none mr-10">
+          <img src="{% static 'public_site/edumim/images/logo/logo.svg' %}" alt="logo">
+        </a>
+        <span class="text-3xl text-black cursor-pointer" id="rt-mobile-menu-close-two">
+          <iconify-icon icon="fe:close"></iconify-icon>
+        </span>
+      </div>
+      <div class="mobile-menu mt-6 flex-1">
+        <ul class="menu-active-classNamees">
+          <li class="menu-item-has-children">
+            <a href="#">Home</a>
+            <ul class="sub-menu">
+              <li><a href="/">Home One</a></li>
+              <li><a href="/home-two/">Home Two</a></li>
+              <li><a href="/home-three/">Home Three</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children">
+            <a href="#">Pages</a>
+            <ul class="sub-menu">
+              <li><a href="/about/">About 1</a></li>
+              <li><a href="/about-two/">About 2</a></li>
+              <li><a href="/instructor/">Instructor</a></li>
+              <li><a href="/instructor-two/">Instructor 2</a></li>
+              <li><a href="/instructor-details/">Instructor Single</a></li>
+              <li><a href="/event/">Event</a></li>
+              <li><a href="/event-single/">Event Single</a></li>
+              <li><a href="/error/">404</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children">
+            <a href="#">Courses</a>
+            <ul class="sub-menu">
+              <li><a href="/courses/">Courses</a></li>
+              <li><a href="/courses-sidebar/">Courses Sidebar</a></li>
+              <li><a href="/single-course/">Single Course</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children">
+            <a href="#">Blog</a>
+            <ul class="sub-menu">
+              <li><a href="/blog-standard/">Blog Standard</a></li>
+              <li><a href="/single-blog/">Blog Single</a></li>
+            </ul>
+          </li>
+          <li><a href="/contacts/">Contacts</a></li>
+        </ul>
+      </div>
+      <div class="flex-none pb-4">
+        <div class="text-center text-black font-semibold mb-2">Siga-nos</div>
+        <ul class="flex space-x-4 justify-center">
+          <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/fb.svg' %}" alt="fbIcon"></a></li>
+          <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/tw.svg' %}" alt="twiter"></a></li>
+          <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/pn.svg' %}" alt="pnIcon"></a></li>
+          <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/ins.svg' %}" alt="insIcon"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rt-mobile-menu-overlay" id="rt-mobile-menu-overlay-two"></div>
+
+    <div class="container relative">
+      <div class="xl:max-w-[570px] xl:pt-[129px] lg:py-28 md:py-20 py-14 lg:space-y-10 space-y-6">
+        <div class="lg:text-[77px] lg:leading-[106.4px] md:text-6xl md:leading-[72px] text-black font-bold text-5xl leading-[62px]">
+          Melhor <span class="text-primary">Gestão Escolar</span> Começa Com O PortalK12
+        </div>
+        <div class="plain-text text-gray leading-[30px] border-l-2 border-primary pl-4">
+          Direção, secretaria, professores e responsáveis em um só painel, com dados organizados por escola e comunicação rastreável.
+        </div>
+        <div class="md:flex md:space-x-4 space-y-3 md:space-y-0 pt-5">
+          <a href="/app/login/" class="btn btn-primary">Começar Agora</a>
+          <a href="/demonstracao/" class="btn btn-black">Agendar Demonstração</a>
+        </div>
+      </div>
+      <div class="imge-box hidden xl:block absolute right-[-60px] top-1/2 -translate-y-1/2 mt-[60px]">
+        <img src="{% static 'public_site/edumim/images/banner/man2.png' %}" alt="Equipe escolar usando o PortalK12">
+      </div>
+    </div>
+  </section>
+
+  <div class="feature-area bg-[url('../images/all-img/section-bg-6.png')] bg-cover bg-no-repeat bg-center section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Categorias</div>
+        <div class="column-title">Explore Nossas <span class="shape-bg">Categorias</span></div>
+      </div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        {% for cat in categories %}
+        <a class="rounded-[8px] transition-all duration-300 hover:shadow-box bg-white flex space-x-5 p-[30px] border-l-4 border-white hover:border-primary" href="#">
+          <div class="w-[72px] h-[72px] rounded bg-white relative group-hover:bg-[#FFE8E8]">
+            <img src="{% static cat.icon %}" alt="" class="w-full h-full object-cover rounded">
+          </div>
+          <div class="course-content">
+            <h4 class="lg:text-2xl text-1xl mb-2 font-bold">{{ cat.title }}</h4>
+            <p>{{ cat.count }} Turmas</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <div class="text-center pt-[70px]">
+        <a href="/modulos/" class="btn btn-primary">Ver Todas As Categorias</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-area section-padding">
+    <div class="container">
+      <div class="grid grid-cols-12 gap-[30px]">
+        <div class="xl:col-span-7 lg:col-span-6 col-span-12">
+          <img src="{% static 'public_site/edumim/images/all-img/about3.png' %}" alt="" class="block w-full">
+        </div>
+        <div class="xl:col-span-5 lg:col-span-6 col-span-12">
+          <div class="mini-title">Sobre O PortalK12</div>
+          <h4 class="column-title">Uma Gestão Escolar Mais <span class="shape-bg">Simples</span></h4>
+          <div class="mb-8">
+            O PortalK12 reúne direção, secretaria, professores e responsáveis em um único ambiente digital, com rotinas organizadas e dados seguros para cada escola.
+          </div>
+          <div class="space-y-8">
+            <div class="progressbar-group">
+              <div class="flex justify-between" data-width="86%">
+                <span class="block text-black font-semibold mb-2">Satisfação Das Escolas</span>
+                <span class="block mb-2 text-black font-semibold">86%</span>
+              </div>
+              <div class="rounded-[2px] overflow-hidden bg-opacity-10 bg-black h-[6px] relative">
+                <div class="ani h-[6px] bg-primary block absolute left-0 top-1/2 -translate-y-1/2" style="width: 86%"></div>
+              </div>
+            </div>
+            <div class="progressbar-group">
+              <div class="flex justify-between" data-width="67%">
+                <span class="block text-black font-semibold mb-2">Adoção Pelas Famílias</span>
+                <span class="block mb-2 text-black font-semibold">67%</span>
+              </div>
+              <div class="rounded-[2px] overflow-hidden bg-opacity-10 bg-black h-[6px] relative">
+                <div class="ani h-[6px] bg-secondary block absolute left-0 top-1/2 -translate-y-1/2" style="width: 67%"></div>
+              </div>
+            </div>
+            <div class="progressbar-group">
+              <div class="flex justify-between" data-width="95%">
+                <span class="block text-black font-semibold mb-2">Implantação Completa</span>
+                <span class="block mb-2 text-black font-semibold">95%</span>
+              </div>
+              <div class="rounded-[2px] overflow-hidden bg-opacity-10 bg-black h-[6px] relative">
+                <div class="ani h-[6px] bg-tertiary block absolute left-0 top-1/2 -translate-y-1/2" style="width: 95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding bg-[url('../images/all-img/section-bg-7.png')] bg-cover bg-no-repeat bg-center">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Módulos Da Plataforma</div>
+        <div class="column-title">Conheça Os Principais <span class="shape-bg">Módulos</span></div>
+      </div>
+      <div class="grid xl:grid-cols-2 grid-cols-1 gap-[30px] lg:pt-10 pt-5">
+        {% for m in home_two_modules %}
+        <a class="bg-white rounded-[8px] transition duration-150 border-b-4 hover:border-primary border-transparent hover:shadow-box6 sm:flex p-8 sm:space-x-6 space-y-6 sm:space-y-0" href="#">
+          <div class="flex-none">
+            <div class="sm:w-[159px] h-[159px] rounded relative">
+              <img src="{% static m.image %}" alt="" class="w-full h-full object-cover rounded">
+            </div>
+          </div>
+          <div class="course-content flex-1">
+            <div class="text-primary font-bold lg:text-2xl text-1xl mb-2 flex justify-between">
+              <span class="inline-block">Incluso</span>
+              <span class="flex space-x-1">
+                {% for star in "1234" %}<span class="w-4 h-4 inline-block"><img src="{% static 'public_site/edumim/images/svg/review.svg' %}" alt="" class="w-full h-full block object-cover"></span>{% endfor %}
+              </span>
+            </div>
+            <h4 class="lg:text-2xl lg:eading-[36px] text-1xl mb-4 font-bold">{{ m.title }}</h4>
+            <div class="flex space-x-6">
+              <span class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/icon/file2.svg' %}" alt="">
+                <span>Relatórios</span>
+              </span>
+              <span class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/icon/user2.svg' %}" alt="">
+                <span>Tempo Real</span>
+              </span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <div class="text-center lg:pt-16 pt-10">
+        <a href="/modulos/" class="btn btn-primary">Ver Todos Os Módulos</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Alguns Números</div>
+        <div class="column-title">Nosso Grande <span class="shape-bg">Impacto</span></div>
+      </div>
+      <div class="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        {% for c in home_two_counters %}
+        <div class="bg-white shadow-box7 text-center pt-[64px] pb-8 px-[50px] rounded-[8px] relative my-4">
+          <img src="{% static c.icon %}" alt="" class="absolute left-1/2 -translate-x-1/2 -top-10">
+          <h4 class="text-[44px] leading-[66px] text-black font-bold mb-1">
+            <span class="counter">{{ c.num }}</span> +
+          </h4>
+          <p>{{ c.sector }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="relative video-area section-padding-bottom z-[1]">
+    <div class="bg-[url('../images/all-img/section-bg-7.png')] bg-cover bg-no-repeat bg-center absolute left-0 bottom-0 h-[60%] w-full z-[-1]"></div>
+    <div class="container">
+      <div class="video-wrapper xl:mb-[205px] lg:mb-[150px] mb-20">
+        <div class="xl:h-[652px] lg:h-[500px] h-[400px] max-w-[1112px] mx-auto p-6 bg-white shadow-box8 rounded-lg relative">
+          <img src="{% static 'public_site/edumim/images/all-img/video.png' %}" alt="" class="object-cover w-full h-full block">
+          <div class="h-[80px] w-[80px] mx-auto absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 flex flex-col justify-center items-center">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full ring-white ring-2"></div>
+            <a href="#" class="bg-white w-20 h-20 flex flex-col justify-center items-center rounded-full text-3xl text-primary">
+              <iconify-icon icon="bi:play-fill"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brands-area">
+      <div class="container">
+        <div class="text-center text-black text-2xl font-medium mb-[50px]">
+          <span class="shape-bg mini">Confiança</span> De Escolas Em Todo O Brasil!
+        </div>
+        <ul class="flex flex-wrap items-center lg:justify-between justify-center">
+          {% for brand in home_two_brands %}
+          <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+            <a href="#" class="block"><img src="{% static brand %}" alt="brandImg"></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-area section-padding bg-[url('../images/all-img/section-bg-8.png')] bg-cover bg-no-repeat bg-center">
+    <div class="container">
+      <div class="lg:grid grid-cols-12 lg:gap-10 space-y-6 lg:space-y-0">
+        <div class="xl:col-span-5 lg:col-span-6 col-span-12">
+          <div class="mini-title">Por Que Escolher O PortalK12</div>
+          <h4 class="column-title">Organize Sua Escola, Garanta Sua <span class="shape-bg pb-4">Tranquilidade</span></h4>
+          <div class="mb-8">
+            Acompanhe cada turma no seu ritmo, mude de perfil de acesso quando precisar e conte com relatórios prontos para direção, secretaria e famílias o ano inteiro.
+          </div>
+          <div>
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-[30px] md:block">
+              <div class="bg-white shadow-box7 p-6 rounded">
+                <div><img src="{% static 'public_site/edumim/images/svg/mini-target.svg' %}" alt=""></div>
+                <div class="font-semibold leading-[27px] text-black mt-3">Painel Personalizado Para Cada Perfil</div>
+              </div>
+              <div class="bg-white shadow-box7 p-6 rounded">
+                <div><img src="{% static 'public_site/edumim/images/svg/mini-heart.svg' %}" alt=""></div>
+                <div class="font-semibold leading-[27px] text-black mt-3">Suporte Dedicado Para Sua Escola</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="xl:col-span-7 lg:col-span-6 col-span-12">
+          <img src="{% static 'public_site/edumim/images/all-img/about4.png' %}" alt="" class="block w-full object-contain">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding bg-[url('../images/all-img/section-bg-9.png')] bg-no-repeat bg-center bg-cover">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Planos</div>
+        <div class="column-title">Escolha O Plano Ideal Para Sua <span class="shape-bg">Escola</span></div>
+      </div>
+      <div class="pt-10 pb-8">
+        <label class="max-w-[254px] bg-white rounded-md shadow-box9 p-3 mx-auto flex cursor-pointer active-price items-center">
+          <input type="checkbox" id="pricechnage" class="hidden form-check">
+          <span class="flex-1 text-center active">Mensal</span>
+          <span class="flex-1 text-center">Anual</span>
+        </label>
+      </div>
+      <div class="space-y-8 max-w-[1170px] mx-auto border-t border-b border-black border-opacity-[0.1]">
+        {% for plan in home_two_plans %}
+        <div class="flex lg:flex-row flex-col {% if plan.highlight %}bg-white{% endif %} space-y-6 lg:space-y-0 lg:justify-between lg:space-x-8 items-center py-10 px-10 rounded-md">
+          <div>
+            <span class="text-2xl {% if plan.highlight %}text-primary{% else %}text-black{% endif %} font-bold">{{ plan.name }}</span>
+          </div>
+          <div>
+            <ul class="space-y-4">
+              {% for feature in plan.features %}
+              <li class="flex space-x-[9px]">
+                <img src="{% static 'public_site/edumim/images/svg/check.svg' %}" alt="">
+                <span>{{ feature }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="w-[150px] text-center">
+            <span class="block font-bold text-black text-[44px]">{{ plan.price }}</span>
+          </div>
+          <div>
+            <a href="/planos/" class="btn {% if plan.highlight %}btn-primary{% else %}btn-black{% endif %}">Começar</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Blog</div>
+        <div class="column-title">Confira As Últimas <span class="shape-bg">Novidades</span></div>
+      </div>
+      <div class="grid xl:grid-cols-2 grid-cols-1 gap-[30px] lg:pt-10 pt-5">
+        {% for post in home_two_posts %}
+        <div class="bg-white shadow-box7 rounded-[8px] group transition duration-150 ring-0 hover:ring-2 hover:ring-primary hover:shadow-box8 sm:flex p-4 sm:space-x-6 space-y-6 sm:space-y-0">
+          <div class="flex-none">
+            <div class="sm:w-[200px] h-[182px] rounded relative">
+              <img src="{% static post.image %}" alt="" class="w-full h-full object-cover rounded">
+            </div>
+          </div>
+          <div class="course-content flex-1">
+            <div class="mb-4">
+              <span class="inline-block text-base text-secondary bg-[#E3F9F6] font-medium rounded px-[10px] py-1">Gestão Escolar</span>
+            </div>
+            <h4 class="lg:text-2xl lg:leading-[36px] text-1xl mb-4 font-bold">
+              <a href="/blog/" class="group-hover:text-primary transitio duration-150">{{ post.title }}</a>
+            </h4>
+            <div class="flex space-x-6">
+              <a class="flex items-center space-x-2" href="/blog/">
+                <img src="{% static 'public_site/edumim/images/svg/calender2.svg' %}" alt="">
+                <span>Em Breve</span>
+              </a>
+              <a class="flex items-center space-x-2" href="/blog/">
+                <img src="{% static 'public_site/edumim/images/svg/clock2.svg' %}" alt="">
+                <span>Leitura Rápida</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="relative z-[1] mx-auto max-w-[1170px] rounded-md bg-[url('../images/all-img/section-bg-3.png')] bg-cover bg-center bg-no-repeat p-20">
+      <div class="items-center space-x-4 space-y-5 text-center lg:flex lg:space-y-0 lg:text-left">
+        <div class="flex-1">
+          <div class="max-w-[590px] text-3xl font-bold text-white md:text-3xl lg:text-[44px] lg:leading-[61px]">
+            Educação É Sobre Formar Os Líderes De Amanhã
+          </div>
+        </div>
+        <div class="flex-none">
+          <a href="/app/login/" class="btn bg-white font-bold text-black">Comece Hoje</a>
+        </div>
+      </div>
+    </div>
+    <div class="-mt-[150px] bg-[url('../images/all-img/section-bg-10.png')] bg-cover bg-center bg-no-repeat pt-[150px]">
+      <div class="section-padding container">
+        <div class="grid grid-cols-12 gap-5">
+          <div class="single-footer col-span-12 lg:col-span-6 xl:col-span-3">
+            <div class="lg:max-w-[270px]">
+              <a href="/home-two/" class="mb-10 block"><img src="{% static 'public_site/edumim/images/logo/footer-logo-2.svg' %}" alt=""></a>
+              <p>Plataforma SaaS de gestão escolar da Smart Control Brasil. Direção, secretaria, professores, responsáveis e alunos em um só lugar.</p>
+              <ul class="flex space-x-4 pt-8">
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/fb.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/tw.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/pn.svg' %}" alt=""></a></li>
+                <li><a href="#" class="flex h-10 w-10"><img src="{% static 'public_site/edumim/images/icon/ins.svg' %}" alt=""></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="single-footer col-span-12 lg:col-span-6 xl:col-span-6">
+            <div class="ml-auto xl:w-[80%]">
+              <div class="flex space-x-[80px]">
+                <div class="flex-1 lg:flex-none">
+                  <h4 class="mb-8 text-2xl font-bold text-black">Links</h4>
+                  <ul class="list-item space-y-5">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/sobre/">Sobre</a></li>
+                    <li><a href="/planos/">Planos</a></li>
+                    <li><a href="/modulos/">Módulos</a></li>
+                    <li><a href="/contato/">Contato</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                  </ul>
+                </div>
+                <div class="flex-1 lg:flex-none">
+                  <h4 class="mb-8 text-2xl font-bold text-black">Legal</h4>
+                  <ul class="list-item space-y-5">
+                    <li><a href="/termos/">Termos De Uso</a></li>
+                    <li><a href="/termos/">Termos E Condições</a></li>
+                    <li><a href="/planos/">Forma De Pagamento</a></li>
+                    <li><a href="/privacidade/">Política De Privacidade</a></li>
+                    <li><a href="/privacidade/">Política De Reembolso</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="single-footer col-span-12 lg:col-span-6 xl:col-span-3">
+            <h4 class="mb-8 text-2xl font-bold text-black">Nas Redes Sociais</h4>
+            <div class="grid grid-cols-3 gap-4">
+              {% for img in home_two_instagram %}
+              <div>
+                <a href="#" class="group relative block h-20 w-full rounded">
+                  <img src="{% static img %}" alt="" class="block h-full w-full rounded object-cover">
+                  <div class="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center rounded bg-black bg-opacity-40 text-3xl text-white opacity-0 transition-all duration-150 group-hover:opacity-100">
+                    <span class="scale-0 transition-all duration-150 group-hover:scale-100">
+                      <iconify-icon icon="akar-icons:instagram-fill"></iconify-icon>
+                    </span>
+                  </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container border-t border-[#E9D4D0] py-8 text-center text-base">
+        &copy; Copyright {% now "Y" %} | PortalK12 — Smart Control Brasil | Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    (function () {
+      var headerEl = document.getElementById('rt-sticky-header-two');
+      window.addEventListener('scroll', function () {
+        var scrolled = window.scrollY > 100;
+        headerEl.classList.toggle('rt-sticky-active', scrolled);
+      });
+
+      var searchBtn = document.getElementById('rt-search-toggle');
+      searchBtn.addEventListener('click', function () {
+        document.body.classList.toggle('modal-open');
+      });
+
+      var mobileMenu = document.getElementById('rt-mobile-menu-two');
+      var overlay = document.getElementById('rt-mobile-menu-overlay-two');
+      function openMenu() {
+        mobileMenu.classList.add('active-mobile-menu');
+        overlay.classList.add('active');
+      }
+      function closeMenu() {
+        mobileMenu.classList.remove('active-mobile-menu');
+        overlay.classList.remove('active');
+      }
+      document.getElementById('rt-mobile-menu-open-two').addEventListener('click', openMenu);
+      document.getElementById('rt-mobile-menu-close-two').addEventListener('click', closeMenu);
+      overlay.addEventListener('click', closeMenu);
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+    })();
+  </script>
+</body>
+</html>

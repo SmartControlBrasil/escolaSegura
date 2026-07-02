@@ -1,0 +1,51 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% load static %}
+{% block title %}PortalK12 | Segurança e gestão escolar{% endblock %}
+{% block content %}
+<section class="xl:min-h-screen bg-[url('../images/banner/1.png')] bg-cover bg-no-repeat bg-center overflow-hidden">
+  <div class="container relative">
+    <div class="max-w-[570px] xl:pt-[297px] md:pt-20 md:pb-20 pt-28 pb-14 xl:pb-40 space-y-8">
+      <h1>Gestão escolar online para <span class="text-secondary inline-block bg-[url('../images/banner/shape.svg')] bg-no-repeat bg-bottom">escolas, famílias e alunos</span></h1>
+      <div class="plain-text text-gray leading-[30px]">PortalK12 conecta direção, secretaria, portaria, professores e responsáveis em uma plataforma SaaS com comunicação rastreável, segurança e operação escolar em tempo real.</div>
+      <div class="md:flex md:space-x-4 space-y-3 md:space-y-0">
+        <a href="/app/" class="btn btn-primary md:w-auto w-full text-center">Acessar painel</a>
+        <a href="/familia/" class="btn btn-black md:w-auto w-full text-center">Portal da família</a>
+      </div>
+    </div>
+    <div class="imge-box absolute xl:right-[-260px] hidden xl:block bottom-0">
+      <img src="{% static 'institutional/portalk12/images/banner/man1.png' %}" alt="" />
+    </div>
+  </div>
+</section>
+
+<div class="section-padding">
+  <div class="container">
+    <div class="text-center"><div class="mini-title">Módulos principais</div><div class="column-title">Soluções para segurança e <span class="shape-bg">vida escolar</span></div></div>
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+      {% for m in modules %}
+      <a class="bg-white shadow-box2 rounded-[8px] transition duration-100 hover:shadow-sm" href="/modulos/">
+        <div class="course-thumb h-[248px] rounded-t-[8px] relative">
+          <img src="{% static m.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]" />
+          <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white absolute left-6 top-6">{{ m.tag }}</span>
+        </div>
+        <div class="course-content p-8"><h4 class="text-xl mb-3 font-bold">{{ m.title }}</h4></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="section-padding bg-[url('../images/all-img/section-bg-5.png')] bg-cover bg-no-repeat bg-center">
+  <div class="container">
+    <div class="lg:flex justify-between items-center"><div class="mb-3"><div class="mini-title">Blog</div><div class="column-title">Últimas <span class="shape-bg">novidades</span></div></div><div class="mb-3"><a href="/blog/" class="btn btn-primary">Ver blog</a></div></div>
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-7">
+      {% for post in blog_posts %}
+      <div class="bg-white shadow-box5 rounded-[8px] transition duration-100 hover:shadow-box3">
+        <div class="course-thumb h-[260px] rounded-t-[8px] relative"><img src="{% static post.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]" /></div>
+        <div class="course-content p-8"><h4 class="text-xl mb-5 font-bold"><a href="/blog/{{ post.slug }}/" class="hover:text-primary transition duration-150">{{ post.title }}</a></h4></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

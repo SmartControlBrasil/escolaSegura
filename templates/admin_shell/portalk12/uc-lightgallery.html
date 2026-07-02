@@ -1,0 +1,130 @@
+{% extends "admin_shell/portalk12/base.html" %}
+{% load static %}
+{% block title %}PortalK12 | {{ page_heading|default:"Light Gallery" }}{% endblock %}
+{% block dashboard_bar %}{{ page_heading|default:"Light Gallery" }}{% endblock %}
+{% block extra_css %}
+	<link href="{% static 'admin_shell/portalk12/vendor/lightgallery/css/lightgallery.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'admin_shell/portalk12/vendor/lightgallery/js/lightgallery-all.min.js' %}"></script>
+{% endblock %}
+{% block main_wrapper_class %}{% endblock %}
+{% block wallet_sidebar %}{% endblock %}
+{% block dashboard_js %}{% endblock %}
+{% block footer %}
+<div class="footer out-footer style-2">
+			<div class="copyright">
+				<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+			</div>
+		</div>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+				
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Light Gallery</h4>
+							</div>
+							<div class="card-body pb-1">
+								<div id="lightgallery" class="row">
+									<a href="{% static 'admin_shell/portalk12/images/big/img1.jpg' %}" data-exthumbimage="images/big/img1.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img1.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img1.jpg' %}" alt="" style="width:100%;">
+									</a>
+									<a href="{% static 'admin_shell/portalk12/images/big/img2.jpg' %}" data-exthumbimage="images/big/img2.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img2.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img2.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img3.jpg' %}" data-exthumbimage="images/big/img3.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img3.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img3.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img4.jpg' %}" data-exthumbimage="images/big/img4.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img4.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img4.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img5.jpg' %}" data-exthumbimage="images/big/img5.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img5.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img5.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img6.jpg' %}" data-exthumbimage="images/big/img6.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img6.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img6.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img7.jpg' %}" data-exthumbimage="images/big/img7.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img7.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img7.jpg' %}" alt="" style="width:100%;">                                                           
+									</a>                                                                                                                     
+									<a href="{% static 'admin_shell/portalk12/images/big/img8.jpg' %}" data-exthumbimage="images/big/img8.jpg" data-src="{% static 'admin_shell/portalk12/images/big/img8.jpg' %}" class="col-lg-3 col-6 mb-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/img8.jpg' %}" alt="" style="width:100%;">
+									</a>
+								</div>
+							</div>
+                        </div>
+                        <!-- /# card -->
+                    </div>
+				<div class="col-xl-4">
+					<div class="card ">
+						<div class="card-body p-3">
+								<div id="lightgallery-1" class="row g-2">
+									<a href="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}" data-exthumbimage="images/big/pic1.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}" class="col-lg-4  col-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}"  alt="" style="width:100%;">
+									</a>
+									<a href="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}" data-exthumbimage="images/big/pic2.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}" class="col-lg-4  col-4">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}"  alt="" style="width:100%;">
+									</a>
+									<a href="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}" data-exthumbimage="images/big/pic3.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}" data-exthumbimage="images/big/pic4.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}" data-exthumbimage="images/big/pic5.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}" data-exthumbimage="images/big/pic6.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}" data-exthumbimage="images/big/pic7.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic8.jpg' %}" data-exthumbimage="images/big/pic8.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic8.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic8.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                        
+									<a href="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}" data-exthumbimage="images/big/pic1.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}" class="col-lg-4  col-4 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic1.jpg' %}"  alt="" style="width:100%;">                                                             
+									</a>                                                                                                                          
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="col-xl-8">
+					<div class="card h-auto">
+						<div class="card-body p-3">
+								<div id="lightgallery-2" class="row g-2">
+									<a href="{% static 'admin_shell/portalk12/images/big/pic9.jpg' %}" data-exthumbimage="images/big/pic9.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic9.jpg' %}" class="col-lg-12  col-12">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic9.jpg' %}"  alt="" style="width:100%;">
+									</a>
+									<a href="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}" data-exthumbimage="images/big/pic2.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}" class="col-lg-2  col-2">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic2.jpg' %}"  alt="" style="width:100%;">
+									</a>
+									<a href="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}" data-exthumbimage="images/big/pic3.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}" class="col-lg-2  col-2 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic3.jpg' %}"  alt="" style="width:100%;">                                                               
+									</a>                                                                                                                          
+									<a href="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}" data-exthumbimage="images/big/pic4.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}" class="col-lg-2  col-2 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic4.jpg' %}"  alt="" style="width:100%;">                                                               
+									</a>                                                                                                                          
+									<a href="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}" data-exthumbimage="images/big/pic5.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}" class="col-lg-2  col-2 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic5.jpg' %}"  alt="" style="width:100%;">                                                               
+									</a>                                                                                                                          
+									<a href="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}" data-exthumbimage="images/big/pic6.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}" class="col-lg-2  col-2 ">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic6.jpg' %}"  alt="" style="width:100%;">                                                               
+									</a>                                                                                                                          
+									<a href="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}" data-exthumbimage="images/big/pic7.jpg" data-src="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}" class="col-lg-2  col-2">
+										<img src="{% static 'admin_shell/portalk12/images/big/pic7.jpg' %}"  alt="" style="width:100%;">                                                               
+									</a>                                                                                                                          
+									                                 
+									
+								</div>
+							</div>
+					</div>
+				</div>
+                </div>
+				 
+            </div>
+{% endblock %}

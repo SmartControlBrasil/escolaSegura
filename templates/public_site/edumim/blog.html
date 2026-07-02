@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog Standard | PortalK12</title>
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+  {% include 'public_site/edumim/includes/edumim_header.html' %}
+  {% include 'public_site/edumim/includes/page_banner.html' %}
+
+  <div class="nav-tab-wrapper tabs section-padding">
+    <div class="container">
+      <div class="grid grid-cols-12 gap-[30px]">
+        <div class="lg:col-span-8 col-span-12">
+          <div class="grid grid-cols-1 gap-[30px]">
+            {% for post in posts %}
+            <div class="bg-white shadow-box12 rounded-[8px] transition duration-100 hover:shadow-box13">
+              <div class="course-thumb h-[420px] rounded-t-[8px] relative">
+                <img src="{% static post.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+              </div>
+              <div class="course-content p-8">
+                <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white inline-block">{{ post.tag }}</span>
+                <h3 class="mb-4 mt-4">
+                  <a href="/single-blog/{{ post.slug }}/" class="hover:text-primary transition duration-150">{{ post.title }}</a>
+                </h3>
+                <p>{{ post.excerpt }}</p>
+                <div class="flex lg:space-x-10 space-x-5 mt-6">
+                  <a class="flex items-center space-x-2" href="/single-blog/{{ post.slug }}/">
+                    <img src="{% static 'public_site/edumim/images/svg/calender.svg' %}" alt="">
+                    <span>{{ post.date }}</span>
+                  </a>
+                  <a class="flex items-center space-x-2" href="/single-blog/{{ post.slug }}/">
+                    <img src="{% static 'public_site/edumim/images/icon/clock.svg' %}" alt="">
+                    <span>{{ post.read_time }}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="pagination mt-14">
+            <ul class="flex justify-center space-x-3">
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold"><iconify-icon icon="heroicons:chevron-double-left-20-solid" class="text-2xl"></iconify-icon></a></li>
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-primary text-white rounded font-semibold">1</a></li>
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">2</a></li>
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">3</a></li>
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold">4</a></li>
+              <li class="inline-flex"><a href="#" class="flex w-12 h-12 flex-col items-center justify-center bg-[#ECECEC] rounded font-semibold"><iconify-icon icon="heroicons:chevron-double-right-20-solid" class="text-2xl"></iconify-icon></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="lg:col-span-4 col-span-12">
+          {% include 'public_site/edumim/includes/blog_sidebar.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'public_site/edumim/includes/edumim_footer.html' %}
+</body>
+</html>

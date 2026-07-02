@@ -1,0 +1,12 @@
+  <div class="breadcrumbs section-padding bg-[url('../images/all-img/bred.png')] bg-cover bg-center bg-no-repeat">
+    <div class="container text-center">
+      <h2>{{ page_banner_title|default:"About Us" }}</h2>
+      <nav>
+        <ol class="flex items-center justify-center space-x-3">
+          <li class="breadcrumb-item"><a href="/about/">Pages</a></li>
+          <li class="breadcrumb-item">-</li>
+          <li class="text-primary">{% if page_banner_crumb %}{{ page_banner_crumb }}{% else %}{{ page_banner_title|default:"About Us" }} {{ page_banner_num }}{% endif %}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+{% extends 'public_site/portalk12/base.html' %}
+{% block title %}Soluções | PortalK12{% endblock %}
+{% block content %}
+<div class="section-padding"><div class="container"><div class="text-center"><div class="mini-title">Soluções</div><div class="column-title">Plataforma completa para <span class="shape-bg">segurança escolar</span></div></div>
+<div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+{% for s in solutions %}
+  <a href="{{ s.href }}" class="bg-white shadow-box rounded-[8px] p-10 group hover:bg-primary transition duration-150 hover:-translate-y-1"><h4 class="lg:text-2xl text-[22px] leading-[30px] mb-4 transition duration-150 group-hover:text-white">{{ s.title }}</h4><div class="transition duration-150 group-hover:text-white">{{ s.summary }}</div></a>
+{% endfor %}
+</div></div></div>
+{% endblock %}
