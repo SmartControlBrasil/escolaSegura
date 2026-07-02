@@ -227,3 +227,33 @@ class ParentPortalTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Boletim')
         self.assertContains(response, '8,50')
+
+    def test_manifest_returns_status_200(self):
+        response = self.client.get('/familia/manifest.json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_manifest_has_escola_segura_familia_name(self):
+        response = self.client.get('/familia/manifest.json')
+        self.assertEqual(response.json()['name'], 'EscolaSegura Família')
+
+    def test_manifest_has_family_start_url(self):
+        response = self.client.get('/familia/manifest.json')
+        self.assertEqual(response.json()['start_url'], '/familia/')
+
+    def test_service_worker_returns_status_200(self):
+        response = self.client.get('/familia/service-worker.js')
+        self.assertEqual(response.status_code, 200)
+
+    def test_service_worker_documents_authenticated_pages_are_not_cached(self):
+        response = self.client.get('/familia/service-worker.js')
+        content = response.content.decode('utf-8')
+        self.assertIn('páginas autenticadas não são cacheadas', content)
+        self.assertIn('Dados de alunos, responsáveis, boletins, mensagens e autorizações não são armazenados offline', content)
+
+    def test_dashboard_base_contains_manifest_link_when_logged_in(self):
+        self.client.login(username='familia', password='testpassword')
+        response = self.client.get('/familia/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'rel="manifest"')
+        self.assertContains(response, '/familia/manifest.json')
+

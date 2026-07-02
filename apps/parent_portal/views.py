@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Q, Prefetch
 from django.shortcuts import render
+from django.templatetags.static import static
 
 from apps.assessments.models import ReportCard
 from apps.attendance.models import AttendanceRecord
@@ -163,3 +165,101 @@ def report_card(request, student_id):
         'enrollment': enrollment,
         'report_cards': report_cards,
     })
+
+PWA_THEME_COLOR = '#0f766e'
+PWA_BACKGROUND_COLOR = '#f5f7fb'
+
+
+def manifest_json(request):
+    return JsonResponse({
+        'name': 'EscolaSegura Família',
+        'short_name': 'EscolaSegura',
+        'start_url': '/familia/',
+        'scope': '/familia/',
+        'display': 'standalone',
+        'background_color': PWA_BACKGROUND_COLOR,
+        'theme_color': PWA_THEME_COLOR,
+        'description': 'Portal mobile EscolaSegura para responsáveis acompanharem alunos, comunicados, autorizações, frequência e boletins.',
+        'orientation': 'portrait-primary',
+        'icons': [
+            {
+                'src': static('backoffice/assets/images/favicon-32x32.png'),
+                'sizes': '32x32',
+                'type': 'image/png',
+                'purpose': 'any maskable',
+            },
+            {
+                'src': static('backoffice/assets/images/logo-icon.png'),
+                'sizes': '192x192',
+                'type': 'image/png',
+                'purpose': 'any maskable',
+            },
+            {
+                'src': static('backoffice/assets/images/brand-logo-2.png'),
+                'sizes': '512x512',
+                'type': 'image/png',
+                'purpose': 'any',
+            },
+        ],
+    }, content_type='application/manifest+json')
+
+
+def service_worker_js(request):
+    asset_urls = [
+        static('parent_portal/css/parent_portal.css'),
+        static('backoffice/assets/images/favicon-32x32.png'),
+        static('backoffice/assets/images/logo-icon.png'),
+        static('backoffice/assets/images/brand-logo-2.png'),
+    ]
+    asset_list = ',\n  '.join(repr(url) for url in asset_urls)
+    body = f"""const CACHE_NAME = 'escolasegura-familia-assets-v1';
+const ASSET_URLS = [
+  {asset_list}
+];
+
+self.addEventListener('install', (event) => {{
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSET_URLS))
+  );
+  self.skipWaiting();
+}});
+
+self.addEventListener('activate', (event) => {{
+  event.waitUntil(
+    caches.keys().then((keys) => Promise.all(
+      keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+    ))
+  );
+  self.clients.claim();
+}});
+
+self.addEventListener('fetch', (event) => {{
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Segurança: páginas autenticadas não são cacheadas neste service worker.
+  // Dados de alunos, responsáveis, boletins, mensagens e autorizações não são armazenados offline neste MVP.
+  // O cache é apenas para assets públicos e estáticos listados em ASSET_URLS.
+  if (request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html')) {{
+    return;
+  }}
+
+  if (url.origin !== self.location.origin || !ASSET_URLS.includes(url.pathname)) {{
+    return;
+  }}
+
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {{
+      return cachedResponse || fetch(request).then((networkResponse) => {{
+        const copy = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        return networkResponse;
+      }});
+    }})
+  );
+}});
+"""
+    response = HttpResponse(body, content_type='application/javascript')
+    response['Service-Worker-Allowed'] = '/familia/'
+    return response
+

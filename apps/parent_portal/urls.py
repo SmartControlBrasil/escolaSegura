@@ -5,6 +5,8 @@ from . import views
 app_name = 'parent_portal'
 
 urlpatterns = [
+    path('manifest.json', views.manifest_json, name='manifest'),
+    path('service-worker.js', views.service_worker_js, name='service_worker'),
     path('', views.dashboard, name='dashboard'),
     path('alunos/<int:student_id>/', views.student_detail, name='student_detail'),
     path('alunos/<int:student_id>/frequencia/', views.attendance, name='attendance'),
