@@ -1,33 +1,528 @@
-{% extends 'public_site/base_public.html' %}
-{% block title %}Início{% endblock %}
-{% block body %}
-<main id="inicio" class="section hero">
-  <div>
-    <span class="eyebrow">SaaS escolar multi-escola</span>
-    <h1>EscolaSegura</h1>
-    <p class="lead">Gestão escolar, comunicação com famílias e segurança de dados em uma plataforma SaaS da Smart Control Brasil.</p>
-    <div class="actions">
-      <a class="btn primary" href="/app/">Acessar Sistema</a>
-      <a class="btn secondary" href="/familia/">Portal da família</a>
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EscolaSegura | Gestão escolar online</title>
+  <meta name="description" content="O EscolaSegura conecta direção, secretaria, professores, responsáveis e alunos em uma plataforma SaaS com comunicação rastreável, frequência, boletim e segurança de dados.">
+  <link rel="stylesheet" href="{% static 'public_site/edumim/css/app.css' %}">
+</head>
+<body class="font-gilroy font-medium text-gray text-lg leading-[27px]">
+
+  <header class="site-header home-one-header top-0 w-full z-[999] rt-sticky" id="rt-sticky-header">
+    <div class="main-header py-6">
+      <div class="container">
+        <div class="flex items-center justify-between">
+          <a href="/" class="brand-logo flex-none lg:mr-10 md:w-auto max-w-[220px] text-2xl font-bold text-[#0C1327]">
+            EscolaSegura
+          </a>
+          <div class="flex items-center flex-1">
+            <div class="flex-1 main-menu relative mr-[74px]">
+              <ul class="menu-active-classNamees">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#escolas">Para Escolas</a></li>
+                <li><a href="#familias">Para Famílias</a></li>
+                <li><a href="#seguranca">Segurança/LGPD</a></li>
+                <li><a href="/contato/">Contato</a></li>
+              </ul>
+            </div>
+            <div class="flex-none flex space-x-[18px]">
+              <div class="hidden lg:block">
+                <a href="/app/" class="btn btn-primary py-[15px] px-8">Acessar</a>
+              </div>
+              <div class="block lg:hidden">
+                <button type="button" id="rt-mobile-menu-open" class="text-3xl md:w-[56px] h-10 w-10 md:h-[56px] rounded bg-[#F8F8F8] flex flex-col items-center justify-center menu-click">
+                  <iconify-icon icon="cil:hamburger-menu" rotate="180deg"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="openmobile-menu fixed top-0 h-screen pt-10 pb-6 bg-white shadow-box2 w-[320px] overflow-y-auto flex flex-col z-[999]" id="rt-mobile-menu">
+    <div class="flex justify-between px-6 flex-none">
+      <a href="/" class="brand-logo flex-none mr-10 text-xl font-bold text-[#0C1327]">EscolaSegura</a>
+      <span class="text-3xl text-black cursor-pointer" id="rt-mobile-menu-close">
+        <iconify-icon icon="fe:close"></iconify-icon>
+      </span>
+    </div>
+    <div class="mobile-menu mt-6 flex-1">
+      <ul class="menu-active-classNamees">
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#recursos">Recursos</a></li>
+        <li><a href="#escolas">Para Escolas</a></li>
+        <li><a href="#familias">Para Famílias</a></li>
+        <li><a href="#seguranca">Segurança/LGPD</a></li>
+        <li><a href="/contato/">Contato</a></li>
+        <li><a href="/app/">Acessar</a></li>
+      </ul>
     </div>
   </div>
-  <div class="hero-panel">
-    <strong>Plataforma em evolução</strong>
-    <p>Admin Master, backoffice e portal da família prontos para crescer com planos e módulos por escola.</p>
-    <div class="metric">
-      <div class="metric-card"><strong>LGPD</strong><span>dados por tenant</span></div>
-      <div class="metric-card"><strong>SaaS</strong><span>multi-escola</span></div>
+  <div class="rt-mobile-menu-overlay" id="rt-mobile-menu-overlay"></div>
+
+  <section id="inicio" class="xl:min-h-screen bg-[url('../images/banner/1.png')] bg-cover bg-no-repeat bg-center overflow-hidden">
+    <div class="container relative">
+      <div class="max-w-[570px] xl:pt-[297px] md:pt-20 md:pb-20 pt-28 pb-14 xl:pb-40 space-y-8">
+        <h1>
+          Gestão escolar
+          <span class="text-secondary inline-block bg-[url('../images/banner/shape.svg')] bg-no-repeat bg-bottom">online</span>
+          para escolas, famílias e alunos
+        </h1>
+        <div class="plain-text text-gray leading-[30px]">
+          O EscolaSegura conecta direção, secretaria, professores, responsáveis e alunos em uma plataforma SaaS com comunicação rastreável, frequência, boletim e segurança de dados.
+        </div>
+        <div class="md:flex md:space-x-4 space-y-3 md:space-y-0">
+          <a href="/app/" class="btn btn-primary md:w-auto w-full text-center">Acessar painel</a>
+          <a href="/familia/" class="btn btn-black md:w-auto w-full text-center">Portal da família</a>
+        </div>
+      </div>
+      <div class="imge-box absolute xl:right-[-260px] hidden xl:block bottom-0">
+        <img src="{% static 'public_site/edumim/images/banner/man1.png' %}" alt="Profissional escolar utilizando o EscolaSegura">
+      </div>
+    </div>
+  </section>
+
+  <div class="about-area section-padding">
+    <div class="container">
+      <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
+        <div>
+          <img src="{% static 'public_site/edumim/images/all-img/about1.png' %}" alt="Equipe escolar acompanhando dados" class="mx-auto">
+        </div>
+        <div>
+          <div class="mini-title">Sobre o EscolaSegura</div>
+          <h4 class="column-title">
+            O Lugar Onde a Gestão Escolar
+            <span class="shape-bg">Se Simplifica</span>
+          </h4>
+          <div>
+            O EscolaSegura reúne direção, secretaria, professores, responsáveis e alunos em um só ambiente digital, com dados organizados por escola.
+          </div>
+          <ul class="list-item space-y-6 pt-8">
+            <li class="flex">
+              <div class="flex-none mr-6">
+                <div class="h-[72px] w-[72px] rounded-full">
+                  <img src="{% static 'public_site/edumim/images/svg/light.svg' %}" alt="" class="w-full h-full object-cover rounded-full block">
+                </div>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-xl mb-1">Nossa Missão</h4>
+                <div>Simplificar a rotina escolar com tecnologia acessível para toda a comunidade educacional.</div>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="flex-none mr-6">
+                <div class="h-[72px] w-[72px] rounded-full">
+                  <img src="{% static 'public_site/edumim/images/svg/target.svg' %}" alt="" class="w-full h-full object-cover rounded-full block">
+                </div>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-xl mb-1">Nossa Visão</h4>
+                <div>Ser a plataforma de referência em gestão escolar segura e conectada no Brasil.</div>
+              </div>
+            </li>
+          </ul>
+          <div class="pt-8">
+            <a href="/sobre/" class="btn btn-primary">Conhecer Mais</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</main>
-<section class="section">
-  <span class="eyebrow">Recursos</span>
-  <h2>Módulos do EscolaSegura</h2>
-  <div class="grid">
-    <article class="card"><h3>Gestão SaaS</h3><p>Escolas, planos, assinaturas e features por tenant.</p></article>
-    <article class="card"><h3>Acadêmico</h3><p>Alunos, turmas, frequência, comunicação e avaliações.</p></article>
-    <article class="card"><h3>Portal da família</h3><p>Comunicados, mensagens, autorizações e boletim.</p></article>
-    <article class="card"><h3>Segurança</h3><p>Baseline LGPD, consentimentos e auditoria evolutiva.</p></article>
+
+  <div class="brands-area section-padding-bottom">
+    <div class="container">
+      <div class="text-center text-black text-2xl font-medium mb-[50px]">
+        <span class="shape-bg mini">Pronto</span> Para Escolas De Todos Os Tamanhos E Redes De Ensino
+      </div>
+      <ul class="flex flex-wrap items-center lg:justify-between justify-center">
+        <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+          <img src="{% static 'public_site/edumim/images/all-img/brands/1.svg' %}" alt="">
+        </li>
+        <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+          <img src="{% static 'public_site/edumim/images/all-img/brands/2.svg' %}" alt="">
+        </li>
+        <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+          <img src="{% static 'public_site/edumim/images/all-img/brands/3.svg' %}" alt="">
+        </li>
+        <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+          <img src="{% static 'public_site/edumim/images/all-img/brands/4.svg' %}" alt="">
+        </li>
+        <li class="mb-6 last:mb-0 mr-6 last:mr-0 transition duration-150 grayscale-[80] hover:grayscale-0">
+          <img src="{% static 'public_site/edumim/images/all-img/brands/5.svg' %}" alt="">
+        </li>
+      </ul>
+    </div>
   </div>
-</section>
-{% endblock %}
+
+  <div id="recursos" class="feature-area bg-[url('../images/all-img/section-bg-1.png')] bg-cover bg-no-repeat bg-center section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Recursos Essenciais</div>
+        <div class="column-title">Por Que Escolher O <span class="shape-bg">EscolaSegura</span></div>
+      </div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        <div class="bg-white shadow-box rounded-[8px] p-10 group hover:bg-primary transition duration-150 hover:-translate-y-1">
+          <div class="h-[72px] w-[72px] rounded-full flex flex-col items-center justify-center text-secondary bg-green-paste mb-8 text-5xl group-hover:bg-black group-hover:bg-opacity-[0.1] group-hover:text-white transition duration-150">
+            <iconify-icon icon="codicon:globe"></iconify-icon>
+          </div>
+          <h4 class="lg:text-2xl text-[22px] leading-[30px] mb-4 transition duration-150 group-hover:text-white">Acesso De Qualquer Lugar</h4>
+          <div class="transition duration-150 group-hover:text-white">Direção, secretaria, professores e famílias acessam a plataforma de qualquer dispositivo, a qualquer hora.</div>
+        </div>
+        <div class="bg-white shadow-box rounded-[8px] p-10 group hover:bg-primary transition duration-150 hover:-translate-y-1">
+          <div class="h-[72px] w-[72px] rounded-full flex flex-col items-center justify-center text-secondary bg-green-paste mb-8 text-5xl group-hover:bg-black group-hover:bg-opacity-[0.1] group-hover:text-white transition duration-150">
+            <iconify-icon icon="healthicons:i-training-class-outline"></iconify-icon>
+          </div>
+          <h4 class="lg:text-2xl text-[22px] leading-[30px] mb-4 transition duration-150 group-hover:text-white">Toda A Equipe Envolvida</h4>
+          <div class="transition duration-150 group-hover:text-white">Professores e coordenação acompanham turmas, frequência e avaliações em um só lugar.</div>
+        </div>
+        <div class="bg-white shadow-box rounded-[8px] p-10 group hover:bg-primary transition duration-150 hover:-translate-y-1">
+          <div class="h-[72px] w-[72px] rounded-full flex flex-col items-center justify-center text-secondary bg-green-paste mb-8 text-5xl group-hover:bg-black group-hover:bg-opacity-[0.1] group-hover:text-white transition duration-150">
+            <iconify-icon icon="fluent:handshake-32-regular"></iconify-icon>
+          </div>
+          <h4 class="lg:text-2xl text-[22px] leading-[30px] mb-4 transition duration-150 group-hover:text-white">Suporte Dedicado</h4>
+          <div class="transition duration-150 group-hover:text-white">Time de suporte próximo para ajudar sua escola em cada etapa da implantação.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Módulos Da Plataforma</div>
+        <div class="column-title">Conheça Os Principais <span class="shape-bg">Módulos</span></div>
+      </div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        {% for m in modules %}
+        <a href="#recursos" class="bg-white shadow-box2 rounded-[8px] transition duration-100 hover:shadow-sm">
+          <div class="course-thumb h-[248px] rounded-t-[8px] relative">
+            <img src="{% static m.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+            <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white absolute left-6 top-6">{{ m.tag }}</span>
+          </div>
+          <div class="course-content p-8">
+            <div class="text-secondary font-bold text-2xl mb-3">Incluso No Plano</div>
+            <h4 class="text-xl mb-3 font-bold">{{ m.title }}</h4>
+            <div class="flex justify-between space-x-3">
+              <span class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/svg/file.svg' %}" alt="">
+                <span>Relatórios</span>
+              </span>
+              <span class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/svg/clock.svg' %}" alt="">
+                <span>Tempo Real</span>
+              </span>
+              <span class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/svg/star.svg' %}" alt="">
+                <span>4.9</span>
+              </span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div id="escolas" class="bg-[url('../images/all-img/section-bg-2.png')] bg-cover bg-no-repeat bg-center section-padding">
+    <div class="container">
+      <div class="lg:grid grid-cols-12 gap-[30px]">
+        <div class="xl:col-span-5 lg:col-span-6 col-span-12">
+          <div class="mini-title">Uma Plataforma Completa</div>
+          <h4 class="column-title">
+            Um Só Painel Para Toda A
+            <span class="shape-bg">Escola</span>
+          </h4>
+          <div>
+            Direção, secretaria, professores e responsáveis acessam informações organizadas por escola, com permissões sob medida para cada papel.
+          </div>
+          <ul class="space-y-2 pt-8">
+            <li class="flex flex-wrap">
+              <div class="flex-none mr-3">
+                <img src="{% static 'public_site/edumim/images/svg/ok.svg' %}" alt="">
+              </div>
+              <div class="flex-1">
+                <h4 class="text-lg mb-1 font-semibold">Comunicação Centralizada E Rastreável</h4>
+              </div>
+            </li>
+            <li class="flex flex-wrap">
+              <div class="flex-none mr-3">
+                <img src="{% static 'public_site/edumim/images/svg/ok.svg' %}" alt="">
+              </div>
+              <div class="flex-1">
+                <h4 class="text-lg mb-1 font-semibold">Frequência E Boletim Sempre Atualizados</h4>
+              </div>
+            </li>
+            <li class="flex flex-wrap">
+              <div class="flex-none mr-3">
+                <img src="{% static 'public_site/edumim/images/svg/ok.svg' %}" alt="">
+              </div>
+              <div class="flex-1">
+                <h4 class="text-lg mb-1 font-semibold">Ambiente Amigável Para Toda A Equipe Escolar</h4>
+              </div>
+            </li>
+          </ul>
+          <div class="pt-8">
+            <a href="#recursos" class="btn btn-primary">Conhecer Os Módulos</a>
+          </div>
+        </div>
+        <div class="xl:col-span-7 lg:col-span-6 col-span-12 lg:pt-0 md:pt-10 pt-6">
+          <img src="{% static 'public_site/edumim/images/all-img/about2.png' %}" alt="" class="mx-auto block w-full">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-[url('../images/all-img/section-bg-3.png')] bg-cover bg-no-repeat bg-center py-20">
+    <div class="container">
+      <div class="lg:flex lg:items-center lg:space-x-[70px]">
+        <div class="flex-none">
+          <div class="flex items-center space-x-8 text-white max-w-[327px] mx-auto lg:mb-0 md:mb-10 mb-5">
+            <div class="flex-none">
+              <img src="{% static 'public_site/edumim/images/svg/big-mail.svg' %}" alt="">
+            </div>
+            <div class="flex-1 lg:text-[33px] lg:leading-[51px] md:text-3xl text-2xl font-bold">
+              Fale Com Nosso Time Comercial
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="md:flex items-center relative md:space-x-6 md:space-y-0 space-y-4">
+            <div class="flex-1 relative">
+              <span class="absolute left-0 top-1/2 -translate-y-1/2">
+                <img src="{% static 'public_site/edumim/images/icon/mail.svg' %}" alt="">
+              </span>
+              <input type="text" placeholder="seunome@escola.com.br" readonly
+                class="border-b border-t-0 border-l-0 border-r-0 border-[#B2E2DF] ring-0 focus:ring-0 bg-transparent text-white placeholder:text-[#B2E2DF] focus:outline-0 focus:border-[#B2E2DF] transition pl-8 text-lg">
+            </div>
+            <div class="flex-none">
+              <a href="/contato/" class="btn bg-white text-secondary md:w-auto w-full text-center inline-block">Ir Para Contato</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Explore Por Área</div>
+        <div class="column-title">Áreas De <span class="shape-bg">Gestão</span> Cobertas</div>
+      </div>
+      <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        {% for t in topics %}
+        <div class="rounded-[8px] transition duration-100 hover:shadow-box hover:bg-white group bg-[#FFE8E8] text-center px-6 py-[65px] hover:-translate-y-2">
+          <div class="w-[72px] h-[72px] rounded-full bg-white relative mx-auto flex flex-col justify-center items-center mb-8 group-hover:bg-[#FFE8E8]">
+            <img src="{% static t.icon %}" alt="" class="w-[32px] h-[32px] object-cover">
+          </div>
+          <div class="course-content">
+            <h4 class="text-2xl mb-2 font-bold">{{ t.title }}</h4>
+            <p>Módulo Disponível</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div id="seguranca" class="section-padding bg-[url('../images/all-img/section-bg-16.png')] bg-cover bg-no-repeat lg:mt-[136px]">
+    <div class="container lg:-mt-[250px] xl:pb-[136px] lg:pb-20 pb-10">
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] bg-white shadow-box14 rounded-md divide-x-2 divide-[#E4EEED] py-20">
+        <div class="text-center">
+          <h2 class="text-secondary font-bold">SaaS</h2>
+          <span class="block text-black font-semibold">Multiescola Desde O Início</span>
+        </div>
+        <div class="text-center">
+          <h2 class="text-secondary font-bold">LGPD</h2>
+          <span class="block text-black font-semibold">Segurança De Dados Por Padrão</span>
+        </div>
+        <div class="text-center">
+          <h2 class="text-secondary font-bold">24/7</h2>
+          <span class="block text-black font-semibold">Portal Da Família Disponível</span>
+        </div>
+        <div class="text-center">
+          <h2 class="text-secondary font-bold">1 Painel</h2>
+          <span class="block text-black font-semibold">Direção, Secretaria E Professores</span>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="grid grid-cols-12 lg:gap-10 gap-6">
+        <div class="xl:col-span-7 lg:col-span-6 col-span-12">
+          <img src="{% static 'public_site/edumim/images/all-img/testi-left.png' %}" alt="" draggable="false">
+        </div>
+        <div class="xl:col-span-5 lg:col-span-6 col-span-12 flex flex-col justify-center">
+          <div class="mini-title">Feito Para A Comunidade Escolar</div>
+          <h4 class="column-title">
+            O Que Você Vai Poder Dizer Sobre O
+            <span class="shape-bg">EscolaSegura</span>
+          </h4>
+          <div>
+            Estamos construindo o EscolaSegura ao lado das primeiras escolas parceiras, com foco em comunicação simples, dados seguros e rotina facilitada para toda a equipe.
+          </div>
+          <div class="mt-12">
+            <a href="/contato/" class="btn btn-primary">Falar Com O Time</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="familias" class="section-padding">
+    <div class="container">
+      <div class="text-center">
+        <div class="mini-title">Perfis De Uso</div>
+        <div class="column-title">Feito Para Toda A <span class="shape-bg">Comunidade Escolar</span></div>
+      </div>
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-10">
+        {% for p in personas %}
+        <div class="bg-white shadow-box3 rounded-[8px] transition-all duration-100 pt-10 pb-[28px] px-6 text-center hover:shadow-box4 border-t-4 border-transparent hover:border-secondary">
+          <div class="w-[170px] h-[170px] rounded-full relative mx-auto mb-8">
+            <img src="{% static p.image %}" alt="" class="w-full h-full object-cover rounded-full">
+          </div>
+          <div class="course-content">
+            <h4 class="lg:text-2xl text-1xl mb-1 font-bold">{{ p.title }}</h4>
+            <div>{{ p.subtitle }}</div>
+            <div class="pt-6">
+              <a href="{{ p.href }}" class="text-secondary font-semibold hover:underline transition duration-150">Saiba Mais</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="section-padding bg-[url('../images/all-img/section-bg-5.png')] bg-cover bg-no-repeat bg-center">
+    <div class="container">
+      <div class="lg:flex justify-between items-center">
+        <div class="mb-3">
+          <div class="mini-title">Conteúdo</div>
+          <div class="column-title">Últimas <span class="shape-bg">Novidades</span></div>
+        </div>
+        <div class="mb-3">
+          <a href="/blog/" class="btn btn-primary">Ver Todas As Novidades</a>
+        </div>
+      </div>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px] pt-7">
+        {% for post in blog_posts %}
+        <div class="bg-white shadow-box5 rounded-[8px] transition duration-100 hover:shadow-box3">
+          <div class="course-thumb h-[260px] rounded-t-[8px] relative">
+            <img src="{% static post.image %}" alt="" class="w-full h-full object-cover rounded-t-[8px]">
+            <span class="bg-secondary py-1 px-3 text-lg font-semibold rounded text-white absolute left-6 top-6">Educação</span>
+          </div>
+          <div class="course-content p-8">
+            <div class="flex lg:space-x-10 space-x-5 mb-5">
+              <a href="/blog/" class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/svg/admin.svg' %}" alt="">
+                <span>Equipe EscolaSegura</span>
+              </a>
+              <a href="/blog/" class="flex items-center space-x-2">
+                <img src="{% static 'public_site/edumim/images/svg/calender.svg' %}" alt="">
+                <span>Em Breve</span>
+              </a>
+            </div>
+            <h4 class="text-xl mb-5 font-bold">
+              <a href="/blog/" class="hover:text-primary transition duration-150">{{ post.title }}</a>
+            </h4>
+            <a href="/blog/" class="text-black font-semibold hover:underline transition duration-150">Ler Mais</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-black bg-[url('../images/all-img/footer-bg-1.png')] bg-cover bg-center bg-no-repeat">
+    <div class="section-padding container">
+      <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+        <div class="single-footer">
+          <div class="lg:max-w-[270px]">
+            <a href="/" class="mb-10 block text-2xl font-bold text-white">EscolaSegura</a>
+            <p>Plataforma SaaS de gestão escolar da Smart Control Brasil. Direção, secretaria, professores, responsáveis e alunos em um só lugar.</p>
+            <ul class="flex space-x-4 pt-8">
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:facebook"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:twitter"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:linkedin"></iconify-icon></a></li>
+              <li><a href="#" class="flex h-12 w-12 flex-col items-center justify-center rounded bg-white bg-opacity-[0.08] text-2xl text-white transition hover:bg-primary hover:text-white"><iconify-icon icon="bxl:instagram"></iconify-icon></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="single-footer">
+          <div class="flex space-x-[80px]">
+            <div class="flex-1 lg:flex-none">
+              <h4 class="mb-8 text-2xl font-bold text-white">Links</h4>
+              <ul class="list-item space-y-5">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="/sobre/">Sobre</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="/contato/">Contato</a></li>
+              </ul>
+            </div>
+            <div class="flex-1 lg:flex-none">
+              <h4 class="mb-8 text-2xl font-bold text-white">Legal</h4>
+              <ul class="list-item space-y-5">
+                <li><a href="/termos/">Termos de Uso</a></li>
+                <li><a href="/privacidade/">Política de Privacidade</a></li>
+                <li><a href="#seguranca">Segurança/LGPD</a></li>
+                <li><a href="/app/">Acessar Sistema</a></li>
+                <li><a href="/familia/">Portal da Família</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="single-footer">
+          <h4 class="mb-8 text-2xl font-bold text-white">Fale Conosco</h4>
+          <div class="mb-8">Sua escola pode ser uma das primeiras parceiras do EscolaSegura.</div>
+          <div class="mb-4 flex items-center rounded-md bg-white py-[10px] pr-[10px] pl-6 shadow-e1">
+            <div class="flex-none">
+              <img src="{% static 'public_site/edumim/images/icon/mail.svg' %}" alt="">
+            </div>
+            <div class="flex-1">
+              <input type="text" placeholder="seunome@escola.com.br" readonly class="border-none focus:ring-0">
+            </div>
+          </div>
+          <a href="/contato/" class="btn btn-primary block w-full text-center">Falar Com O Time</a>
+        </div>
+      </div>
+    </div>
+    <div class="container border-t border-white border-opacity-[0.1] py-8 text-center text-base">
+      &copy; Copyright {% now "Y" %} | EscolaSegura — Smart Control Brasil | Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    (function () {
+      var headerEl = document.getElementById('rt-sticky-header');
+      window.addEventListener('scroll', function () {
+        var scrolled = window.scrollY > 100;
+        headerEl.classList.toggle('rt-sticky-active', scrolled);
+      });
+
+      var mobileMenu = document.getElementById('rt-mobile-menu');
+      var overlay = document.getElementById('rt-mobile-menu-overlay');
+      function openMenu() {
+        mobileMenu.classList.add('active-mobile-menu');
+        overlay.classList.add('active');
+      }
+      function closeMenu() {
+        mobileMenu.classList.remove('active-mobile-menu');
+        overlay.classList.remove('active');
+      }
+      document.getElementById('rt-mobile-menu-open').addEventListener('click', openMenu);
+      document.getElementById('rt-mobile-menu-close').addEventListener('click', closeMenu);
+      overlay.addEventListener('click', closeMenu);
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+    })();
+  </script>
+</body>
+</html>

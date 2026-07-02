@@ -20,10 +20,17 @@ class PublicSiteTests(TestCase):
         response = self.client.get('/')
         self.assertContains(response, 'href="/familia/"')
 
-    def test_home_page_uses_minimal_landing_structure(self):
+    def test_home_page_uses_edumim_landing_structure(self):
         response = self.client.get('/')
-        self.assertContains(response, 'EscolaSegura')
-        self.assertContains(response, 'class="section hero"')
+        self.assertContains(response, 'home-one-header')
+        self.assertContains(response, 'mini-title')
+        self.assertContains(response, 'shape-bg')
+        self.assertContains(response, 'section-padding')
+        self.assertContains(response, 'btn-primary')
+
+    def test_home_page_loads_edumim_stylesheet(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'public_site/edumim/css/app.css')
 
     def test_home_page_does_not_contain_old_branding(self):
         response = self.client.get('/')
