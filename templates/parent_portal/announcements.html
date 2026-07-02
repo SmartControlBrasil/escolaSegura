@@ -1,0 +1,9 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card"><h2>Comunicados</h2><p class="muted">{{ student.full_name }}</p></section>
+<div class="list" style="margin-top:12px;">
+  {% for announcement in announcements %}
+  <article class="card"><span class="badge">{{ announcement.get_priority_display }}</span><h3 style="margin-top:10px;">{{ announcement.title }}</h3><p>{{ announcement.body }}</p><p class="muted">{{ announcement.published_at|date:'d/m/Y H:i' }}</p></article>
+  {% empty %}<div class="card empty">Nenhum comunicado publicado.</div>{% endfor %}
+</div>
+{% endblock %}

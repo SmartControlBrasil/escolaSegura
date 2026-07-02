@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.attendance',
     'apps.communication',
     'apps.assessments',
+    'apps.parent_portal',
     'apps.agents',
     'apps.escola_segura_assistant',
     'apps.policy_guard',

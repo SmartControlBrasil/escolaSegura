@@ -28,6 +28,7 @@ urlpatterns = [
     path('assistant/', include('apps.escola_segura_assistant.urls')),
     path('', include('apps.public_site.urls')),
     path('app/', include('apps.backoffice.urls')),
+    path('familia/', include('apps.parent_portal.urls')),
 ]
 
 if settings.DEBUG:

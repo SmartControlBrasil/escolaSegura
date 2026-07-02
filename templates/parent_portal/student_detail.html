@@ -1,0 +1,27 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card">
+  <span class="badge">{{ student.get_status_display }}</span>
+  <h2 style="margin-top:10px;">{{ student.full_name }}</h2>
+  <p class="muted">{{ student.school.name }}</p>
+  <p>{% if enrollment %}Turma {{ enrollment.class_group.name }} · {{ enrollment.academic_year.name }}{% else %}Sem matrícula ativa{% endif %}</p>
+</section>
+<div class="grid cols" style="margin-top:12px;">
+  <section class="card">
+    <h3>Últimas frequências</h3>
+    {% for record in attendance_records %}<div class="row"><div>{{ record.session.session_date|date:'d/m/Y' }}<br><span class="muted">{{ record.session.class_group.name }}</span></div><strong>{{ record.get_status_display }}</strong></div>{% empty %}<p class="empty">Sem registros.</p>{% endfor %}
+  </section>
+  <section class="card">
+    <h3>Comunicados</h3>
+    {% for announcement in announcements %}<div class="row"><div>{{ announcement.title }}<br><span class="muted">{{ announcement.published_at|date:'d/m/Y H:i' }}</span></div><span class="badge">{{ announcement.get_priority_display }}</span></div>{% empty %}<p class="empty">Sem comunicados.</p>{% endfor %}
+  </section>
+  <section class="card">
+    <h3>Autorizações abertas</h3>
+    {% for request in authorization_requests %}<div class="row"><div>{{ request.title }}<br><span class="muted">{{ request.get_request_type_display }}</span></div><span class="badge">{{ request.get_status_display }}</span></div>{% empty %}<p class="empty">Sem autorizações abertas.</p>{% endfor %}
+  </section>
+  <section class="card">
+    <h3>Último boletim</h3>
+    {% if report_card %}<p>{{ report_card.academic_year.name }}{% if report_card.term %} · {{ report_card.term.name }}{% endif %}</p><span class="badge">{{ report_card.get_status_display }}</span>{% else %}<p class="empty">Sem boletim publicado.</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

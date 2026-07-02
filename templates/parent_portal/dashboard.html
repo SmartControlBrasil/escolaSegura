@@ -1,0 +1,20 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<div class="card">
+  <h2>Meus alunos</h2>
+  <p class="muted">Acompanhe a vida escolar dos alunos vinculados ao seu responsável.</p>
+</div>
+<div class="grid cols" style="margin-top:12px;">
+  {% for student in students %}
+  <article class="card">
+    <span class="badge">{{ student.get_status_display }}</span>
+    <h3 style="margin-top:10px;">{{ student.full_name }}</h3>
+    <p class="muted">{{ student.school.name }}</p>
+    <p>{% if student.current_enrollment %}Turma {{ student.current_enrollment.class_group.name }}{% else %}Sem matrícula ativa{% endif %}</p>
+    <a class="button" href="{% url 'parent_portal:student_detail' student.id %}">Abrir resumo</a>
+  </article>
+  {% empty %}
+  <div class="card empty">Nenhum aluno vinculado ao e-mail do seu usuário.</div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card"><h2>Autorizações</h2><p class="muted">{{ student.full_name }}</p></section>
+<div class="list" style="margin-top:12px;">
+  {% for request in authorization_requests %}
+  <article class="card"><span class="badge">{{ request.get_status_display }}</span><h3 style="margin-top:10px;">{{ request.title }}</h3><p>{{ request.description }}</p><p class="muted">{{ request.get_request_type_display }}{% if request.due_at %} · até {{ request.due_at|date:'d/m/Y H:i' }}{% endif %}</p>{% if request.guardian_response %}<p>Resposta: <strong>{{ request.guardian_response.get_response_display }}</strong></p>{% else %}<p class="muted">Sem resposta registrada.</p>{% endif %}</article>
+  {% empty %}<div class="card empty">Nenhuma autorização encontrada.</div>{% endfor %}
+</div>
+{% endblock %}

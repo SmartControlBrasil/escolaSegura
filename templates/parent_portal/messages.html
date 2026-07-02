@@ -1,0 +1,9 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card"><h2>Mensagens</h2><p class="muted">{{ student.full_name }}</p></section>
+<div class="list" style="margin-top:12px;">
+  {% for thread in threads %}
+  <article class="card"><span class="badge">{{ thread.get_status_display }}</span><h3 style="margin-top:10px;">{{ thread.subject }}</h3><p class="muted">Prioridade: {{ thread.get_priority_display }} · {{ thread.created_at|date:'d/m/Y H:i' }}</p>{% for message in thread.latest_messages|slice:':3' %}<div class="row"><div>{{ message.body }}<br><span class="muted">{{ message.sent_at|date:'d/m/Y H:i' }}</span></div></div>{% empty %}<p class="empty">Sem mensagens.</p>{% endfor %}</article>
+  {% empty %}<div class="card empty">Nenhuma conversa encontrada.</div>{% endfor %}
+</div>
+{% endblock %}

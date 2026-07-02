@@ -1,0 +1,9 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card"><h2>Boletim</h2><p class="muted">{{ student.full_name }}</p></section>
+<div class="list" style="margin-top:12px;">
+  {% for report_card in report_cards %}
+  <article class="card"><span class="badge">{{ report_card.get_status_display }}</span><h3 style="margin-top:10px;">{{ report_card.academic_year.name }}{% if report_card.term %} · {{ report_card.term.name }}{% endif %}</h3>{% if report_card.general_comments %}<p>{{ report_card.general_comments }}</p>{% endif %}{% for entry in report_card.entries.all %}<div class="row"><div><strong>{{ entry.subject.name }}</strong><br><span class="muted">Faltas: {{ entry.absences_count }}</span><br>{% if entry.teacher_comments %}<small>{{ entry.teacher_comments }}</small>{% endif %}</div><div class="metric">{{ entry.average_score }}</div></div>{% empty %}<p class="empty">Sem disciplinas no boletim.</p>{% endfor %}</article>
+  {% empty %}<div class="card empty">Nenhum boletim publicado.</div>{% endfor %}
+</div>
+{% endblock %}

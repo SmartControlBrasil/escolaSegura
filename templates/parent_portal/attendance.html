@@ -1,0 +1,12 @@
+{% extends 'parent_portal/base.html' %}
+{% block content %}
+<section class="card"><h2>Frequência</h2><p class="muted">{{ student.full_name }}</p></section>
+<div class="card" style="margin-top:12px;">
+  {% for record in records %}
+  <div class="row">
+    <div><strong>{{ record.session.session_date|date:'d/m/Y' }}</strong><br><span class="muted">{{ record.session.class_group.name }}{% if record.session.subject %} · {{ record.session.subject.name }}{% endif %}</span><br>{% if record.notes %}<small>{{ record.notes }}</small>{% endif %}</div>
+    <div style="text-align:right;"><span class="badge">{{ record.get_status_display }}</span><br><span class="muted">{{ record.arrival_time|time:'H:i'|default:'-' }}</span></div>
+  </div>
+  {% empty %}<p class="empty">Sem registros de frequência.</p>{% endfor %}
+</div>
+{% endblock %}
