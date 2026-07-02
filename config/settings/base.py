@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.students',
     'apps.guardians',
     'apps.attendance',
+    'apps.communication',
     'apps.agents',
     'apps.escola_segura_assistant',
     'apps.policy_guard',
