@@ -1,8 +1,8 @@
 from django.urls import path
 
-from apps.santander_assistant import views
+from apps.escola_segura_assistant import views
 
-app_name = 'santander_assistant'
+app_name = 'escola_segura_assistant'
 
 urlpatterns = [
     path('chat/', views.chat_endpoint, name='chat'),

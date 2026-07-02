@@ -1,5 +1,5 @@
 """
-services.py — Serviço de orquestração da Assistente Santander
+services.py — Serviço de orquestração da Assistente EscolaSegura
 ==============================================================
 
 Camada central que implementa TODA a lógica de negócio do chat.
@@ -33,18 +33,18 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 
-from apps.santander_assistant.lead_state import (
+from apps.escola_segura_assistant.lead_state import (
     LeadState,
     is_coletando,
     proximo_estado,
     verificar_intencao_comercial,
 )
-from apps.santander_assistant.models import (
-    SantanderChatMessage,
-    SantanderChatSession,
-    SantanderKnowledgeItem,
+from apps.escola_segura_assistant.models import (
+    EscolaSeguraChatMessage,
+    EscolaSeguraChatSession,
+    EscolaSeguraKnowledgeItem,
 )
-from apps.santander_assistant.prompts import (
+from apps.escola_segura_assistant.prompts import (
     LEAD_COLLECT_PROMPTS,
     SANTANDER_GREETING,
     SANTANDER_SYSTEM_PROMPT,
@@ -133,12 +133,12 @@ _RESPOSTA_VALIDACAO_EMAIL = (
 # ─────────────────────────────────────────────────────────────────────────────
 # Serviço principal
 # ─────────────────────────────────────────────────────────────────────────────
-class SantanderAssistantService:
+class EscolaSeguraAssistantService:
     """
-    Serviço de orquestração da Assistente Santander.
+    Serviço de orquestração da Assistente EscolaSegura.
 
     Uso típico (na view):
-        service = SantanderAssistantService()
+        service = EscolaSeguraAssistantService()
         result  = service.process_message(session_key, texto)
         # result = { 'reply': str, 'lead_detected': bool, ... }
     """
@@ -149,7 +149,7 @@ class SantanderAssistantService:
     def get_or_create_session(
         session_key: str,
         source_page: str = '',
-    ) -> tuple[SantanderChatSession, bool]:
+    ) -> tuple[EscolaSeguraChatSession, bool]:
         """
         Retorna a sessão existente ou cria uma nova.
 
@@ -162,7 +162,7 @@ class SantanderAssistantService:
         if not session_key or len(session_key) > 64:
             session_key = str(uuid.uuid4())
 
-        session, created = SantanderChatSession.objects.get_or_create(
+        session, created = EscolaSeguraChatSession.objects.get_or_create(
             session_key=session_key,
             defaults={
                 'source_page': source_page[:500] if source_page else '',
@@ -171,7 +171,7 @@ class SantanderAssistantService:
 
         if created:
             logger.info(
-                'Santander Assistant: nova sessão criada — %s (page=%s)',
+                'EscolaSegura Assistant: nova sessão criada — %s (page=%s)',
                 session_key[:8], source_page[:80],
             )
 
@@ -212,9 +212,9 @@ class SantanderAssistantService:
         session, _ = self.get_or_create_session(session_key, source_page)
 
         # 2. Persiste mensagem do usuário
-        SantanderChatMessage.objects.create(
+        EscolaSeguraChatMessage.objects.create(
             session=session,
-            role=SantanderChatMessage.Role.USER,
+            role=EscolaSeguraChatMessage.Role.USER,
             content=user_message_text,
         )
 
@@ -234,7 +234,7 @@ class SantanderAssistantService:
                     session.current_state = LeadState.COLLECT_NAME
                     session.save(update_fields=['current_state', 'updated_at'])
                     logger.info(
-                        'Santander Assistant: intenção comercial detectada — sessão %s',
+                        'EscolaSegura Assistant: intenção comercial detectada — sessão %s',
                         session.session_key[:8],
                     )
 
@@ -256,9 +256,9 @@ class SantanderAssistantService:
                     reply = f'{reply}\n\n{prompt_coleta}'
 
         # 8. Persiste resposta da assistente
-        SantanderChatMessage.objects.create(
+        EscolaSeguraChatMessage.objects.create(
             session=session,
-            role=SantanderChatMessage.Role.ASSISTANT,
+            role=EscolaSeguraChatMessage.Role.ASSISTANT,
             content=reply,
         )
 
@@ -276,7 +276,7 @@ class SantanderAssistantService:
     @staticmethod
     def _verificar_guardrails(
         mensagem: str,
-        session: SantanderChatSession,
+        session: EscolaSeguraChatSession,
     ) -> Optional[str]:
         """
         Verifica regras bloqueantes que NÃO devem passar para o LLM.
@@ -291,7 +291,7 @@ class SantanderAssistantService:
         # Emergência: prioridade máxima
         if _TERMOS_EMERGENCIA.search(mensagem):
             logger.warning(
-                'Santander Assistant: EMERGÊNCIA detectada — sessão %s',
+                'EscolaSegura Assistant: EMERGÊNCIA detectada — sessão %s',
                 session.session_key[:8],
             )
             return _RESPOSTA_EMERGENCIA
@@ -312,7 +312,7 @@ class SantanderAssistantService:
 
     def _processar_coleta(
         self,
-        session: SantanderChatSession,
+        session: EscolaSeguraChatSession,
         mensagem: str,
     ) -> str:
         """
@@ -365,7 +365,7 @@ class SantanderAssistantService:
                     'qualified_at', 'updated_at',
                 ])
                 logger.info(
-                    'Santander Assistant: LEAD QUALIFICADO — %s (%s) — sessão %s',
+                    'EscolaSegura Assistant: LEAD QUALIFICADO — %s (%s) — sessão %s',
                     session.client_name, session.client_email,
                     session.session_key[:8],
                 )
@@ -447,7 +447,7 @@ class SantanderAssistantService:
     @staticmethod
     def _buscar_knowledge(mensagem: str) -> Optional[str]:
         """
-        Busca na base SantanderKnowledgeItem por matching de keywords.
+        Busca na base EscolaSeguraKnowledgeItem por matching de keywords.
 
         Estratégia:
             1. Tokeniza a mensagem em palavras (>= 3 chars)
@@ -467,8 +467,8 @@ class SantanderAssistantService:
         if not palavras:
             return None
 
-        items = SantanderKnowledgeItem.objects.filter(is_active=True)
-        melhor_item: Optional[SantanderKnowledgeItem] = None
+        items = EscolaSeguraKnowledgeItem.objects.filter(is_active=True)
+        melhor_item: Optional[EscolaSeguraKnowledgeItem] = None
         melhor_score = 0
 
         for item in items:
@@ -485,7 +485,7 @@ class SantanderAssistantService:
 
         if melhor_item and melhor_score >= 1:
             logger.debug(
-                'Santander Assistant: knowledge match (score=%d) — "%s"',
+                'EscolaSegura Assistant: knowledge match (score=%d) — "%s"',
                 melhor_score, melhor_item.pergunta[:60],
             )
             return melhor_item.resposta
@@ -496,7 +496,7 @@ class SantanderAssistantService:
 
     def _gerar_resposta_ia(
         self,
-        session: SantanderChatSession,
+        session: EscolaSeguraChatSession,
         mensagem: str,
     ) -> str:
         """
@@ -518,14 +518,14 @@ class SantanderAssistantService:
             return self._chamar_gemini(session, mensagem, api_key)
         except Exception:
             logger.exception(
-                'Santander Assistant: falha no Gemini — fallback ativado (sessão %s)',
+                'EscolaSegura Assistant: falha no Gemini — fallback ativado (sessão %s)',
                 session.session_key[:8],
             )
             return self._resposta_fallback(mensagem, session)
 
     def _chamar_gemini(
         self,
-        session: SantanderChatSession,
+        session: EscolaSeguraChatSession,
         mensagem: str,
         api_key: str,
     ) -> str:
@@ -572,14 +572,14 @@ class SantanderAssistantService:
         reply = response.text.strip() if response.text else _RESPOSTA_FALLBACK
 
         logger.info(
-            'Santander Assistant: Gemini respondeu — sessão %s (model=%s)',
+            'EscolaSegura Assistant: Gemini respondeu — sessão %s (model=%s)',
             session.session_key[:8], model_name,
         )
 
         return reply
 
     @staticmethod
-    def _resposta_fallback(mensagem: str, session: SantanderChatSession) -> str:
+    def _resposta_fallback(mensagem: str, session: EscolaSeguraChatSession) -> str:
         """
         Fallback determinístico — responde sem API externa.
 
@@ -650,7 +650,7 @@ class SantanderAssistantService:
         # Fallback genérico
         return _RESPOSTA_FALLBACK
 
-    def _disparar_webhook_lead(self, session: SantanderChatSession) -> None:
+    def _disparar_webhook_lead(self, session: EscolaSeguraChatSession) -> None:
         """
         Dispara um webhook com os dados do lead qualificado.
 
@@ -659,7 +659,7 @@ class SantanderAssistantService:
         """
         url = getattr(settings, 'SANTANDER_LEAD_WEBHOOK_URL', '')
         if not url:
-            logger.info('Santander Assistant: Webhook de leads não configurado (SANTANDER_LEAD_WEBHOOK_URL vazio).')
+            logger.info('EscolaSegura Assistant: Webhook de leads não configurado (SANTANDER_LEAD_WEBHOOK_URL vazio).')
             return
 
         payload = {
@@ -678,10 +678,10 @@ class SantanderAssistantService:
         }
 
         try:
-            logger.info('Santander Assistant: Disparando webhook para %s', url)
+            logger.info('EscolaSegura Assistant: Disparando webhook para %s', url)
             response = requests.post(url, json=payload, timeout=5)
             response.raise_for_status()
-            logger.info('Santander Assistant: Webhook disparado com sucesso. Status: %s', response.status_code)
+            logger.info('EscolaSegura Assistant: Webhook disparado com sucesso. Status: %s', response.status_code)
         except requests.exceptions.RequestException as exc:
-            logger.error('Santander Assistant: Falha ao disparar webhook para %s. Erro: %s', url, exc)
+            logger.error('EscolaSegura Assistant: Falha ao disparar webhook para %s. Erro: %s', url, exc)
 

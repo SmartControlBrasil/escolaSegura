@@ -1,7 +1,7 @@
 import os
 
-base_path = '/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/backoffice/base.html'
-index_path = '/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/backoffice/index.html'
+base_path = '/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/backoffice/base.html'
+index_path = '/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/backoffice/index.html'
 
 with open(base_path, 'r', encoding='utf-8') as f:
     lines = f.readlines()
@@ -21,8 +21,8 @@ new_nav = """            <ul class="nav nav-pills flex-column">
               <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
                 <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-dashboards" type="button"><i class="bi bi-house-door-fill"></i></button>
               </li>
-              <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Marmoraria360">
-                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-marmoraria" type="button"><i class="bi bi-tools"></i></button>
+              <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="EscolaSegura">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-escola" type="button"><i class="bi bi-tools"></i></button>
               </li>
               <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="IA & Growth">
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-growth" type="button"><i class="bi bi-cpu"></i></button>
@@ -46,11 +46,11 @@ new_tabs = """            <div class="tab-content">
                   <a href="/app/" class="list-group-item"><i class="bi bi-house-door"></i>Início</a>
                 </div>
               </div>
-              <div class="tab-pane fade" id="pills-marmoraria">
+              <div class="tab-pane fade" id="pills-escola">
                 <div class="list-group list-group-flush">
                   <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-0">Marmoraria360</h5>
+                      <h5 class="mb-0">EscolaSegura</h5>
                     </div>
                     <small class="mb-0">Gestão Comercial</small>
                   </div>

@@ -1,6 +1,6 @@
 # Orçamento Profissional (Módulo de Vendas)
 
-O módulo de orçamentos (Estimates) foi significativamente melhorado para atuar não apenas como uma ferramenta interna de cálculo, mas como o principal instrumento de fechamento de vendas da Marmoraria360.
+O módulo de orçamentos (Estimates) foi significativamente melhorado para atuar não apenas como uma ferramenta interna de cálculo, mas como o principal instrumento de fechamento de vendas da EscolaSegura.
 
 ## Novas Funcionalidades Arquiteturais
 
@@ -35,4 +35,4 @@ Os orçamentos refletem estados claros:
 A mudança manual de status na barra de cabeçalho salva e registra imediatamente na tabela de auditoria (via `log_activity`), rastreando as etapas do funil de vendas por colaborador.
 
 ## População de Dados (Seed)
-A rotina `seed_marmoraria_demo` forja itens que testam este fluxo ao extremo, gerando automaticamente chapas e serviços que usam as variáveis `length` e `width` e calculando o imposto e desconto adequadamente para a demonstração comercial.
+A rotina `seed_escola_segura_demo` forja itens que testam este fluxo ao extremo, gerando automaticamente chapas e serviços que usam as variáveis `length` e `width` e calculando o imposto e desconto adequadamente para a demonstração comercial.

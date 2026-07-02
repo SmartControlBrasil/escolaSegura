@@ -1,7 +1,7 @@
 import os
 import glob
 
-directory = "/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/public_site/"
+directory = "/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/public_site/"
 files = glob.glob(os.path.join(directory, "*.html"))
 
 for filepath in files:
@@ -19,9 +19,9 @@ for filepath in files:
     content = content.replace(old_policies, new_policies)
     
     # Replace support/info emails and phone numbers to match our corporate profile
-    content = content.replace("info@website.com", "comercial@santandermarmoraria.com.br")
-    content = content.replace("info@intereal.com", "comercial@santandermarmoraria.com.br")
-    content = content.replace("support@intereal.com", "comercial@santandermarmoraria.com.br")
+    content = content.replace("info@website.com", "comercial@santanderescola.com.br")
+    content = content.replace("info@intereal.com", "comercial@santanderescola.com.br")
+    content = content.replace("support@intereal.com", "comercial@santanderescola.com.br")
     content = content.replace("+33 877 554 332", "(11) 4142-1413 / (11) 98271-9989")
     content = content.replace("+569 2316 2156", "(11) 4142-1413 / (11) 98271-9989")
     content = content.replace("256 Elizaberth Ave, CA, 90025", "São Paulo - SP")

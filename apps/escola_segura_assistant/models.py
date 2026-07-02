@@ -1,19 +1,19 @@
 """
-models.py — Modelos de persistência da Assistente Santander
+models.py — Modelos de persistência da Assistente EscolaSegura
 ============================================================
 
 Três modelos cobrem todo o ciclo de vida de uma conversa:
 
-    SantanderChatSession
+    EscolaSeguraChatSession
         Sessão de chat única vinculada ao visitante.  Armazena os dados
         do lead conforme são coletados (nome, telefone, e-mail) e o
         estado atual da máquina de estados (``current_state``).
 
-    SantanderChatMessage
+    EscolaSeguraChatMessage
         Cada mensagem individual (user ou assistant) dentro de uma sessão.
         Garante auditoria completa e replay de contexto para o provider de IA.
 
-    SantanderKnowledgeItem
+    EscolaSeguraKnowledgeItem
         Item curado da base de conhecimento.  Respostas pré-editadas
         associadas a perguntas e tags para busca por keywords, sem
         necessidade de vector database no dia 1.
@@ -26,13 +26,13 @@ from __future__ import annotations
 from django.db import models
 
 from apps.core.infrastructure.models import TimeStampedModel
-from apps.santander_assistant.lead_state import LeadState
+from apps.escola_segura_assistant.lead_state import LeadState
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Sessão de Chat
 # ─────────────────────────────────────────────────────────────────────────────
-class SantanderChatSession(TimeStampedModel):
+class EscolaSeguraChatSession(TimeStampedModel):
     """
     Sessão de chat com um visitante do site.
 
@@ -127,7 +127,7 @@ class SantanderChatSession(TimeStampedModel):
 # ─────────────────────────────────────────────────────────────────────────────
 # Mensagens do Chat
 # ─────────────────────────────────────────────────────────────────────────────
-class SantanderChatMessage(TimeStampedModel):
+class EscolaSeguraChatMessage(TimeStampedModel):
     """
     Mensagem individual dentro de uma sessão.
 
@@ -141,7 +141,7 @@ class SantanderChatMessage(TimeStampedModel):
         SYSTEM = 'system', 'Sistema'
 
     session = models.ForeignKey(
-        SantanderChatSession,
+        EscolaSeguraChatSession,
         on_delete=models.CASCADE,
         related_name='messages',
         verbose_name='Sessão',
@@ -168,7 +168,7 @@ class SantanderChatMessage(TimeStampedModel):
 # ─────────────────────────────────────────────────────────────────────────────
 # Base de Conhecimento (busca por keywords)
 # ─────────────────────────────────────────────────────────────────────────────
-class SantanderKnowledgeItem(TimeStampedModel):
+class EscolaSeguraKnowledgeItem(TimeStampedModel):
     """
     Item curado de conhecimento para respostas rápidas.
 

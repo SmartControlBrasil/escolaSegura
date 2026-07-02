@@ -17,38 +17,38 @@ from apps.service_reports.infrastructure.models import ServiceReport, ServiceRep
 from apps.agents.infrastructure.models import AtlasProspect, VirtualAssistantSession, VirtualAssistantMessage
 
 class Command(BaseCommand):
-    help = 'Popula a base com dados de demonstração comercial realistas da Marmoraria360.'
+    help = 'Popula a base com dados de demonstração comercial realistas da EscolaSegura.'
 
     def handle(self, *args, **options):
         # 1. Obter ou Criar Organização
         org, _ = Organization.objects.get_or_create(
-            name='Marmoraria Santander',
+            name='EscolaSegura',
             defaults={
-                'legal_name': 'Marmoraria Santander LTDA',
+                'legal_name': 'EscolaSegura LTDA',
                 'document': '12345678000199',
-                'email': 'comercial@santandermarmoraria.com.br',
+                'email': 'comercial@santanderescola.com.br',
                 'phone': '(11) 4142-1413',
             }
         )
 
         profile, created = CompanyProfile.objects.get_or_create(organization=org)
-        profile.trade_name = 'Santander Mármores e Granitos'
-        profile.legal_name = 'Santander Mármores e Granitos LTDA'
+        profile.trade_name = 'EscolaSegura Mármores e Granitos'
+        profile.legal_name = 'EscolaSegura Mármores e Granitos LTDA'
         profile.cnpj = '12.345.678/0001-99'
         profile.phone = '(11) 4142-1413'
         profile.whatsapp = '(11) 99999-8888'
-        profile.email = 'comercial@santandermarmoraria.com.br'
-        profile.website = 'www.santandermarmoraria.com.br'
+        profile.email = 'comercial@santanderescola.com.br'
+        profile.website = 'www.santanderescola.com.br'
         profile.address = 'Av. Exemplo Comercial, 1000 - Centro'
         profile.city = 'São Paulo'
         profile.state = 'SP'
         profile.business_hours = 'Segunda a Sexta: 08:00 às 18:00'
         profile.slogan = 'Qualidade e sofisticação em mármores e granitos'
-        profile.footer_text = 'Orçamento gerado por Marmoraria Santander - Todos os direitos reservados.'
+        profile.footer_text = 'Orçamento gerado por EscolaSegura - Todos os direitos reservados.'
         profile.default_terms = 'Pagamento: 50% de sinal e 50% na entrega. Prazo de entrega: 15 dias úteis após medição final.'
         profile.default_estimate_validity = 15
-        profile.privacy_policy = 'Esta é a política de privacidade da Marmoraria Santander.'
-        profile.terms_of_use = 'Estes são os termos de uso do sistema da Marmoraria Santander.'
+        profile.privacy_policy = 'Esta é a política de privacidade da EscolaSegura.'
+        profile.terms_of_use = 'Estes são os termos de uso do sistema da EscolaSegura.'
         profile.is_active = True
         profile.save()
 
@@ -184,7 +184,7 @@ class Command(BaseCommand):
                     'sale_price': Decimal(price),
                     'cost_price': Decimal(price * 0.35),
                     'is_active': True,
-                    'description': f'Serviço especializado de {name} com profissionais da marmoraria.'
+                    'description': f'Serviço especializado de {name} com profissionais da escola.'
                 }
             )
             services.append(prod)
@@ -263,10 +263,10 @@ class Command(BaseCommand):
                 defaults={
                     'estimate': est,
                     'status': status,
-                    'technician_name': 'Fabrizio Santander',
+                    'technician_name': 'Fabrizio EscolaSegura',
                     'problem_reported': 'Fazer medições milimétricas para corte da chapa no tear.',
                     'service_performed': 'Medições tomadas com laser e conferidas na trena. Alinhamento de paredes aprovado.',
-                    'recommendations': 'Cuba deve ser entregue na marmoraria antes do corte do tampo.',
+                    'recommendations': 'Cuba deve ser entregue na escola antes do corte do tampo.',
                     'created_by': admin_user,
                 }
             )
@@ -391,4 +391,4 @@ class Command(BaseCommand):
                 defaults={'amount': Decimal('5000.00'), 'due_date': timezone.now().date(), 'status': 'paid'}
             )
 
-        self.stdout.write(self.style.SUCCESS('Comando de seed comercial seed_marmoraria_demo concluído com sucesso!'))
+        self.stdout.write(self.style.SUCCESS('Comando de seed comercial seed_escola_segura_demo concluído com sucesso!'))

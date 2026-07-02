@@ -1,6 +1,6 @@
 # Geração de PDFs e Relatórios de Entrega
 
-Para transformar o painel comercial da Marmoraria360 em uma verdadeira suíte de gestão de ponta a ponta, implementamos a geração nativa de relatórios PDF. Isso elimina a dependência de plataformas externas para gerar orçamentos e termos de aceite de obra.
+Para transformar o painel comercial da EscolaSegura em uma verdadeira suíte de gestão de ponta a ponta, implementamos a geração nativa de relatórios PDF. Isso elimina a dependência de plataformas externas para gerar orçamentos e termos de aceite de obra.
 
 ## Biblioteca Utilizada
 **WeasyPrint (v63.1+)**
@@ -15,7 +15,7 @@ Para transformar o painel comercial da Marmoraria360 em uma verdadeira suíte de
 
 2. **PDF de Entrega de Obra (`/app/entregas/<id>/pdf/`)**
    - Rota nova para gerar um termo oficial.
-   - Apresenta cabeçalho da Marmoraria, identificação do cliente e as métricas do checklist de entrega.
+   - Apresenta cabeçalho da Escola, identificação do cliente e as métricas do checklist de entrega.
    - Fornece duas áreas de assinatura físicas ("Responsável Técnico" e "Cliente/Recebedor").
 
 ## Evolução do Modelo de Entregas (`ProjectDelivery`)

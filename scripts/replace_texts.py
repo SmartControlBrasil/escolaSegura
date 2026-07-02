@@ -1,7 +1,7 @@
 import os
 import glob
 
-directory = "/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/public_site/"
+directory = "/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/public_site/"
 files = glob.glob(os.path.join(directory, "*.html"))
 
 replacements = {
@@ -20,9 +20,9 @@ replacements = {
     "View Details": "Ver Detalhes",
     
     # Company Name and Info
-    "Intereal": "Santander",
+    "Intereal": "EscolaSegura",
     "121 King Street, Melbourne Victoria 3000 Australia": "São Paulo - SP",
-    "info@example.com": "comercial@santandermarmoraria.com.br",
+    "info@example.com": "comercial@santanderescola.com.br",
     "(+01) 123 456 7890": "(11) 4142-1413 / (11) 98271-9989",
     "Architecture": "Mármore",
     "Interior Design": "Granito",
@@ -30,7 +30,7 @@ replacements = {
     
     # Specific texts
     "We provide the best": "Serviço Com Alto",
-    "Architecture & Interior Design": "Padrão de Qualidade Santander!",
+    "Architecture & Interior Design": "Padrão de Qualidade EscolaSegura!",
     "Ready To Start New Project With": "Pronto para Iniciar seu Projeto com a",
     "We Will Make Your": "Nós Faremos o Seu",
     "Dream Come True": "Sonho se Tornar Realidade",

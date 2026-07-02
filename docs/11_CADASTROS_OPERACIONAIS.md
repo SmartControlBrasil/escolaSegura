@@ -1,6 +1,6 @@
-# Cadastros Operacionais Marmoraria360
+# Cadastros Operacionais EscolaSegura
 
-Esta documentação descreve a fundação completa do CRM e ERP do produto Marmoraria360, focada na gestão operacional da marmoraria.
+Esta documentação descreve a fundação completa do CRM e ERP do produto EscolaSegura, focada na gestão operacional da escola.
 
 ## Arquitetura de Dados Implementada
 
@@ -50,7 +50,7 @@ Os templates foram gerados com base na anatomia robusta do template Intereal/Sko
 
 ## População de Dados (Seed)
 
-O comando `python manage.py seed_marmoraria_demo` foi atualizado para criar não apenas Orçamentos e Clientes, mas injetar dados realistas em **Obras, Fornecedores, Veículos, Entregas e Financeiro**. Essa atualização garante que, ao apresentar o software para uma marmoraria real, o painel pareça estar em uso pleno (Growth Engine, IA, Obras em Andamento, Contas a Pagar, etc).
+O comando `python manage.py seed_escola_segura_demo` foi atualizado para criar não apenas Orçamentos e Clientes, mas injetar dados realistas em **Obras, Fornecedores, Veículos, Entregas e Financeiro**. Essa atualização garante que, ao apresentar o software para uma escola real, o painel pareça estar em uso pleno (Growth Engine, IA, Obras em Andamento, Contas a Pagar, etc).
 
 ## Limitações Atuais
 - **Validações de Domínio:** Os formulários atualmente não possuem bloqueios avançados de regras de negócio (ex: não é possível bloquear a exclusão de um cliente se ele possuir orçamentos abertos, pois a operação de exclusão ainda não foi disponibilizada).

@@ -38,13 +38,13 @@ public_site_files = [
     'index.html', 'about.html', 'service-list.html', 
     'project.html', 'blog-list.html', 'contact.html'
 ]
-public_site_dir = '/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/public_site'
+public_site_dir = '/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/public_site'
 
 for pf in public_site_files:
     process_file(os.path.join(public_site_dir, pf), 'public_site', ['css', 'image', 'js', 'scss'])
 
 backoffice_files = ['index.html']
-backoffice_dir = '/home/marcelo/projetos/Marmoraria_Santander/Santander/templates/backoffice'
+backoffice_dir = '/home/marcelo/projetos/Escola_EscolaSegura/EscolaSegura/templates/backoffice'
 
 for bf in backoffice_files:
     process_file(os.path.join(backoffice_dir, bf), 'backoffice', ['assets'])

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'apps.sales',
     'apps.finance',
     'apps.agents',
-    'apps.santander_assistant',
+    'apps.escola_segura_assistant',
     'apps.policy_guard',
     'apps.integrations',
     'apps.pages',
@@ -197,7 +197,7 @@ DEFAULT_FROM_EMAIL    = os.getenv('DEFAULT_FROM_EMAIL', 'nao-responda@smart-syst
 ATLAS_DEFAULT_FROM_EMAIL = os.getenv('ATLAS_DEFAULT_FROM_EMAIL', DEFAULT_FROM_EMAIL)
 POLICY_GUARD_STRICT_MODE = os.getenv('POLICY_GUARD_STRICT_MODE', 'true').lower() == 'true'
 
-# ── Assistente Santander ────────────────────────────────────────────────────
+# ── Assistente EscolaSegura ────────────────────────────────────────────────────
 SANTANDER_ASSISTANT_ENABLED = os.getenv('SANTANDER_ASSISTANT_ENABLED', 'true').lower() == 'true'
 SANTANDER_AI_PROVIDER = os.getenv('SANTANDER_AI_PROVIDER', 'fallback')   # 'gemini' ou 'fallback'
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
@@ -217,6 +217,6 @@ LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/'
 LOGOUT_REDIRECT_URL = '/app/login/'
 
-# Webhook para envio de leads qualificados da Assistente Santander
+# Webhook para envio de leads qualificados da Assistente EscolaSegura
 SANTANDER_LEAD_WEBHOOK_URL = os.getenv('SANTANDER_LEAD_WEBHOOK_URL', '')
 

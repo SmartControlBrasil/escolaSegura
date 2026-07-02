@@ -1,12 +1,12 @@
 """
-views.py — Endpoint HTTP da Assistente Santander
+views.py — Endpoint HTTP da Assistente EscolaSegura
 =================================================
 
 View fina: toda lógica de negócio fica em ``services.py``.
 A view apenas:
     1. Valida o método e o payload JSON
     2. Aplica rate-limiting e length checks
-    3. Delega ao SantanderAssistantService
+    3. Delega ao EscolaSeguraAssistantService
     4. Serializa a resposta como JsonResponse
 """
 
@@ -20,8 +20,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from apps.santander_assistant.prompts import SANTANDER_GREETING
-from apps.santander_assistant.services import SantanderAssistantService
+from apps.escola_segura_assistant.prompts import SANTANDER_GREETING
+from apps.escola_segura_assistant.services import EscolaSeguraAssistantService
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 @require_POST
 def chat_endpoint(request):
     """
-    Endpoint público da Assistente Santander.
+    Endpoint público da Assistente EscolaSegura.
 
     Contrato:
         POST /assistant/chat/
@@ -103,14 +103,14 @@ def chat_endpoint(request):
 
     # ── Processamento ─────────────────────────────────────────────────────
     try:
-        service = SantanderAssistantService()
+        service = EscolaSeguraAssistantService()
         result = service.process_message(
             session_key=session_key,
             user_message_text=message,
             source_page=source_page,
         )
     except Exception:
-        logger.exception('Santander Assistant: erro ao processar mensagem.')
+        logger.exception('EscolaSegura Assistant: erro ao processar mensagem.')
         return JsonResponse(
             {'error': 'Erro interno ao processar a mensagem. Tente novamente.'},
             status=500,
@@ -135,6 +135,6 @@ def greeting_endpoint(request):
     """
     return JsonResponse({
         'greeting': SANTANDER_GREETING,
-        'assistant_name': 'Santander',
+        'assistant_name': 'EscolaSegura',
         'enabled': getattr(settings, 'SANTANDER_ASSISTANT_ENABLED', True),
     })

@@ -1,10 +1,10 @@
-# Documentação das Telas Operacionais (Marmoraria360)
+# Documentação das Telas Operacionais (EscolaSegura)
 
 Esta documentação descreve o conjunto de telas comerciais (CRUDs) que foram implementadas no painel administrativo (`backoffice`) utilizando o template Skodash.
 
 ## Visão Geral
 
-O módulo operacional é o core de vendas e serviços da marmoraria, consistindo nos seguintes pilares:
+O módulo operacional é o core de vendas e serviços da escola, consistindo nos seguintes pilares:
 - **Clientes**: Cadastro e manutenção de pessoas físicas e jurídicas.
 - **Catálogo**: Cadastro de materiais (Chapas de Mármore, Granito, Quartzo, etc) e serviços de mão de obra e instalação (com unidade de medida m², ml, un, h).
 - **Orçamentos**: Criação e gestão de propostas comerciais, incluindo cálculo automático de totais baseado nos itens de linha do catálogo. Suporte para múltiplos status (Rascunho, Em orçamento, Enviado, Aprovado, Rejeitado, Cancelado) e tela de "Preview PDF" pronta para impressão ou envio por e-mail/WhatsApp.
@@ -25,9 +25,9 @@ Todas as alterações (Criação, Atualização, Exclusão, Mudança de Status) 
 
 ## Seed de Dados
 
-O script `seed_marmoraria_demo.py` preenche o banco com uma vasta quantidade de informações simuladas (pedras famosas, clientes com nomes realistas, dezenas de orçamentos e vistorias). Para rodá-lo:
+O script `seed_escola_segura_demo.py` preenche o banco com uma vasta quantidade de informações simuladas (pedras famosas, clientes com nomes realistas, dezenas de orçamentos e vistorias). Para rodá-lo:
 ```bash
-python manage.py seed_marmoraria_demo
+python manage.py seed_escola_segura_demo
 ```
 
 ## Como Demonstrar Comercial
@@ -39,7 +39,7 @@ python manage.py seed_marmoraria_demo
    - Mostre a tabela principal;
    - Clique em "Novo Orçamento", crie uma estrutura básica;
    - Entre no detalhe do orçamento criado, adicione itens do catálogo (bancada, cuba, instalação) e mude a quantidade. Veja o subtotal calcular;
-   - Clique em "Visualizar/Imprimir PDF" para abrir a janela `preview`, demonstrando o aspecto premium que a marmoraria poderá enviar ao cliente final.
+   - Clique em "Visualizar/Imprimir PDF" para abrir a janela `preview`, demonstrando o aspecto premium que a escola poderá enviar ao cliente final.
 5. **Vistorias**: Na sequência de um orçamento aprovado, mostre a tela de vistoria onde o medidor preenche relatórios de medidas de obra.
 
 ---

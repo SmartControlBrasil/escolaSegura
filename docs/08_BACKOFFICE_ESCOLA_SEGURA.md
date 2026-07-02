@@ -1,10 +1,10 @@
-# Backoffice Comercial Demonstrável - Marmoraria360
+# Backoffice Comercial Demonstrável - EscolaSegura
 
-Este documento descreve a estrutura do painel de controle (backoffice) da Marmoraria360 (Marmoraria Santander), as rotas disponíveis, o fluxo comercial simulado e as credenciais necessárias para demonstração.
+Este documento descreve a estrutura do painel de controle (backoffice) da EscolaSegura (EscolaSegura), as rotas disponíveis, o fluxo comercial simulado e as credenciais necessárias para demonstração.
 
 ## Objetivos Comerciais
 
-O objetivo principal desta versão do painel é servir como um piloto comercial robusto, realista e de alto impacto visual. Ele foi desenhado para simular todos os principais fluxos de uma marmoraria no dia a dia, com inteligência artificial e prospecção ativa prontas para demonstração a potenciais clientes (proprietários de marmorarias).
+O objetivo principal desta versão do painel é servir como um piloto comercial robusto, realista e de alto impacto visual. Ele foi desenhado para simular todos os principais fluxos de uma escola no dia a dia, com inteligência artificial e prospecção ativa prontas para demonstração a potenciais clientes (proprietários de escolas).
 
 ## Rotas Mapeadas no Skodash
 
@@ -29,18 +29,18 @@ O painel é acessado através do prefixo `/app/` e possui as seguintes telas:
 9.  **Growth Engine (`/app/growth/`)**: Funil comercial exibindo as oportunidades em qualificação, proposta, negociação e fechamento.
 10. **Robô Atlas (`/app/atlas/`)**: Painel onde o Atlas identifica prospects, sugere oportunidades e prepara dados/minutas para revisão humana.
 11. **Assistente Virtual Lívia (`/app/assistente/`)**: Conversas do chat público capturadas no site, com resumos gerados de intenção de compra.
-12. **Configurações (`/app/configuracoes/`)**: Dados de cadastro oficiais da empresa (Marmoraria Santander).
+12. **Configurações (`/app/configuracoes/`)**: Dados de cadastro oficiais da empresa (EscolaSegura).
 
 ## Dados de Demonstração (Seed)
 
 Para carregar todos os dados demonstrativos no banco de dados, execute:
 
 ```bash
-python manage.py seed_marmoraria_demo
+python manage.py seed_escola_segura_demo
 ```
 
 Este comando criará:
-- **Organização principal** (Marmoraria Santander)
+- **Organização principal** (EscolaSegura)
 - **Usuário administrador** (`admin` / `admin123`)
 - **Clientes residenciais e construtoras** com endereços e contatos.
 - **Tabelas de preços** reais de chapas (Carrara, Nero Marquina, Preto São Gabriel, etc.) e serviços.

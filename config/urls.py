@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/v1/pages/', include('apps.pages.interfaces.urls')),
     path('app/estimates/', include('apps.estimates.interfaces.web_urls')),
     path('app/service-reports/', include('apps.service_reports.interfaces.web_urls')),
-    path('assistant/', include('apps.santander_assistant.urls')),
+    path('assistant/', include('apps.escola_segura_assistant.urls')),
     path('', include('apps.public_site.urls')),
     path('app/', include('apps.backoffice.urls')),
 ]

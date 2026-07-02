@@ -1,4 +1,4 @@
-# Modo Dark - Painel Skodash (Marmoraria360)
+# Modo Dark - Painel Skodash (EscolaSegura)
 
 O template Skodash, utilizado no painel comercial administrativo (`/app/`), possui suporte nativo para múltiplas variações de tema, incluindo Dark, Light, Semi-Dark e Minimal.
 

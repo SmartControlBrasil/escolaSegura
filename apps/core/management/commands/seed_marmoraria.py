@@ -11,16 +11,16 @@ from apps.estimates.infrastructure.models import Estimate, EstimateLine, Estimat
 from apps.service_reports.infrastructure.models import ServiceReport, ServiceReportItem
 
 class Command(BaseCommand):
-    help = 'Popula a base com dados demonstrativos para a Marmoraria Santander / Marmoraria360.'
+    help = 'Popula a base com dados demonstrativos para a EscolaSegura / EscolaSegura.'
 
     def handle(self, *args, **options):
         # 1. Obter ou Criar Organização
         org, _ = Organization.objects.get_or_create(
-            name='Marmoraria Santander',
+            name='EscolaSegura',
             defaults={
-                'legal_name': 'Marmoraria Santander LTDA',
+                'legal_name': 'EscolaSegura LTDA',
                 'document': '12345678000199',
-                'email': 'comercial@santandermarmoraria.com.br',
+                'email': 'comercial@santanderescola.com.br',
                 'phone': '(11) 4142-1413',
             }
         )
@@ -227,7 +227,7 @@ class Command(BaseCommand):
                 defaults={
                     'estimate': est,
                     'status': 'completed',
-                    'technician_name': 'Fabrizio Santander',
+                    'technician_name': 'Fabrizio EscolaSegura',
                     'problem_reported': 'Fazer medições finais das bancadas para corte.',
                     'service_performed': 'Medição de nível, prumo e alinhamento concluída com sucesso.',
                     'recommendations': 'Garantir que a cuba esteja no local no dia da instalação.',
@@ -246,4 +246,4 @@ class Command(BaseCommand):
                     is_billable=True
                 )
 
-        self.stdout.write(self.style.SUCCESS('Seed demonstrativo da marmoraria criado com sucesso!'))
+        self.stdout.write(self.style.SUCCESS('Seed demonstrativo da escola criado com sucesso!'))

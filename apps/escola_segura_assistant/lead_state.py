@@ -95,7 +95,7 @@ def is_coletando(estado: str) -> bool:
 # Detecção de intenção comercial
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Termos que indicam interesse real em serviço/produto da marmoraria.
+# Termos que indicam interesse real em serviço/produto da escola.
 # Organizados por categoria para facilitar manutenção e expansão.
 _TERMOS_COMERCIAIS: list[str] = [
     # ── Ação comercial direta ────────────────────────────────────────────
@@ -112,7 +112,7 @@ _TERMOS_COMERCIAIS: list[str] = [
     'quero um orçamento',
     'fazer um orçamento',
 
-    # ── Produtos de marmoraria ───────────────────────────────────────────
+    # ── Produtos de escola ───────────────────────────────────────────
     'bancada', 'bancadas',
     'pia', 'pias',
     'lavatório', 'lavatorio',

@@ -1,6 +1,6 @@
-# Baseline de Segurança e LGPD - Marmoraria360
+# Baseline de Segurança e LGPD - EscolaSegura
 
-Este documento apresenta a fundamentação inicial de segurança, conformidade de dados e proteção de usuários estabelecida no projeto Marmoraria360.
+Este documento apresenta a fundamentação inicial de segurança, conformidade de dados e proteção de usuários estabelecida no projeto EscolaSegura.
 
 ## 1. Segurança de Credenciais & Ambiente (`.env`)
 
@@ -18,7 +18,7 @@ python manage.py bootstrap_demo_users
 ```
 
 ## 2. Grupos e Controle de Acesso
-Definimos grupos/perfis específicos para as funções da marmoraria, organizando o controle de acesso de maneira granular:
+Definimos grupos/perfis específicos para as funções da escola, organizando o controle de acesso de maneira granular:
 * **Proprietário**: Acesso completo ao cockpit e todas as configurações.
 * **Comercial**: Criação e acompanhamento de orçamentos e gerenciamento de leads.
 * **Técnico**: Acesso a relatórios de vistoria técnica e medições milimétricas de obras.

@@ -1,8 +1,8 @@
-{# Widget de Chat Flutuante da Assistente Santander #}
+{# Widget de Chat Flutuante da Assistente EscolaSegura #}
 <div id="santander-chat-widget" class="santander-chat-container">
   
   {# Bolha Flutuante (Toggle) #}
-  <button id="santander-chat-toggle" class="santander-chat-bubble" aria-label="Abrir chat com a Assistente Santander">
+  <button id="santander-chat-toggle" class="santander-chat-bubble" aria-label="Abrir chat com a Assistente EscolaSegura">
     <i class="bi bi-chat-left-text-fill bubble-icon-open"></i>
     <i class="bi bi-x-lg bubble-icon-close d-none"></i>
     <span class="bubble-pulse"></span>
@@ -18,7 +18,7 @@
         <span class="status-indicator online"></span>
       </div>
       <div class="header-info">
-        <h6 class="header-title">Santander</h6>
+        <h6 class="header-title">EscolaSegura</h6>
         <p class="header-subtitle">Assistente Virtual • Online</p>
       </div>
       <button id="santander-chat-close" class="header-close-btn" aria-label="Minimizar chat">
@@ -492,9 +492,9 @@
           }
         }, 600);
       } catch (err) {
-        console.error('[Santander Assistant] Erro ao carregar greeting:', err);
+        console.error('[EscolaSegura Assistant] Erro ao carregar greeting:', err);
         removeTypingIndicator();
-        appendMessage('assistant', 'Olá! Sou a **Santander**, assistente virtual da Marmoraria Santander. Como posso ajudar você hoje?');
+        appendMessage('assistant', 'Olá! Sou a **EscolaSegura**, assistente virtual da EscolaSegura. Como posso ajudar você hoje?');
       }
     }
 
@@ -536,7 +536,7 @@
         }, 750);
 
       } catch (err) {
-        console.error('[Santander Assistant] Erro no envio:', err);
+        console.error('[EscolaSegura Assistant] Erro no envio:', err);
         setTimeout(() => {
           removeTypingIndicator();
           appendMessage('assistant', 'Não consegui me comunicar com o servidor. Verifique sua conexão e tente de novo.');

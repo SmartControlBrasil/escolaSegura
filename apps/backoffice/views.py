@@ -432,7 +432,7 @@ def redes_sociais(request):
         {
             'channel': 'Instagram',
             'suggested_title': 'Elegância em Mármore Carrara',
-            'caption': 'Transforme seu banheiro em uma verdadeira suíte de luxo. Bancadas e nichos sob medida em Mármore Carrara. Peça seu orçamento hoje! #carrara #marmoraria #decor',
+            'caption': 'Transforme seu banheiro em uma verdadeira suíte de luxo. Bancadas e nichos sob medida em Mármore Carrara. Peça seu orçamento hoje! #carrara #escola #decor',
             'status': 'Agendado'
         },
         {
@@ -527,15 +527,15 @@ def atlas_aprovar_prospect(request, prospect_id):
 
     # 2. Gera o rascunho de e-mail de outreach (sem enviar)
     #    O assunto e corpo padrão servem como ponto de partida para edição humana.
-    subject = f'Parceria Marmoraria Santander × {prospect.company_name}'
+    subject = f'Parceria EscolaSegura × {prospect.company_name}'
     body = (
         f'Olá {prospect.contact_name or "prezado(a)"},\n\n'
-        f'Meu nome é Fabrizio e represento a Marmoraria Santander.\n'
+        f'Meu nome é Fabrizio e represento a EscolaSegura.\n'
         f'Identificamos a {prospect.company_name} como uma empresa com alto potencial '
         f'de parceria em projetos de mármore e granito.\n\n'
         f'Gostaríamos de apresentar nosso portfólio e discutir possibilidades de colaboração.\n'
         f'Podemos agendar uma conversa rápida?\n\n'
-        f'Atenciosamente,\nMarmoraria Santander'
+        f'Atenciosamente,\nEscolaSegura'
     )
     draft = AtlasProspectorService.create_email_draft(prospect, subject=subject, body=body)
 
@@ -717,13 +717,13 @@ def assistente(request):
 def operations_review(request):
     """
     Fila de Revisão Unificada (Operations Review Queue).
-    Unifica leads inbound (SantanderChatSession) e outbound (AtlasProspect).
+    Unifica leads inbound (EscolaSeguraChatSession) e outbound (AtlasProspect).
     """
-    from apps.santander_assistant.models import SantanderChatSession
+    from apps.escola_segura_assistant.models import EscolaSeguraChatSession
     from django.db.models import Q
 
     # Inbound: Sessões que atingiram o estado 'qualified' OU que possuem nome e algum contato
-    inbound_leads = SantanderChatSession.objects.filter(
+    inbound_leads = EscolaSeguraChatSession.objects.filter(
         Q(current_state='qualified') | 
         (Q(client_name__isnull=False) & ~Q(client_name='')) & 
         (~Q(client_phone='') | ~Q(client_email=''))
@@ -747,10 +747,10 @@ def session_messages_json(request, session_id):
     API interna para carregar a transcrição/mensagens de uma sessão de chat.
     Utilizado no modal da Fila de Revisão.
     """
-    from apps.santander_assistant.models import SantanderChatMessage, SantanderChatSession
+    from apps.escola_segura_assistant.models import EscolaSeguraChatMessage, EscolaSeguraChatSession
 
-    session = get_object_or_404(SantanderChatSession, pk=session_id)
-    messages = SantanderChatMessage.objects.filter(session=session).order_by('created_at')
+    session = get_object_or_404(EscolaSeguraChatSession, pk=session_id)
+    messages = EscolaSeguraChatMessage.objects.filter(session=session).order_by('created_at')
 
     messages_data = []
     for msg in messages:
@@ -802,28 +802,28 @@ def configuracoes_empresa(request):
         org = Organization.objects.first()
         
     if not org:
-        org = Organization.objects.create(name="Marmoraria Santander", legal_name="Santander Mármores e Granitos LTDA")
+        org = Organization.objects.create(name="EscolaSegura", legal_name="EscolaSegura Mármores e Granitos LTDA")
         
     profile, created = CompanyProfile.objects.get_or_create(
         organization=org,
         defaults={
-            'trade_name': org.name or "Marmoraria Santander",
-            'legal_name': org.legal_name or "Santander Mármores e Granitos LTDA",
+            'trade_name': org.name or "EscolaSegura",
+            'legal_name': org.legal_name or "EscolaSegura Mármores e Granitos LTDA",
             'cnpj': org.document or "12.345.678/0001-99",
             'phone': org.phone or "(11) 4142-1413",
             'whatsapp': "(11) 99999-8888",
-            'email': org.email or "comercial@santandermarmoraria.com.br",
-            'website': "www.santandermarmoraria.com.br",
+            'email': org.email or "comercial@santanderescola.com.br",
+            'website': "www.santanderescola.com.br",
             'address': "Av. Exemplo Comercial, 1000 - Centro",
             'city': "São Paulo",
             'state': "SP",
             'business_hours': "Segunda a Sexta: 08:00 às 18:00",
             'slogan': "Qualidade e sofisticação em mármores e granitos",
-            'footer_text': "Orçamento gerado por Marmoraria Santander - Todos os direitos reservados.",
+            'footer_text': "Orçamento gerado por EscolaSegura - Todos os direitos reservados.",
             'default_terms': "Pagamento: 50% de sinal e 50% na entrega. Prazo de entrega: 15 dias úteis após medição final.",
             'default_estimate_validity': 15,
-            'privacy_policy': "Esta é a política de privacidade da Marmoraria Santander.",
-            'terms_of_use': "Estes são os termos de uso do sistema da Marmoraria Santander.",
+            'privacy_policy': "Esta é a política de privacidade da EscolaSegura.",
+            'terms_of_use': "Estes são os termos de uso do sistema da EscolaSegura.",
             'is_active': True
         }
     )

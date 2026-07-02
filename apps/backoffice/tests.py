@@ -24,8 +24,8 @@ class BackofficeTests(TestCase):
         self.assertTrue(User.objects.filter(username='envadmin', is_superuser=True).exists())
         self.assertTrue(User.objects.filter(username='envdemo', is_staff=False).exists())
 
-    def test_seed_marmoraria_demo_command(self):
-        call_command('seed_marmoraria_demo')
+    def test_seed_escola_segura_demo_command(self):
+        call_command('seed_escola_segura_demo')
 
     def test_routes_require_authentication_redirects_to_custom_login(self):
         routes = [
@@ -92,7 +92,7 @@ class BackofficeTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_routes_status_200_if_logged_in(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         self.client.login(username='testuser', password='testpassword')
         
         routes = [
@@ -114,7 +114,7 @@ class BackofficeTests(TestCase):
             self.assertEqual(response.status_code, 200, f"Route {route} failed with status {response.status_code}")
 
     def test_orcamentos_novo_post(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         from apps.customers.infrastructure.models import Customer
         customer = Customer.objects.first()
         self.client.login(username='testuser', password='testpassword')
@@ -133,7 +133,7 @@ class BackofficeTests(TestCase):
         self.assertRedirects(response, '/app/')
 
     def test_estimate_line_calculation(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         from apps.estimates.infrastructure.models import Estimate, EstimateLine
         from apps.catalog.infrastructure.models import Product
         from decimal import Decimal
@@ -155,7 +155,7 @@ class BackofficeTests(TestCase):
         self.assertEqual(line.subtotal, Decimal('550.00')) # (6 * 100) - 50
         
     def test_orcamento_preview_route(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         from apps.estimates.infrastructure.models import Estimate
         est = Estimate.objects.first()
         self.client.login(username='testuser', password='testpassword')
@@ -163,7 +163,7 @@ class BackofficeTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_orcamento_pdf_route(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         from apps.estimates.infrastructure.models import Estimate
         est = Estimate.objects.first()
         self.client.login(username='testuser', password='testpassword')
@@ -172,7 +172,7 @@ class BackofficeTests(TestCase):
         self.assertEqual(response['Content-Type'], 'application/pdf')
 
     def test_entrega_pdf_route(self):
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         from apps.service_reports.infrastructure.models import ProjectDelivery
         
         # Create one delivery if it doesn't exist
@@ -201,12 +201,12 @@ class BackofficeTests(TestCase):
     def test_seed_creates_company_profile(self):
         from apps.core.infrastructure.models import CompanyProfile
         CompanyProfile.objects.all().delete()
-        call_command('seed_marmoraria_demo')
-        self.assertTrue(CompanyProfile.objects.filter(trade_name='Santander Mármores e Granitos').exists())
+        call_command('seed_escola_segura_demo')
+        self.assertTrue(CompanyProfile.objects.filter(trade_name='EscolaSegura Mármores e Granitos').exists())
 
     def test_configuracoes_empresa_post_success(self):
         from apps.core.infrastructure.models import CompanyProfile
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         self.user.role = 'owner'
         self.user.save()
         self.client.login(username='testuser', password='testpassword')
@@ -238,7 +238,7 @@ class BackofficeTests(TestCase):
 
     def test_configuracoes_empresa_post_permission_denied(self):
         from apps.core.infrastructure.models import CompanyProfile
-        call_command('seed_marmoraria_demo')
+        call_command('seed_escola_segura_demo')
         self.user.role = 'viewer'
         self.user.save()
         self.client.login(username='testuser', password='testpassword')

@@ -41,11 +41,11 @@ class Command(BaseCommand):
 
         # Obter ou criar organização padrão
         org, _ = Organization.objects.get_or_create(
-            name='Marmoraria Santander',
+            name='EscolaSegura',
             defaults={
-                'legal_name': 'Marmoraria Santander LTDA',
+                'legal_name': 'EscolaSegura LTDA',
                 'document': '12345678000199',
-                'email': 'comercial@santandermarmoraria.com.br',
+                'email': 'comercial@santanderescola.com.br',
                 'phone': '(11) 4142-1413',
             }
         )
@@ -54,7 +54,7 @@ class Command(BaseCommand):
         superuser_obj, su_created = User.objects.get_or_create(
             username=su_user or 'admin',
             defaults={
-                'email': su_email or 'admin@marmoraria360.local',
+                'email': su_email or 'admin@escola_segura.local',
                 'is_staff': True,
                 'is_superuser': True,
                 'role': 'owner',
@@ -77,7 +77,7 @@ class Command(BaseCommand):
         demo_obj, demo_created = User.objects.get_or_create(
             username=demo_user or 'fabrizio',
             defaults={
-                'email': demo_email or 'comercial@santandermarmoraria.com.br',
+                'email': demo_email or 'comercial@santanderescola.com.br',
                 'is_staff': False,
                 'is_superuser': False,
                 'role': 'owner',

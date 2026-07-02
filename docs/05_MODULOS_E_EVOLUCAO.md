@@ -40,7 +40,7 @@ Para derivar um sistema por nicho, reaproveite:
 
 Exemplos:
 
-- marmoraria: medidas, fotos de bancada, recortes, cuba, acabamento;
+- escola: medidas, fotos de bancada, recortes, cuba, acabamento;
 - ar-condicionado: fotos do ambiente, evaporadora/condensadora, distância, dreno;
 - obra civil: antes/depois, materiais, metragem, etapas;
 - manutenção industrial: evidências técnicas, componentes, diagnóstico, relatório.

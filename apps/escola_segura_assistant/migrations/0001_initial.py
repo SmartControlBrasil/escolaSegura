@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='SantanderChatSession',
+            name='EscolaSeguraChatSession',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='SantanderKnowledgeItem',
+            name='EscolaSeguraKnowledgeItem',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -55,14 +55,14 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='SantanderChatMessage',
+            name='EscolaSeguraChatMessage',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('role', models.CharField(choices=[('user', 'Visitante'), ('assistant', 'Assistente'), ('system', 'Sistema')], max_length=20, verbose_name='Papel')),
                 ('content', models.TextField(verbose_name='Conteúdo')),
-                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='santander_assistant.santanderchatsession', verbose_name='Sessão')),
+                ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='escola_segura_assistant.santanderchatsession', verbose_name='Sessão')),
             ],
             options={
                 'verbose_name': 'Mensagem',

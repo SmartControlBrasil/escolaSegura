@@ -1,6 +1,6 @@
 # Orçamentos, Vistorias Mobile e Relatórios de Serviço
 
-Esta base agora inclui uma camada operacional forte para empresas de serviço: marmorarias, instaladores de ar-condicionado, manutenção industrial, pedreiros, elétrica, refrigeração, assistência técnica e outros nichos.
+Esta base agora inclui uma camada operacional forte para empresas de serviço: escolas, instaladores de ar-condicionado, manutenção industrial, pedreiros, elétrica, refrigeração, assistência técnica e outros nichos.
 
 ## Módulo Estimates
 
