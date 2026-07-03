@@ -1,0 +1,100 @@
+{% extends "admin_shell/portalk12/base.html" %}
+{% load static %}
+
+{% block title %}PortalK12 | {{ mock.title }}{% endblock %}
+{% block dashboard_bar %}{{ mock.title }}{% endblock %}
+{% block main_wrapper_class %}{% endblock %}
+{% block wallet_sidebar %}{% endblock %}
+{% block dashboard_js %}{% endblock %}
+{% block footer %}
+<div class="footer out-footer style-2">
+	<div class="copyright">
+		<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">PortalK12</a> 2023</p>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="page-title flex-wrap">
+				<div>
+					<h2 class="mb-1">{{ mock.title }}</h2>
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a href="{% url 'backoffice:dashboard' %}">Dashboard</a></li>
+							<li class="breadcrumb-item active" aria-current="page">{{ mock.title }}</li>
+						</ol>
+					</nav>
+				</div>
+				<a href="javascript:void(0);" class="btn btn-primary">{{ mock.primary_label }}</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		{% for stat in mock.stats %}
+		<div class="col-xl-3 col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="content-box">
+						<div class="icon-box icon-box-xl {{ stat.accent }}">
+							<i class="material-symbols-outlined text-white">school</i>
+						</div>
+						<div class="chart-num">
+							<p>{{ stat.label }}</p>
+							<h2 class="font-w700 mb-0">{{ stat.value }}</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="row">
+		<div class="col-xl-8">
+			<div class="card">
+				<div class="card-header border-0 pb-0">
+					<div>
+						<h4 class="heading mb-1">{{ mock.table_title }}</h4>
+						<p class="mb-0">{{ mock.subtitle }}</p>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-responsive-md">
+							<thead>
+								<tr>{% for column in mock.columns %}<th>{{ column }}</th>{% endfor %}</tr>
+							</thead>
+							<tbody>
+								{% for row in mock.rows %}
+								<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-4">
+			<div class="card">
+				<div class="card-header border-0 pb-0"><h4 class="heading mb-0">Próximas ações</h4></div>
+				<div class="card-body">
+					<div class="d-flex align-items-start mb-3">
+						<div class="icon-box icon-box-sm bg-primary-light me-3"><i class="material-symbols-outlined text-primary">check_circle</i></div>
+						<div><h6 class="mb-1">Validar dados</h6><p class="mb-0">Conferir cadastros antes de ativar integrações reais.</p></div>
+					</div>
+					<div class="d-flex align-items-start mb-3">
+						<div class="icon-box icon-box-sm bg-primary-light me-3"><i class="material-symbols-outlined text-primary">notifications</i></div>
+						<div><h6 class="mb-1">Acompanhar alertas</h6><p class="mb-0">Monitorar eventos do painel durante o dia letivo.</p></div>
+					</div>
+					<div class="d-flex align-items-start">
+						<div class="icon-box icon-box-sm bg-primary-light me-3"><i class="material-symbols-outlined text-primary">assignment</i></div>
+						<div><h6 class="mb-1">Revisar permissões</h6><p class="mb-0">Manter acessos coerentes com a rotina da unidade.</p></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

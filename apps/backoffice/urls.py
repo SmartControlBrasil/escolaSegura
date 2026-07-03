@@ -18,6 +18,7 @@ urlpatterns = [
     path('alunos/novo/', views.panel_page, {'page': 'alunos-novo'}, name='alunos_novo'),
     path('responsaveis/', views.panel_page, {'page': 'responsaveis'}, name='responsaveis'),
     path('turmas/', views.panel_page, {'page': 'turmas'}, name='turmas'),
+    path('unidades/', views.panel_page, {'page': 'unidades'}, name='unidades'),
     path('escolas/', views.panel_page, {'page': 'escolas'}, name='escolas'),
     path('colaboradores/', views.panel_page, {'page': 'colaboradores'}, name='colaboradores'),
     path('colaboradores/detalhe/', views.panel_page, {'page': 'colaboradores-detalhe'}, name='colaboradores_detalhe'),

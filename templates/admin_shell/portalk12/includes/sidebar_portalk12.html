@@ -2,27 +2,17 @@
         <div class="dlabnav">
 			<div class="dlabnav-scroll">
 				<ul class="metismenu" id="menu">
-					<li class="{% if panel_page == 'dashboard' or panel_page == 'dashboard-dark' or panel_page == 'dashboard-finance' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+					<li class="{% if panel_page == 'dashboard' %}mm-active{% endif %}">
+						<a href="{% url 'backoffice:dashboard' %}">
 							<i class="material-symbols-outlined">home</i>
 							<span class="nav-text">Dashboard</span>
 						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:dashboard' %}">Visão Geral</a></li>
-							<li><a href="{% url 'backoffice:dashboard_dark' %}">Dashboard Dark</a></li>
-							<li><a href="{% url 'backoffice:dashboard_finance' %}">Financeiro</a></li>
-						</ul>
 					</li>
-					<li class="{% if panel_page == 'alunos' or panel_page == 'alunos-detalhe' or panel_page == 'alunos-novo' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+					<li class="{% if panel_page == 'alunos' %}mm-active{% endif %}">
+						<a href="{% url 'backoffice:alunos' %}">
 							<i class="material-symbols-outlined">school</i>
 							<span class="nav-text">Alunos</span>
 						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:alunos' %}">Lista de Alunos</a></li>
-							<li><a href="{% url 'backoffice:alunos_detalhe' %}">Detalhe do Aluno</a></li>
-							<li><a href="{% url 'backoffice:alunos_novo' %}">Novo Aluno</a></li>
-						</ul>
 					</li>
 					<li class="{% if panel_page == 'responsaveis' %}mm-active{% endif %}">
 						<a href="{% url 'backoffice:responsaveis' %}">
@@ -36,45 +26,43 @@
 							<span class="nav-text">Turmas</span>
 						</a>
 					</li>
-					<li class="{% if panel_page == 'escolas' %}mm-active{% endif %}">
-						<a href="{% url 'backoffice:escolas' %}">
+					<li class="{% if panel_page == 'unidades' %}mm-active{% endif %}">
+						<a href="{% url 'backoffice:unidades' %}">
 							<i class="material-symbols-outlined">domain</i>
-							<span class="nav-text">Escolas</span>
+							<span class="nav-text">Unidades</span>
 						</a>
 					</li>
-					<li class="{% if panel_page == 'colaboradores' or panel_page == 'colaboradores-detalhe' or panel_page == 'colaboradores-novo' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+					<li class="{% if panel_page == 'colaboradores' %}mm-active{% endif %}">
+						<a href="{% url 'backoffice:colaboradores' %}">
 							<i class="material-symbols-outlined">badge</i>
 							<span class="nav-text">Colaboradores</span>
 						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:colaboradores' %}">Lista de Colaboradores</a></li>
-							<li><a href="{% url 'backoffice:colaboradores_detalhe' %}">Detalhe do Colaborador</a></li>
-							<li><a href="{% url 'backoffice:colaboradores_novo' %}">Novo Colaborador</a></li>
-						</ul>
 					</li>
-					<li class="{% if panel_page == 'visitantes' or panel_page == 'autorizacoes' or panel_page == 'controle-acesso' or panel_page == 'catracas' or panel_page == 'cameras' %}mm-active{% endif %}">
+					<li class="{% if panel_page == 'visitantes' %}mm-active{% endif %}">
+						<a href="{% url 'backoffice:visitantes' %}">
+							<i class="material-symbols-outlined">person_pin</i>
+							<span class="nav-text">Visitantes</span>
+						</a>
+					</li>
+					<li class="{% if panel_page == 'controle-acesso' or panel_page == 'catracas' or panel_page == 'cameras' %}mm-active{% endif %}">
 						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
 							<i class="material-symbols-outlined">shield</i>
-							<span class="nav-text">Operacional</span>
+							<span class="nav-text">Acesso</span>
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{% url 'backoffice:controle_acesso' %}">Controle de Acesso</a></li>
 							<li><a href="{% url 'backoffice:catracas' %}">Catracas</a></li>
 							<li><a href="{% url 'backoffice:cameras' %}">Câmeras</a></li>
-							<li><a href="{% url 'backoffice:visitantes' %}">Visitantes</a></li>
-							<li><a href="{% url 'backoffice:autorizacoes' %}">Autorizações</a></li>
 						</ul>
 					</li>
-					<li class="{% if panel_page == 'comunicados' or panel_page == 'comunicados-redigir' or panel_page == 'ocorrencias' %}mm-active{% endif %}">
+					<li class="{% if panel_page == 'ocorrencias' or panel_page == 'comunicados' %}mm-active{% endif %}">
 						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
 							<i class="material-symbols-outlined">campaign</i>
-							<span class="nav-text">Comunicação</span>
+							<span class="nav-text">Vida Escolar</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:comunicados' %}">Comunicados (Inbox)</a></li>
-							<li><a href="{% url 'backoffice:comunicados_redigir' %}">Redigir</a></li>
 							<li><a href="{% url 'backoffice:ocorrencias' %}">Ocorrências</a></li>
+							<li><a href="{% url 'backoffice:comunicados' %}">Comunicados</a></li>
 						</ul>
 					</li>
 					<li class="{% if panel_page == 'cantina' or panel_page == 'pedidos-lanche' %}mm-active{% endif %}">
@@ -83,8 +71,8 @@
 							<span class="nav-text">Cantina</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:cantina' %}">Cardápio</a></li>
-							<li><a href="{% url 'backoffice:pedidos_lanche' %}">Detalhe / Pedidos</a></li>
+							<li><a href="{% url 'backoffice:cantina' %}">Cantina</a></li>
+							<li><a href="{% url 'backoffice:pedidos_lanche' %}">Pedidos de Lanche</a></li>
 						</ul>
 					</li>
 					<li class="{% if panel_page == 'pagamentos' %}mm-active{% endif %}">
@@ -93,61 +81,14 @@
 							<span class="nav-text">Pagamentos</span>
 						</a>
 					</li>
-					<li class="{% if panel_page == 'relatorios' or panel_page == 'configuracoes' or panel_page == 'perfil' %}mm-active{% endif %}">
+					<li class="{% if panel_page == 'relatorios' or panel_page == 'configuracoes' %}mm-active{% endif %}">
 						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
 							<i class="material-symbols-outlined">settings</i>
-							<span class="nav-text">Relatórios & Sistema</span>
+							<span class="nav-text">Sistema</span>
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{% url 'backoffice:relatorios' %}">Relatórios</a></li>
 							<li><a href="{% url 'backoffice:configuracoes' %}">Configurações</a></li>
-							<li><a href="{% url 'backoffice:perfil' %}">Meu Perfil</a></li>
-						</ul>
-					</li>
-					<li class="{% if panel_page == 'saas-dashboard' or panel_page == 'saas-tenants' or panel_page == 'saas-plans' or panel_page == 'saas-subscriptions' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-							<i class="material-symbols-outlined">cloud</i>
-							<span class="nav-text">SaaS Master</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:saas_dashboard' %}">Dashboard SaaS</a></li>
-							<li><a href="{% url 'backoffice:saas_tenants' %}">Tenants</a></li>
-							<li><a href="{% url 'backoffice:saas_plans' %}">Planos</a></li>
-							<li><a href="{% url 'backoffice:saas_subscriptions' %}">Assinaturas</a></li>
-						</ul>
-					</li>
-					<li class="{% if panel_page == 'tabelas' or panel_page == 'formularios' or panel_page == 'cards' or panel_page == 'graficos' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-							<i class="material-symbols-outlined">widgets</i>
-							<span class="nav-text">UI Kit</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:ui_tabelas' %}">Tabelas</a></li>
-							<li><a href="{% url 'backoffice:ui_formularios' %}">Formulários</a></li>
-							<li><a href="{% url 'backoffice:ui_cards' %}">Cards</a></li>
-							<li><a href="{% url 'backoffice:ui_graficos' %}">Gráficos</a></li>
-						</ul>
-					</li>
-					<li>
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-							<i class="material-symbols-outlined">palette</i>
-							<span class="nav-text">Template Demo</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:template_page' 'student' %}">Alunos (demo)</a></li>
-							<li><a href="{% url 'backoffice:template_page' 'teacher' %}">Professores (demo)</a></li>
-							<li><a href="{% url 'backoffice:template_page' 'food' %}">Cantina (demo)</a></li>
-							<li><a href="{% url 'backoffice:template_page' 'email-inbox' %}">Comunicação (demo)</a></li>
-						</ul>
-					</li>
-					<li class="{% if panel_page == 'erro-404' or panel_page == 'erro-500' %}mm-active{% endif %}">
-						<a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
-							<i class="material-symbols-outlined">error</i>
-							<span class="nav-text">Erros</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="{% url 'backoffice:erro_404' %}">Erro 404</a></li>
-							<li><a href="{% url 'backoffice:erro_500' %}">Erro 500</a></li>
 						</ul>
 					</li>
 				</ul>
