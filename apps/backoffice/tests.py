@@ -1,8 +1,12 @@
 import os
+from datetime import date
 
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from django.db import IntegrityError, transaction
 from django.test import TestCase
+
+from .models import Guardian, SchoolUnit, Student, StudentGuardianLink
 
 
 User = get_user_model()
@@ -25,6 +29,44 @@ class BackofficeSmokeTests(TestCase):
 
     def test_seed_escola_segura_demo_command(self):
         call_command('seed_escola_segura_demo')
+
+    def test_portalk12_models_can_be_created(self):
+        unit, student, guardian = self.create_portalk12_fixture()
+        link = StudentGuardianLink.objects.create(
+            student=student,
+            guardian=guardian,
+            relationship=StudentGuardianLink.Relationship.MOTHER,
+            is_primary=True,
+        )
+
+        self.assertEqual(str(unit), 'Unidade Teste')
+        self.assertEqual(str(student), 'Aluno Teste')
+        self.assertEqual(str(guardian), 'Responsável Teste')
+        self.assertEqual(str(link), 'Aluno Teste - Responsável Teste')
+
+    def test_student_guardian_link_is_unique(self):
+        _, student, guardian = self.create_portalk12_fixture()
+        StudentGuardianLink.objects.create(
+            student=student,
+            guardian=guardian,
+            relationship=StudentGuardianLink.Relationship.MOTHER,
+        )
+
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                StudentGuardianLink.objects.create(
+                    student=student,
+                    guardian=guardian,
+                    relationship=StudentGuardianLink.Relationship.FATHER,
+                )
+
+    def test_seed_portalk12_demo_command_creates_minimum_dataset(self):
+        call_command('seed_portalk12_demo')
+
+        self.assertGreaterEqual(SchoolUnit.objects.count(), 2)
+        self.assertGreaterEqual(Student.objects.count(), 8)
+        self.assertGreaterEqual(Guardian.objects.count(), 8)
+        self.assertGreaterEqual(StudentGuardianLink.objects.count(), 8)
 
     def test_login_page_returns_200(self):
         response = self.client.get('/app/login/')
@@ -78,6 +120,31 @@ class BackofficeSmokeTests(TestCase):
             for term in forbidden_terms:
                 self.assertNotContains(response, term, msg_prefix=route)
 
+    def test_real_backoffice_lists_return_200_when_authenticated(self):
+        self.client.login(username='testuser', password='testpassword')
+        for route in ['/app/unidades/', '/app/alunos/', '/app/responsaveis/']:
+            response = self.client.get(route)
+            self.assertEqual(response.status_code, 200, route)
+
+    def test_real_backoffice_lists_show_seeded_names(self):
+        call_command('seed_portalk12_demo')
+        self.client.login(username='testuser', password='testpassword')
+
+        units_response = self.client.get('/app/unidades/')
+        students_response = self.client.get('/app/alunos/')
+        guardians_response = self.client.get('/app/responsaveis/')
+
+        self.assertContains(units_response, 'Unidade Centro')
+        self.assertContains(students_response, 'Ana Beatriz Lima')
+        self.assertContains(guardians_response, 'Carla Lima')
+
+    def test_real_backoffice_lists_show_empty_state(self):
+        self.client.login(username='testuser', password='testpassword')
+
+        self.assertContains(self.client.get('/app/unidades/'), 'Nenhuma unidade escolar cadastrada ainda.')
+        self.assertContains(self.client.get('/app/alunos/'), 'Nenhum aluno cadastrado ainda.')
+        self.assertContains(self.client.get('/app/responsaveis/'), 'Nenhum responsável cadastrado ainda.')
+
     def test_sidebar_reflects_portalk12_modules(self):
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get('/app/')
@@ -111,3 +178,27 @@ class BackofficeSmokeTests(TestCase):
             '/app/relatorios/',
             '/app/configuracoes/',
         ]
+
+    @staticmethod
+    def create_portalk12_fixture():
+        unit = SchoolUnit.objects.create(
+            name='Unidade Teste',
+            slug='unidade-teste',
+            city='São Paulo',
+            state='SP',
+        )
+        student = Student.objects.create(
+            school_unit=unit,
+            full_name='Aluno Teste',
+            registration_code='TESTE-001',
+            birth_date=date(2014, 1, 20),
+            grade_name='5º ano',
+            classroom='5º A',
+        )
+        guardian = Guardian.objects.create(
+            full_name='Responsável Teste',
+            email='responsavel@example.com',
+            phone='(11) 99999-0000',
+            document='000.000.000-00',
+        )
+        return unit, student, guardian

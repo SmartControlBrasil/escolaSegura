@@ -7,6 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.http import Http404
 from django.shortcuts import redirect, render
 
+from .models import Guardian, SchoolUnit, Student
+
 
 TEMPLATE_DIR = Path(settings.BASE_DIR) / 'templates' / 'admin_shell' / 'portalk12'
 AVAILABLE_PAGES = {p.stem for p in TEMPLATE_DIR.glob('*.html')}
@@ -93,6 +95,116 @@ MOCK_MODULES = {
     'configuracoes': ('Configurações', 'Parâmetros do painel, permissões e preferências da escola', 'Salvar ajustes', ['Perfis de acesso', 'Regras de retirada', 'Integrações mockadas', 'Alertas pendentes'], ['Configuração', 'Escopo', 'Valor mockado', 'Status'], [['Janela de saída', 'Unidade', '15 minutos', 'Ativo'], ['Notificação de atraso', 'Responsáveis', 'App e SMS', 'Ativo'], ['Dupla validação visitante', 'Portaria', 'Obrigatória', 'Ativo']]),
 }
 
+def _yes_no(value):
+    return 'Sim' if value else 'Não'
+
+
+def _real_units_context():
+    units = list(SchoolUnit.objects.order_by('name'))
+    active_count = sum(1 for unit in units if unit.is_active)
+    rows = [
+        [unit.name, unit.city, unit.state, _yes_no(unit.is_active)]
+        for unit in units
+    ]
+    return {
+        'title': 'Unidades',
+        'subtitle': 'Unidades escolares cadastradas no banco de dados',
+        'primary_label': 'Nova unidade',
+        'stats': [
+            {'label': 'Unidades cadastradas', 'value': len(units), 'accent': 'std-data'},
+            {'label': 'Unidades ativas', 'value': active_count, 'accent': 'teach-data'},
+            {'label': 'Cidades atendidas', 'value': len({unit.city for unit in units}), 'accent': 'event-data'},
+            {'label': 'Inativas', 'value': len(units) - active_count, 'accent': 'food-data bg-dark'},
+        ],
+        'table_title': 'Unidades escolares',
+        'columns': ['Unidade', 'Cidade', 'UF', 'Ativa'],
+        'rows': rows,
+        'empty_message': 'Nenhuma unidade escolar cadastrada ainda.',
+    }
+
+
+def _primary_guardian_name(student):
+    primary_link = next((link for link in student.guardian_links.all() if link.is_primary), None)
+    fallback_link = next(iter(student.guardian_links.all()), None)
+    link = primary_link or fallback_link
+    return link.guardian.full_name if link else 'Sem responsável vinculado'
+
+
+def _real_students_context():
+    students = list(
+        Student.objects.select_related('school_unit')
+        .prefetch_related('guardian_links__guardian')
+        .order_by('full_name')
+    )
+    active_count = sum(1 for student in students if student.status == Student.Status.ACTIVE)
+    rows = [
+        [
+            student.full_name,
+            student.school_unit.name,
+            student.grade_name or '-',
+            student.classroom or '-',
+            _primary_guardian_name(student),
+            student.get_status_display(),
+        ]
+        for student in students
+    ]
+    return {
+        'title': 'Alunos',
+        'subtitle': 'Alunos cadastrados no banco de dados do PortalK12',
+        'primary_label': 'Novo aluno',
+        'stats': [
+            {'label': 'Alunos cadastrados', 'value': len(students), 'accent': 'std-data'},
+            {'label': 'Alunos ativos', 'value': active_count, 'accent': 'teach-data'},
+            {'label': 'Unidades com alunos', 'value': len({student.school_unit_id for student in students}), 'accent': 'event-data'},
+            {'label': 'Inativos/transferidos', 'value': len(students) - active_count, 'accent': 'food-data bg-dark'},
+        ],
+        'table_title': 'Lista de alunos',
+        'columns': ['Aluno', 'Unidade', 'Série', 'Turma', 'Responsável principal', 'Status'],
+        'rows': rows,
+        'empty_message': 'Nenhum aluno cadastrado ainda.',
+    }
+
+
+def _real_guardians_context():
+    guardians = list(
+        Guardian.objects.prefetch_related('student_links__student')
+        .order_by('full_name')
+    )
+    active_count = sum(1 for guardian in guardians if guardian.is_active)
+    rows = []
+    for guardian in guardians:
+        linked_students = ', '.join(link.student.full_name for link in guardian.student_links.all())
+        rows.append([
+            guardian.full_name,
+            guardian.phone,
+            guardian.email or '-',
+            linked_students or 'Sem aluno vinculado',
+            _yes_no(guardian.is_active),
+        ])
+    return {
+        'title': 'Responsáveis',
+        'subtitle': 'Responsáveis cadastrados e seus vínculos com alunos',
+        'primary_label': 'Novo responsável',
+        'stats': [
+            {'label': 'Responsáveis cadastrados', 'value': len(guardians), 'accent': 'std-data'},
+            {'label': 'Responsáveis ativos', 'value': active_count, 'accent': 'teach-data'},
+            {'label': 'Com alunos vinculados', 'value': sum(1 for guardian in guardians if guardian.student_links.all()), 'accent': 'event-data'},
+            {'label': 'Inativos', 'value': len(guardians) - active_count, 'accent': 'food-data bg-dark'},
+        ],
+        'table_title': 'Lista de responsáveis',
+        'columns': ['Responsável', 'Telefone', 'E-mail', 'Alunos vinculados', 'Ativo'],
+        'rows': rows,
+        'empty_message': 'Nenhum responsável cadastrado ainda.',
+    }
+
+
+REAL_PAGE_CONTEXT = {
+    'unidades': _real_units_context,
+    'alunos': _real_students_context,
+    'responsaveis': _real_guardians_context,
+}
+
+
 STAT_VALUES = ['932', '842', '64', '7']
 STAT_ACCENTS = ['std-data', 'teach-data', 'event-data', 'food-data bg-dark']
 
@@ -117,6 +229,13 @@ def _mock_context(page_key):
 def _render_panel_page(request, page_key: str):
     if page_key == 'escolas':
         page_key = 'unidades'
+    if page_key in REAL_PAGE_CONTEXT:
+        mock = REAL_PAGE_CONTEXT[page_key]()
+        return render(request, 'admin_shell/portalk12/mock_page.html', {
+            'panel_page': page_key,
+            'page_heading': mock['title'],
+            'mock': mock,
+        })
     if page_key in MOCK_MODULES:
         mock = _mock_context(page_key)
         return render(request, 'admin_shell/portalk12/mock_page.html', {
